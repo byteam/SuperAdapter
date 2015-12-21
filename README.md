@@ -84,10 +84,10 @@ recyclerView.setAdapter(mMultiAdapter);
 The usages between AdapterView(ListView, GridView) and RecyclerView are almost the same.
 
 
-Inspired Ray Zhang.
+Inspired by Ray Zhang.
 
-Welcome to pull requests and open iusses! : )
-
+**Welcome to pull requests and open iusses!  : )
+**
 ### License
 
 ```
