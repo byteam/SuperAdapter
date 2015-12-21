@@ -1,0 +1,10 @@
+.DS_Store
+.gradle
+gradle.properties
+local.properties
+.idea
+build
+*.iml
+gradle
+bintray.gradle
+androidTest
