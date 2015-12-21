@@ -4,7 +4,7 @@
 
 **Less code for redundant adapter.** You won't need to write ViewHolder, createView, setTag, getTag, and confuse how to setOnItemClickListener to RecyclerView, etc. SuperAdapter does everything for you! The only thing you really need to do is that implement a method `onBind()`.  
 
-### Download
+## Download
 
 In build.gradle:
 
@@ -12,7 +12,7 @@ In build.gradle:
 
 SuperAdapter requires at minimum Android 4.0.
 
-### How to use
+## How to use
 
 If a simple adapter, it can be simplified like this:  
 
@@ -84,11 +84,11 @@ recyclerView.setAdapter(mMultiAdapter);
 The usages between AdapterView(ListView, GridView) and RecyclerView are almost the same.
 
 
-Inspired by Ray Zhang.
+Inspired by Ray Zhang.  
 
-**Welcome to pull requests and open iusses!  : )
-**
-### License
+**Welcome to pull requests and open iusses!  : )**
+
+## License
 
 ```
 Copyright 2015 Chenenyu.
