@@ -15,7 +15,7 @@ public class ListSingleAdapter extends SuperAdapter<String> {
     }
 
     @Override
-    protected void onBind(BaseViewHolder holder, int position, String item) {
+    protected void onBind(int viewType, BaseViewHolder holder, int position, String item) {
         holder.setText(R.id.tv_name, item);
     }
 }

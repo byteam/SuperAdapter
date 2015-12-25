@@ -14,7 +14,7 @@ public class RecyclerSingleAdapter extends SuperAdapter<String> {
     }
 
     @Override
-    public void onBind(BaseViewHolder holder, int position, String item) {
+    public void onBind(int viewType, BaseViewHolder holder, int position, String item) {
         holder.setText(R.id.tv_name, item);
     }
 }

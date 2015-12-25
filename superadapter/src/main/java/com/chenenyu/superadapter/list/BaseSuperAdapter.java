@@ -66,7 +66,7 @@ public abstract class BaseSuperAdapter<T, H extends BaseViewHolder> extends Base
     public View getView(int position, View convertView, ViewGroup parent) {
         final H viewHolder = onCreate(getItemViewType(position), convertView, parent);
         T item = getItem(position);
-        onBind(viewHolder, position, item);
+        onBind(getItemViewType(position), viewHolder, position, item);
         return viewHolder.getItemView();
     }
 
@@ -75,11 +75,12 @@ public abstract class BaseSuperAdapter<T, H extends BaseViewHolder> extends Base
     /**
      * Abstract method for binding view and data.
      *
+     * @param viewType {@link #getItemViewType}
      * @param holder   ViewHolder
      * @param position position
      * @param item     data
      */
-    protected abstract void onBind(H holder, int position, T item);
+    protected abstract void onBind(int viewType, H holder, int position, T item);
 
     public void add(T item) {
         mList.add(item);

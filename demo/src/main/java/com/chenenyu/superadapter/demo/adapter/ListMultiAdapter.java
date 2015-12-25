@@ -16,8 +16,8 @@ public class ListMultiAdapter extends SuperAdapter<MockModel> {
     }
 
     @Override
-    protected void onBind(BaseViewHolder holder, int position, MockModel item) {
-        switch (getItemViewType(position)) {
+    protected void onBind(int viewType, BaseViewHolder holder, int position, MockModel item) {
+        switch (viewType) {
             case 0:
                 holder.setText(R.id.tv_name, item.getName());
                 break;

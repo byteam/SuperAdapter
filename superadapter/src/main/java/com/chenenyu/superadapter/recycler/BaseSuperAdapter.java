@@ -53,12 +53,20 @@ public abstract class BaseSuperAdapter<T, H extends BaseViewHolder> extends Recy
 
     @Override
     public void onBindViewHolder(H holder, int position) {
-        onBind(holder, position, mList.get(position));
+        onBind(getItemViewType(position), holder, position, mList.get(position));
     }
 
     public abstract H onCreate(ViewGroup parent, int viewType);
 
-    public abstract void onBind(H holder, int position, T item);
+    /**
+     * Abstract method for binding view and data.
+     *
+     * @param viewType {@link #getItemViewType}
+     * @param holder   ViewHolder
+     * @param position position
+     * @param item     data
+     */
+    public abstract void onBind(int viewType, H holder, int position, T item);
 
     public void add(T item) {
         add(item, true);

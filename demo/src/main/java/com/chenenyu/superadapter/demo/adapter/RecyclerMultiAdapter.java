@@ -16,8 +16,8 @@ public class RecyclerMultiAdapter extends SuperAdapter<MockModel> {
     }
 
     @Override
-    public void onBind(BaseViewHolder holder, int position, MockModel item) {
-        switch (getItemViewType(position)) {
+    public void onBind(int viewType, BaseViewHolder holder, int position, MockModel item) {
+        switch (viewType) {
             case 0:
                 holder.setText(R.id.tv_name, item.getName());
                 break;
