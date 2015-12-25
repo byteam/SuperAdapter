@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.ColorFilter;
 import android.os.Build;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -167,9 +168,31 @@ public class BaseViewHolder {
         return this;
     }
 
+    /**
+     * Set adapter for AbsListView.
+     * @param viewId id
+     * @param adapter BaseAdapter
+     * @return BaseViewHolder
+     */
     public BaseViewHolder setAdapter(int viewId, BaseAdapter adapter) {
-        AbsListView view = (AbsListView) getView(viewId);
-        view.setAdapter(adapter);
+        View view = getView(viewId);
+        if (view instanceof AbsListView) {
+            ((AbsListView) view).setAdapter(adapter);
+        }
+        return this;
+    }
+
+    /**
+     * Set adapter for RecyclerView.
+     * @param viewId id
+     * @param adapter RecyclerView.Adapter
+     * @return BaseViewHolder
+     */
+    public BaseViewHolder setAdapter(int viewId, RecyclerView.Adapter adapter) {
+        View view = getView(viewId);
+        if (view instanceof RecyclerView) {
+            ((RecyclerView) view).setAdapter(adapter);
+        }
         return this;
     }
 

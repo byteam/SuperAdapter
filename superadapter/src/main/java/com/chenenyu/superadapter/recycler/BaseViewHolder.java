@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.AbsListView;
+import android.widget.BaseAdapter;
 import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -65,6 +67,34 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     public BaseViewHolder setImageUri(int viewId, Uri imageUri) {
         ImageView view = getView(viewId);
         view.setImageURI(imageUri);
+        return this;
+    }
+
+    /**
+     * Set adapter for AbsListView.
+     * @param viewId id
+     * @param adapter BaseAdapter
+     * @return BaseViewHolder
+     */
+    public BaseViewHolder setAdapter(int viewId, BaseAdapter adapter) {
+        View view = getView(viewId);
+        if (view instanceof AbsListView) {
+            ((AbsListView) view).setAdapter(adapter);
+        }
+        return this;
+    }
+
+    /**
+     * Set adapter for RecyclerView.
+     * @param viewId id
+     * @param adapter RecyclerView.Adapter
+     * @return BaseViewHolder
+     */
+    public BaseViewHolder setAdapter(int viewId, RecyclerView.Adapter adapter) {
+        View view = getView(viewId);
+        if (view instanceof RecyclerView) {
+            ((RecyclerView) view).setAdapter(adapter);
+        }
         return this;
     }
 
