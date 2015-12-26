@@ -23,7 +23,7 @@ public class RecyclerSingleAdapter extends SuperAdapter<String> {
     }
 
     @Override
-    public void onBind(BaseViewHolder holder, int position, String item) {
+    public void onBind(int viewType, BaseViewHolder holder, int position, String item) {
         holder.setText(R.id.tv_name, item);
     }
 }
@@ -44,8 +44,8 @@ public class RecyclerMultiAdapter extends SuperAdapter<MockModel> {
     }
 
     @Override
-    public void onBind(BaseViewHolder holder, int position, MockModel item) {
-        switch (getItemViewType(position)) {
+    public void onBind(int viewType, BaseViewHolder holder, int position, MockModel item) {
+        switch (viewType) {
             case 0:
                 holder.setText(R.id.tv_name, item.getName());
                 break;
@@ -86,12 +86,12 @@ The usages between AdapterView(ListView, GridView) and RecyclerView are almost t
 
 Inspired by Ray Zhang.  
 
-**Welcome to pull requests and open iusses!  : )**
+**Welcome to submit pull requests and open iusses!  : )**
 
 ## License
 
 ```
-Copyright 2015 Chenenyu.
+Copyright 2015 chenenyu.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
