@@ -8,9 +8,9 @@
 
 In build.gradle:
 
-`compile 'com.chenenyu.superadapter:superadapter:1.0.2'`
+`compile 'com.chenenyu.superadapter:superadapter:2.0.0'`
 
-SuperAdapter requires at minimum Android 2.9.
+SuperAdapter requires at minimum Android 2.3.
 
 ## How to use
 
