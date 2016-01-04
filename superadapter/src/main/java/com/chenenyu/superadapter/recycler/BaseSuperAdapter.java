@@ -69,21 +69,16 @@ public abstract class BaseSuperAdapter<T, H extends BaseViewHolder> extends Recy
     public abstract void onBind(int viewType, H holder, int position, T item);
 
     public void add(T item) {
-        add(item, true);
-    }
-
-    public void add(T item, boolean isChanged) {
         if (mList == null) {
             mList = new ArrayList<>();
         }
         mList.add(item);
-        if (isChanged)
-            notifyDataSetChanged();
+        notifyItemInserted(mList.size() - 1);
     }
 
     public void add(int index, T item) {
         mList.add(index, item);
-        notifyDataSetChanged();
+        notifyItemInserted(index);
     }
 
     public void addAll(List<T> items) {
@@ -93,24 +88,21 @@ public abstract class BaseSuperAdapter<T, H extends BaseViewHolder> extends Recy
         if (mList == null) {
             mList = new ArrayList<>();
         }
+        int position = mList.size();
         mList.addAll(items);
-        notifyDataSetChanged();
+        notifyItemRangeInserted(position, items.size());
     }
 
     public void remove(T item) {
-        mList.remove(item);
-        notifyDataSetChanged();
+        if (mList.contains(item)) {
+            int index = mList.indexOf(item);
+            remove(index);
+        }
     }
 
     public void remove(int index) {
         mList.remove(index);
-        notifyDataSetChanged();
-    }
-
-    public void remove(int index, boolean isChange) {
-        mList.remove(index);
-        if (isChange)
-            notifyDataSetChanged();
+        notifyItemRemoved(index);
     }
 
     public void set(T oldItem, T newItem) {
@@ -119,12 +111,13 @@ public abstract class BaseSuperAdapter<T, H extends BaseViewHolder> extends Recy
 
     public void set(int index, T item) {
         mList.set(index, item);
-        notifyDataSetChanged();
+        notifyItemChanged(index);
     }
 
     public void replaceAll(List<T> items) {
         mList.clear();
-        addAll(items);
+        mList.addAll(items);
+        notifyItemRangeInserted(0, items.size());
     }
 
     public boolean contains(T item) {

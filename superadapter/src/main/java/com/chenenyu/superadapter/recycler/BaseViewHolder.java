@@ -2,16 +2,17 @@ package com.chenenyu.superadapter.recycler;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
+import android.support.annotation.FloatRange;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Checkable;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 /**
@@ -36,9 +37,15 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         View childView = childViews.get(id);
         if (childView == null) {
             childView = itemView.findViewById(id);
-            childViews.put(id, childView);
+            if (childView != null)
+                childViews.put(id, childView);
         }
-        return (T) childView;
+        try {
+            return (T) childView;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public BaseViewHolder setText(int viewId, CharSequence text) {
@@ -72,21 +79,25 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 
     /**
      * Set adapter for AbsListView.
-     * @param viewId id
+     *
+     * @param viewId  id
      * @param adapter BaseAdapter
      * @return BaseViewHolder
      */
     public BaseViewHolder setAdapter(int viewId, BaseAdapter adapter) {
         View view = getView(viewId);
-        if (view instanceof AbsListView) {
-            ((AbsListView) view).setAdapter(adapter);
+        if (view instanceof ListView) {
+            ((ListView) view).setAdapter(adapter);
+        } else if (view instanceof GridView) {
+            ((GridView) view).setAdapter(adapter);
         }
         return this;
     }
 
     /**
      * Set adapter for RecyclerView.
-     * @param viewId id
+     *
+     * @param viewId  id
      * @param adapter RecyclerView.Adapter
      * @return BaseViewHolder
      */
@@ -116,15 +127,9 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public BaseViewHolder setAlpha(int viewId, float value) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            getView(viewId).setAlpha(value);
-        } else {
-            AlphaAnimation alpha = new AlphaAnimation(value, value);
-            alpha.setDuration(0);
-            alpha.setFillAfter(true);
-            getView(viewId).startAnimation(alpha);
-        }
+    public BaseViewHolder setAlpha(int viewId, @FloatRange(from = 0.0, to = 1.0) float value) {
+        View view = getView(viewId);
+        ViewCompat.setAlpha(view, value);
         return this;
     }
 
@@ -147,7 +152,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     }
 
     public BaseViewHolder setChecked(int viewId, boolean checked) {
-        Checkable view = (Checkable) getView(viewId);
+        Checkable view = getView(viewId);
         view.setChecked(checked);
         return this;
     }

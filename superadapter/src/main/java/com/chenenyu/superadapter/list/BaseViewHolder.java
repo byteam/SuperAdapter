@@ -3,18 +3,21 @@ package com.chenenyu.superadapter.list;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.ColorFilter;
+import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.FloatRange;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Checkable;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -22,13 +25,13 @@ import android.widget.TextView;
 
 /**
  * ViewHolder
- * <p>
+ * <p/>
  * Contains convenient method for getter, setter and listener.
  */
 public class BaseViewHolder {
 
     private final Context mContext;
-    private final SparseArray<View> mViews;
+    private final SparseArray<View> childViews;
 
     private View mItemView;
     private int mLayoutResId;
@@ -55,136 +58,182 @@ public class BaseViewHolder {
     private BaseViewHolder(Context context, ViewGroup parent, int layoutResId) {
         this.mContext = context;
         this.mLayoutResId = layoutResId;
-        this.mViews = new SparseArray<>();
+        this.childViews = new SparseArray<>();
         this.mItemView = LayoutInflater.from(mContext).inflate(layoutResId, parent, false);
         mItemView.setTag(this);
     }
 
     private <T extends View> T getView(int viewId) {
-        View view = mViews.get(viewId);
+        View view = childViews.get(viewId);
         if (view == null) {
             view = mItemView.findViewById(viewId);
-            mViews.put(viewId, view);
+            if (view != null)
+                childViews.put(viewId, view);
         }
-        return (T) view;
+        try {
+            return (T) view;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public BaseViewHolder setText(int viewId, CharSequence value) {
         TextView view = getView(viewId);
-        if (TextUtils.isEmpty(value))
-            view.setText("");
-        else
-            view.setText(value);
+        if (view != null) {
+            if (TextUtils.isEmpty(value))
+                view.setText("");
+            else
+                view.setText(value);
+        }
         return this;
     }
 
     public BaseViewHolder setImageResource(int viewId, int imageResId) {
         ImageView view = getView(viewId);
-        view.setImageResource(imageResId);
+        if (view != null) {
+            view.setImageResource(imageResId);
+        }
         return this;
     }
 
     public BaseViewHolder setImageBitmap(int viewId, Bitmap bitmap) {
         ImageView view = getView(viewId);
-        view.setImageBitmap(bitmap);
+        if (view != null) {
+            view.setImageBitmap(bitmap);
+        }
+        return this;
+    }
+
+    public BaseViewHolder setImageUri(int viewId, Uri imageUri) {
+        ImageView view = getView(viewId);
+        if (view != null) {
+            view.setImageURI(imageUri);
+        }
         return this;
     }
 
     public BaseViewHolder setBackgroundColor(int viewId, int bgColor) {
         View view = getView(viewId);
-        view.setBackgroundColor(bgColor);
+        if (view != null) {
+            view.setBackgroundColor(bgColor);
+        }
         return this;
     }
 
     public BaseViewHolder setBackgroundRes(int viewId, int backgroundRes) {
         View view = getView(viewId);
-        view.setBackgroundResource(backgroundRes);
+        if (view != null) {
+            view.setBackgroundResource(backgroundRes);
+        }
         return this;
     }
 
     public BaseViewHolder setTextColor(int viewId, int textColor) {
         TextView view = getView(viewId);
-        view.setTextColor(textColor);
+        if (view != null) {
+            view.setTextColor(textColor);
+        }
         return this;
     }
 
     public BaseViewHolder setColorFilter(int viewId, ColorFilter colorFilter) {
         ImageView view = getView(viewId);
-        view.setColorFilter(colorFilter);
+        if (view != null) {
+            view.setColorFilter(colorFilter);
+        }
         return this;
     }
 
     public BaseViewHolder setColorFilter(int viewId, int colorFilter) {
         ImageView view = getView(viewId);
-        view.setColorFilter(colorFilter);
+        if (view != null) {
+            view.setColorFilter(colorFilter);
+        }
         return this;
     }
 
-    public BaseViewHolder setAlpha(int viewId, float value) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            getView(viewId).setAlpha(value);
-        } else {
-            AlphaAnimation alpha = new AlphaAnimation(value, value);
-            alpha.setDuration(0);
-            alpha.setFillAfter(true);
-            getView(viewId).startAnimation(alpha);
+    public BaseViewHolder setAlpha(int viewId, @FloatRange(from = 0.0, to = 1.0) float value) {
+        View view = getView(viewId);
+        if (view != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                view.setAlpha(value);
+            } else {
+                ViewCompat.setAlpha(view, value);
+            }
         }
         return this;
     }
 
     public BaseViewHolder setVisibility(int viewId, int visible) {
         View view = getView(viewId);
-        view.setVisibility(visible);
+        if (view != null) {
+            view.setVisibility(visible);
+        }
         return this;
     }
 
     public BaseViewHolder setMax(int viewId, int max) {
         ProgressBar view = getView(viewId);
-        view.setMax(max);
+        if (view != null) {
+            view.setMax(max);
+        }
         return this;
     }
 
     public BaseViewHolder setProgress(int viewId, int progress) {
         ProgressBar view = getView(viewId);
-        view.setProgress(progress);
+        if (view != null) {
+            view.setProgress(progress);
+        }
         return this;
     }
 
     public BaseViewHolder setRating(int viewId, float rating) {
         RatingBar view = getView(viewId);
-        view.setRating(rating);
+        if (view != null) {
+            view.setRating(rating);
+        }
         return this;
     }
 
     public BaseViewHolder setTag(int viewId, Object tag) {
         View view = getView(viewId);
-        view.setTag(tag);
+        if (view != null) {
+            view.setTag(tag);
+        }
         return this;
     }
 
     public BaseViewHolder setTag(int viewId, int key, Object tag) {
         View view = getView(viewId);
-        view.setTag(key, tag);
+        if (view != null) {
+            view.setTag(key, tag);
+        }
         return this;
     }
 
     /**
      * Set adapter for AbsListView.
-     * @param viewId id
+     *
+     * @param viewId  id
      * @param adapter BaseAdapter
      * @return BaseViewHolder
      */
     public BaseViewHolder setAdapter(int viewId, BaseAdapter adapter) {
         View view = getView(viewId);
-        if (view instanceof AbsListView) {
-            ((AbsListView) view).setAdapter(adapter);
+        if (view instanceof ListView) {
+            ((ListView) view).setAdapter(adapter);
+        } else if (view instanceof GridView) {
+            ((GridView) view).setAdapter(adapter);
         }
         return this;
     }
 
     /**
      * Set adapter for RecyclerView.
-     * @param viewId id
+     *
+     * @param viewId  id
      * @param adapter RecyclerView.Adapter
      * @return BaseViewHolder
      */
@@ -197,26 +246,34 @@ public class BaseViewHolder {
     }
 
     public BaseViewHolder setChecked(int viewId, boolean checked) {
-        Checkable view = (Checkable) getView(viewId);
-        view.setChecked(checked);
+        Checkable view = getView(viewId);
+        if (view != null) {
+            view.setChecked(checked);
+        }
         return this;
     }
 
     public BaseViewHolder setOnClickListener(int viewId, View.OnClickListener listener) {
         View view = getView(viewId);
-        view.setOnClickListener(listener);
+        if (view != null) {
+            view.setOnClickListener(listener);
+        }
         return this;
     }
 
     public BaseViewHolder setOnTouchListener(int viewId, View.OnTouchListener listener) {
         View view = getView(viewId);
-        view.setOnTouchListener(listener);
+        if (view != null) {
+            view.setOnTouchListener(listener);
+        }
         return this;
     }
 
     public BaseViewHolder setOnLongClickListener(int viewId, View.OnLongClickListener listener) {
         View view = getView(viewId);
-        view.setOnLongClickListener(listener);
+        if (view != null) {
+            view.setOnLongClickListener(listener);
+        }
         return this;
     }
 
