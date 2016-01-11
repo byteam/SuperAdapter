@@ -1,17 +1,17 @@
 ![Download](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg)
+## [Chinese Version 中文版](SuperAdapter/README-zh-rCN.md)
 # SuperAdapter
 *Adapter(ListAdapter, RecyclerView.Adapter) wrapperr for android.*
 
 **Less code for redundant adapter.** You won't need to write ViewHolder, createView, setTag, getTag, and confuse how to setOnItemClickListener to RecyclerView, etc. SuperAdapter does everything for you! The only thing you really need to do is that implement a method `onBind()`.  
 
-## Download
+## Android Studio
 
-In build.gradle:
+In build.gradle中:
 
 `compile 'com.chenenyu.superadapter:superadapter:2.0.0'`
-
-SuperAdapter requires at minimum Android 2.3.
-
+## Eclipse:
+Add [latest Jar](https://github.com/chenenyu/SuperAdapter/releases) to libs dir manually.
 ## How to use
 
 If a simple adapter, it can be simplified like this:  
@@ -91,7 +91,7 @@ Inspired by Ray Zhang.
 ## License
 
 ```
-Copyright 2015 chenenyu.
+Copyright 2015-2016 chenenyu.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

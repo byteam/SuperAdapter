@@ -92,7 +92,7 @@ AdapterView(ListView, GridView)和RecyclerView的用法几乎完全一样。
 ## License
 
 ```
-Copyright 2015 chenenyu.
+Copyright 2015-2016 chenenyu.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
