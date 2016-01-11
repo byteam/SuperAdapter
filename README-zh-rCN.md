@@ -1,20 +1,19 @@
 ![Download](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg)
 # SuperAdapter
-*Adapter(ListAdapter, RecyclerView.Adapter) wrapperr for android.*
+*一个封装了BaseAdapter和RecyclerView.Adapter的简洁的Adapter。*
 
-**Less code for redundant adapter.** You won't need to write ViewHolder, createView, setTag, getTag, and confuse how to setOnItemClickListener to RecyclerView, etc. SuperAdapter does everything for you! The only thing you really need to do is that implement a method `onBind()`.  
+**旨在减少Adapter冗余的代码。** 你不必再写ViewHolder以及其他必须覆写的方法，也不必再惆怅怎样方便的为RecyclerView的item设置点击事件，SuperAdapter为你做好了一切！你只需要实现`onBind()`方法就够了。  
 
-## Download
+## Android Studio
 
-In build.gradle:
+在module的build.gradle中:
 
 `compile 'com.chenenyu.superadapter:superadapter:2.0.0'`
+## Eclipse:
+可以手动添加最新的[jar包](https://github.com/chenenyu/SuperAdapter/releases)到libs文件夹下，建议尽早迁移到Android Studio开发。
+## 如何使用
 
-SuperAdapter requires at minimum Android 2.3.
-
-## How to use
-
-If a simple adapter, it can be simplified like this:  
+如果是个单布局的Adapter，可以简写为如下示例代码:  
 
 ```
 public class RecyclerSingleAdapter extends SuperAdapter<String> {
@@ -24,18 +23,22 @@ public class RecyclerSingleAdapter extends SuperAdapter<String> {
 
     @Override
     public void onBind(int viewType, BaseViewHolder holder, int position, String item) {
+    	// 便捷的绑定数据的方法
         holder.setText(R.id.tv_name, item);
+        // 或者手动查找View，然后赋值，如下：
+        // TextView tvName = getView(R.id.tv_name);
+        // tvName.setText(item);
     }
 }
 ```  
 
-Then:  
+然后调用:  
 
 ```
 mSingleAdapter = new RecyclerSingleAdapter(getContext(), names, R.layout.item_type1);  
 recyclerView.setAdapter(mSingleAdapter);
 ```  
-If a complex adapter, it can be simplified like this:  
+如果是个多布局的Adapter，可以简写为如下示例代码:  
 
 ```
 public class RecyclerMultiAdapter extends SuperAdapter<MockModel> {
@@ -59,7 +62,7 @@ public class RecyclerMultiAdapter extends SuperAdapter<MockModel> {
 }
 ```  
 
-Then:  
+然后调用（注意构造方法的参数与单布局的区别）:  
 
 ```
 mMultiAdapter = new RecyclerMultiAdapter(getContext(), models, new IMultiItemViewType<MockModel>() {
@@ -81,12 +84,10 @@ mMultiAdapter = new RecyclerMultiAdapter(getContext(), models, new IMultiItemVie
 });
 recyclerView.setAdapter(mMultiAdapter);
 ```  
-The usages between AdapterView(ListView, GridView) and RecyclerView are almost the same.
+AdapterView(ListView, GridView)和RecyclerView的用法几乎完全一样。
+  
 
-
-Inspired by Ray Zhang.  
-
-**Welcome to submit pull requests and open iusses!  : )**
+**欢迎提交代码、bug以及讨论  : )**
 
 ## License
 
