@@ -1,5 +1,5 @@
 ![Download](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg)
-## [Chinese Version 中文版](SuperAdapter/README-zh-rCN.md)
+## [Chinese Version 中文版](README-zh-rCN.md)
 # SuperAdapter
 *Adapter(ListAdapter, RecyclerView.Adapter) wrapperr for android.*
 
@@ -84,7 +84,7 @@ recyclerView.setAdapter(mMultiAdapter);
 The usages between AdapterView(ListView, GridView) and RecyclerView are almost the same.
 
 
-Inspired by Ray Zhang.  
+Inspired by Ray.  
 
 **Welcome to submit pull requests and open iusses!  : )**
 
