@@ -15,20 +15,20 @@ import java.util.List;
 public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends RecyclerView.Adapter<VH> {
     protected Context mContext;
     protected int mLayoutResId;
-    protected List<T> mList;
+    protected List<T> mItems;
     protected IMultiItemViewType<T> mMultiItemViewType;
     protected LayoutInflater mLayoutInflater;
 
-    public BaseSuperAdapter(Context context, List<T> list, int layoutResId) {
+    public BaseSuperAdapter(Context context, List<T> items, int layoutResId) {
         this.mContext = context;
-        this.mList = list == null ? new ArrayList<T>() : new ArrayList<>(list);
+        this.mItems = items == null ? new ArrayList<T>() : new ArrayList<>(items);
         this.mLayoutResId = layoutResId;
         this.mLayoutInflater = LayoutInflater.from(context);
     }
 
-    public BaseSuperAdapter(Context context, List<T> data, IMultiItemViewType<T> multiItemViewType) {
+    public BaseSuperAdapter(Context context, List<T> items, IMultiItemViewType<T> multiItemViewType) {
         this.mContext = context;
-        this.mList = data == null ? new ArrayList<T>() : new ArrayList<>(data);
+        this.mItems = items == null ? new ArrayList<T>() : new ArrayList<>(items);
         this.mMultiItemViewType = multiItemViewType;
         this.mLayoutInflater = LayoutInflater.from(context);
     }
@@ -40,14 +40,14 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
     @Override
     public int getItemViewType(int position) {
         if (mMultiItemViewType != null) {
-            return mMultiItemViewType.getItemViewType(position, mList.get(position));
+            return mMultiItemViewType.getItemViewType(position, mItems.get(position));
         }
         return 0;
     }
 
     @Override
     public int getItemCount() {
-        return mList == null ? 0 : mList.size();
+        return mItems == null ? 0 : mItems.size();
     }
 
     @Override
@@ -57,7 +57,7 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
-        onBind(getItemViewType(position), holder, position, mList.get(position));
+        onBind(getItemViewType(position), holder, position, mItems.get(position));
     }
 
     public abstract VH onCreate(ViewGroup parent, int viewType);
@@ -73,15 +73,15 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
     public abstract void onBind(int viewType, VH holder, int position, T item);
 
     public void add(T item) {
-        if (mList == null) {
-            mList = new ArrayList<>();
+        if (mItems == null) {
+            mItems = new ArrayList<>();
         }
-        mList.add(item);
-        notifyItemInserted(mList.size() - 1);
+        mItems.add(item);
+        notifyItemInserted(mItems.size() - 1);
     }
 
     public void add(int index, T item) {
-        mList.add(index, item);
+        mItems.add(index, item);
         notifyItemInserted(index);
     }
 
@@ -89,52 +89,52 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
         if (items == null || items.size() == 0) {
             return;
         }
-        if (mList == null) {
-            mList = new ArrayList<>();
+        if (mItems == null) {
+            mItems = new ArrayList<>();
         }
-        int position = mList.size();
-        mList.addAll(items);
+        int position = mItems.size();
+        mItems.addAll(items);
         notifyItemRangeInserted(position, items.size());
     }
 
     public void remove(T item) {
-        if (mList.contains(item)) {
-            int index = mList.indexOf(item);
+        if (mItems.contains(item)) {
+            int index = mItems.indexOf(item);
             remove(index);
         }
     }
 
     public void remove(int index) {
-        mList.remove(index);
+        mItems.remove(index);
         notifyItemRemoved(index);
     }
 
     public void set(T oldItem, T newItem) {
-        set(mList.indexOf(oldItem), newItem);
+        set(mItems.indexOf(oldItem), newItem);
     }
 
     public void set(int index, T item) {
-        mList.set(index, item);
+        mItems.set(index, item);
         notifyItemChanged(index);
     }
 
     public void replaceAll(List<T> items) {
-        mList.clear();
-        mList.addAll(items);
+        mItems.clear();
+        mItems.addAll(items);
         notifyItemRangeInserted(0, items.size());
     }
 
     public boolean contains(T item) {
-        return mList.contains(item);
+        return mItems.contains(item);
     }
 
     public void clear() {
-        mList.clear();
+        mItems.clear();
         notifyDataSetChanged();
     }
 
     public List<T> getAllData() {
-        return mList;
+        return mItems;
     }
 
 }

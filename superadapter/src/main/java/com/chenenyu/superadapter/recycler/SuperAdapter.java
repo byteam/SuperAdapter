@@ -25,15 +25,15 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T, BaseViewHolder
     /**
      * Constructor for single itemView type.
      */
-    public SuperAdapter(Context context, List<T> list, int layoutResId) {
-        super(context, list, layoutResId);
+    public SuperAdapter(Context context, List<T> items, int layoutResId) {
+        super(context, items, layoutResId);
     }
 
     /**
      * Constructor for multiple itemView types.
      */
-    public SuperAdapter(Context context, List<T> list, IMultiItemViewType<T> multiItemViewType) {
-        super(context, list, multiItemViewType);
+    public SuperAdapter(Context context, List<T> items, IMultiItemViewType<T> multiItemViewType) {
+        super(context, items, multiItemViewType);
     }
 
     @Override
