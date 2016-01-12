@@ -1,19 +1,23 @@
 package com.chenenyu.superadapter.demo.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.chenenyu.superadapter.demo.R;
 import com.chenenyu.superadapter.demo.adapter.RecyclerMultiAdapter;
 import com.chenenyu.superadapter.demo.adapter.RecyclerSingleAdapter;
 import com.chenenyu.superadapter.demo.model.MockModel;
 import com.chenenyu.superadapter.recycler.IMultiItemViewType;
+import com.chenenyu.superadapter.recycler.SuperAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +65,20 @@ public class RecyclerAdapterFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             if (mType == 1) {
                 mSingleAdapter = new RecyclerSingleAdapter(getContext(), names, R.layout.item_type1);
+                TextView header = new TextView(getContext());
+                header.setBackgroundColor(Color.YELLOW);
+                header.setText("header");
+                mSingleAdapter.addHeaderView(header);
+                TextView footer = new TextView(getContext());
+                footer.setBackgroundColor(Color.BLUE);
+                footer.setText("footer");
+                mSingleAdapter.addFooterView(footer);
+                mSingleAdapter.setOnItemClickListener(new SuperAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View itemView, int viewType, int position) {
+                        Log.d("onItemClick", "" + position);
+                    }
+                });
                 recyclerView.setAdapter(mSingleAdapter);
             } else if (mType == 2) {
                 mMultiAdapter = new RecyclerMultiAdapter(getContext(), models, new IMultiItemViewType<MockModel>() {
