@@ -14,6 +14,7 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T, BaseViewHolder
 
     protected OnItemClickListener mOnItemClickListener;
 
+    // TODO: 16/1/12 重载方法，支持根据viewType设置listener
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.mOnItemClickListener = onItemClickListener;
     }
@@ -39,6 +40,11 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T, BaseViewHolder
     @Override
     public BaseViewHolder onCreate(ViewGroup parent, final int viewType) {
         final BaseViewHolder holder;
+        if (viewType == TYPE_HEADER && hasHeaderView()) {
+            return new BaseViewHolder(getHeaderView());
+        } else if (viewType == TYPE_FOOTER && hasFooterView()) {
+            return new BaseViewHolder(getFooterView());
+        }
         if (mMultiItemViewType != null) {
             holder = new BaseViewHolder(mLayoutInflater.inflate(mMultiItemViewType.getLayoutId(viewType),
                     parent, false));

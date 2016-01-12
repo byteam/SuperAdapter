@@ -6,7 +6,7 @@ package com.chenenyu.superadapter.recycler;
  */
 public interface IMultiItemViewType<T> {
     /**
-     * ItemView type
+     * ItemView type, a non-negative integer is better.
      *
      * @param position current position of ViewHolder
      * @param t        model item
