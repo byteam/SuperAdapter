@@ -7,7 +7,7 @@
 
 ## Android Studio
 
-In build.gradle中:
+In build.gradle:
 
 `compile 'com.chenenyu.superadapter:superadapter:2.0.0'`
 ## Eclipse:
