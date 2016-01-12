@@ -20,17 +20,15 @@ import android.widget.TextView;
  * Created by Cheney on 15/11/27.
  */
 public class BaseViewHolder extends RecyclerView.ViewHolder {
-    private View itemView;
     private SparseArray<View> childViews;
 
     public BaseViewHolder(View itemView) {
         super(itemView);
-        this.itemView = itemView;
         this.childViews = new SparseArray<>();
     }
 
     public View getItemView() {
-        return this.itemView;
+        return itemView;
     }
 
     public <T extends View> T getView(int id) {

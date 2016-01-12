@@ -51,8 +51,7 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T, BaseViewHolder
         } else {
             holder = new BaseViewHolder(mLayoutInflater.inflate(mLayoutResId, parent, false));
         }
-
-        holder.getItemView().setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mOnItemClickListener != null) {

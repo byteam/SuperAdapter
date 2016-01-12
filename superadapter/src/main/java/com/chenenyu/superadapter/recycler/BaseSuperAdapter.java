@@ -13,10 +13,11 @@ import java.util.List;
  * Base of QuickAdapter.
  * Created by Cheney on 15/11/28.
  */
-public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends RecyclerView.Adapter<VH> implements IHeaderFooter {
-    protected Context mContext;
+public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends RecyclerView.Adapter<VH>
+        implements IHeaderFooter {
+    private Context mContext;
+    private List<T> mItems;
     protected int mLayoutResId;
-    protected List<T> mItems;
     protected IMultiItemViewType<T> mMultiItemViewType;
     protected LayoutInflater mLayoutInflater;
 
@@ -41,6 +42,10 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
 
     public Context getContext() {
         return mContext;
+    }
+
+    public List<T> getList() {
+        return mItems;
     }
 
     @Override
@@ -69,10 +74,9 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
         return size;
     }
 
-    public T getItem(int position) {
-        if (hasHeaderView())
-            position--;
-        return mItems.get(position);
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
@@ -88,7 +92,7 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
         if (viewType != TYPE_HEADER && viewType != TYPE_FOOTER) {
             onBind(viewType, holder, position, mItems.get(position));
         }
-        // TODO: 16/1/12 是否需要考虑header和footer的情况 
+        // TODO: 16/1/12 是否需要考虑header和footer的情况
     }
 
     public abstract VH onCreate(ViewGroup parent, int viewType);
@@ -146,7 +150,7 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
         if (hasFooterView())
             throw new IllegalStateException("You have already added a footer view.");
         mFooter = footer;
-        notifyItemInserted(getItemCount());
+        notifyItemInserted(getItemCount() - 1);
     }
 
     @Override
@@ -162,7 +166,7 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
     @Override
     public boolean removeFooterView() {
         if (hasFooterView()) {
-            notifyItemRemoved(getItemCount());
+            notifyItemRemoved(getItemCount() - 1);
             mFooter = null;
             return true;
         }
@@ -236,10 +240,6 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
     public void clear() {
         mItems.clear();
         notifyDataSetChanged();
-    }
-
-    public List<T> getAllData() {
-        return mItems;
     }
 
 }
