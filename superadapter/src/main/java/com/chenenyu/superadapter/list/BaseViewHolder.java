@@ -29,7 +29,6 @@ import android.widget.TextView;
  * Contains convenient method for getter, setter and listener.
  */
 public class BaseViewHolder {
-
     private final Context mContext;
     private final SparseArray<View> childViews;
 

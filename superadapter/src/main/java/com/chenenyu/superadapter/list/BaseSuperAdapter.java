@@ -11,8 +11,7 @@ import java.util.List;
 /**
  * Wrapper of BaseAdapter.
  */
-public abstract class BaseSuperAdapter<T, H extends BaseViewHolder> extends BaseAdapter {
-
+public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends BaseAdapter {
     protected Context mContext;
     protected int mLayoutResId;
     protected List<T> mList;
@@ -28,6 +27,10 @@ public abstract class BaseSuperAdapter<T, H extends BaseViewHolder> extends Base
         this.mContext = context;
         this.mList = data == null ? new ArrayList<T>() : new ArrayList<>(data);
         this.mMultiItemViewType = multiItemViewType;
+    }
+
+    public Context getContext() {
+        return mContext;
     }
 
     @Override
@@ -64,13 +67,13 @@ public abstract class BaseSuperAdapter<T, H extends BaseViewHolder> extends Base
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final H viewHolder = onCreate(getItemViewType(position), convertView, parent);
+        final VH viewHolder = onCreate(getItemViewType(position), convertView, parent);
         T item = getItem(position);
         onBind(getItemViewType(position), viewHolder, position, item);
         return viewHolder.getItemView();
     }
 
-    protected abstract H onCreate(int viewType, View convertView, ViewGroup parent);
+    protected abstract VH onCreate(int viewType, View convertView, ViewGroup parent);
 
     /**
      * Abstract method for binding view and data.
@@ -80,7 +83,7 @@ public abstract class BaseSuperAdapter<T, H extends BaseViewHolder> extends Base
      * @param position position
      * @param item     data
      */
-    protected abstract void onBind(int viewType, H holder, int position, T item);
+    protected abstract void onBind(int viewType, VH holder, int position, T item);
 
     public void add(T item) {
         mList.add(item);

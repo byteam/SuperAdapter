@@ -12,7 +12,7 @@ import java.util.List;
  * Base of QuickAdapter.
  * Created by Cheney on 15/11/28.
  */
-public abstract class BaseSuperAdapter<T, H extends BaseViewHolder> extends RecyclerView.Adapter<H> {
+public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends RecyclerView.Adapter<VH> {
     protected Context mContext;
     protected int mLayoutResId;
     protected List<T> mList;
@@ -33,6 +33,10 @@ public abstract class BaseSuperAdapter<T, H extends BaseViewHolder> extends Recy
         this.mLayoutInflater = LayoutInflater.from(context);
     }
 
+    public Context getContext() {
+        return mContext;
+    }
+
     @Override
     public int getItemViewType(int position) {
         if (mMultiItemViewType != null) {
@@ -47,16 +51,16 @@ public abstract class BaseSuperAdapter<T, H extends BaseViewHolder> extends Recy
     }
 
     @Override
-    public H onCreateViewHolder(ViewGroup parent, int viewType) {
+    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
         return onCreate(parent, viewType);
     }
 
     @Override
-    public void onBindViewHolder(H holder, int position) {
+    public void onBindViewHolder(VH holder, int position) {
         onBind(getItemViewType(position), holder, position, mList.get(position));
     }
 
-    public abstract H onCreate(ViewGroup parent, int viewType);
+    public abstract VH onCreate(ViewGroup parent, int viewType);
 
     /**
      * Abstract method for binding view and data.
@@ -66,7 +70,7 @@ public abstract class BaseSuperAdapter<T, H extends BaseViewHolder> extends Recy
      * @param position position
      * @param item     data
      */
-    public abstract void onBind(int viewType, H holder, int position, T item);
+    public abstract void onBind(int viewType, VH holder, int position, T item);
 
     public void add(T item) {
         if (mList == null) {
