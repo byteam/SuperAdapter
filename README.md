@@ -9,9 +9,14 @@
 
 In build.gradle:
 
-`compile 'com.chenenyu.superadapter:superadapter:2.0.0'`
+`compile 'com.chenenyu.superadapter:superadapter:2.1.0'`
 ## Eclipse:
 Add [latest Jar](https://github.com/chenenyu/SuperAdapter/releases) to libs dir manually.
+
+## CHANGELOG
+* 2016/1/13 v2.1.0 
+* addHeaderView()/addFooterView() for RecyclerView.Adapter
+
 ## How to use
 
 If a simple adapter, it can be simplified like this:  

@@ -12,15 +12,10 @@ import java.util.List;
  */
 public abstract class SuperAdapter<T> extends BaseSuperAdapter<T, BaseViewHolder> {
 
-    protected OnItemClickListener mOnItemClickListener;
+    private OnItemClickListener mOnItemClickListener;
 
-    // TODO: 16/1/12 重载方法，支持根据viewType设置listener
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.mOnItemClickListener = onItemClickListener;
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(View itemView, int viewType, int position);
     }
 
     /**
@@ -45,12 +40,14 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T, BaseViewHolder
         } else if (viewType == TYPE_FOOTER && hasFooterView()) {
             return new BaseViewHolder(getFooterView());
         }
+
         if (mMultiItemViewType != null) {
             holder = new BaseViewHolder(mLayoutInflater.inflate(mMultiItemViewType.getLayoutId(viewType),
                     parent, false));
         } else {
             holder = new BaseViewHolder(mLayoutInflater.inflate(mLayoutResId, parent, false));
         }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

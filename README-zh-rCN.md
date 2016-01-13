@@ -11,6 +11,10 @@
 `compile 'com.chenenyu.superadapter:superadapter:2.0.0'`
 ## Eclipse:
 可以手动添加最新的[jar包](https://github.com/chenenyu/SuperAdapter/releases)到libs文件夹下，建议尽早迁移到Android Studio开发。
+## 更新日志
+* 2016/1/13 v2.1.0 
+* RecyclerView.Adapter添加addHeaderView()/addFooterView()等相关方法。
+
 ## 如何使用
 
 如果是个单布局的Adapter，可以简写为如下示例代码:  
