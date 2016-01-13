@@ -4,7 +4,7 @@
 
 **旨在减少Adapter冗余的代码。** 你不必再写ViewHolder以及其他必须覆写的方法，也不必再惆怅怎样方便的为RecyclerView的item设置点击事件，SuperAdapter为你做好了一切！你只需要实现`onBind()`方法就够了。  
 
-## Android Studio
+## Android Studio:
 
 在module的build.gradle中:
 

@@ -5,7 +5,7 @@
 
 **Less code for redundant adapter.** You won't need to write ViewHolder, createView, setTag, getTag, and confuse how to setOnItemClickListener to RecyclerView, etc. SuperAdapter does everything for you! The only thing you really need to do is that implement a method `onBind()`.  
 
-## Android Studio
+## Android Studio:
 
 In build.gradle:
 
