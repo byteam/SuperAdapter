@@ -8,7 +8,7 @@
 
 在module的build.gradle中:
 
-`compile 'com.chenenyu.superadapter:superadapter:2.0.0'`
+`compile 'com.chenenyu.superadapter:superadapter:2.1.0'`
 ## Eclipse:
 可以手动添加最新的[jar包](https://github.com/chenenyu/SuperAdapter/releases)到libs文件夹下，建议尽早迁移到Android Studio开发。
 ## 更新日志
