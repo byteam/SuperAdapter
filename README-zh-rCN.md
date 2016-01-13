@@ -17,8 +17,8 @@
 
 ```
 public class RecyclerSingleAdapter extends SuperAdapter<String> {
-    public RecyclerSingleAdapter(Context context, List<String> list, int layoutResId) {
-        super(context, list, layoutResId);
+    public RecyclerSingleAdapter(Context context, List<String> items, int layoutResId) {
+        super(context, items, layoutResId);
     }
 
     @Override
@@ -42,8 +42,8 @@ recyclerView.setAdapter(mSingleAdapter);
 
 ```
 public class RecyclerMultiAdapter extends SuperAdapter<MockModel> {
-    public RecyclerMultiAdapter(Context context, List<MockModel> list, IMultiItemViewType<MockModel> multiItemViewType) {
-        super(context, list, multiItemViewType);
+    public RecyclerMultiAdapter(Context context, List<MockModel> items, IMultiItemViewType<MockModel> multiItemViewType) {
+        super(context, items, multiItemViewType);
     }
 
     @Override

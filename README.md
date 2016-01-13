@@ -1,7 +1,7 @@
 ![Download](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg)
 ## [Chinese Version 中文版](README-zh-rCN.md)
 # SuperAdapter
-*Adapter(ListAdapter, RecyclerView.Adapter) wrapperr for android.*
+*Adapter(ListAdapter, RecyclerView.Adapter) wrapper for android.*
 
 **Less code for redundant adapter.** You won't need to write ViewHolder, createView, setTag, getTag, and confuse how to setOnItemClickListener to RecyclerView, etc. SuperAdapter does everything for you! The only thing you really need to do is that implement a method `onBind()`.  
 
@@ -18,8 +18,8 @@ If a simple adapter, it can be simplified like this:
 
 ```
 public class RecyclerSingleAdapter extends SuperAdapter<String> {
-    public RecyclerSingleAdapter(Context context, List<String> list, int layoutResId) {
-        super(context, list, layoutResId);
+    public RecyclerSingleAdapter(Context context, List<String> items, int layoutResId) {
+        super(context, items, layoutResId);
     }
 
     @Override
@@ -39,8 +39,8 @@ If a complex adapter, it can be simplified like this:
 
 ```
 public class RecyclerMultiAdapter extends SuperAdapter<MockModel> {
-    public RecyclerMultiAdapter(Context context, List<MockModel> list, IMultiItemViewType<MockModel> multiItemViewType) {
-        super(context, list, multiItemViewType);
+    public RecyclerMultiAdapter(Context context, List<MockModel> items, IMultiItemViewType<MockModel> multiItemViewType) {
+        super(context, items, multiItemViewType);
     }
 
     @Override
