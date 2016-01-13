@@ -8,6 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -36,6 +39,8 @@ public class RecyclerAdapterFragment extends Fragment {
     private List<MockModel> models = new ArrayList<>();
     private RecyclerMultiAdapter mMultiAdapter;
 
+    private TextView header, footer;
+
     public static RecyclerAdapterFragment newInstance(int type) {
         RecyclerAdapterFragment fragment = new RecyclerAdapterFragment();
         Bundle args = new Bundle();
@@ -47,10 +52,35 @@ public class RecyclerAdapterFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
             mType = getArguments().getInt("type", 1);
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_add_header:
+                mSingleAdapter.addHeaderView(header);
+                return true;
+            case R.id.action_remove_header:
+                mSingleAdapter.removeHeaderView();
+                return true;
+            case R.id.action_add_footer:
+                mSingleAdapter.addFooterView(footer);
+                return true;
+            case R.id.action_remove_footer:
+                mSingleAdapter.removeFooterView();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -58,6 +88,12 @@ public class RecyclerAdapterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
         initData();
+        header = new TextView(getContext());
+        header.setBackgroundColor(Color.YELLOW);
+        header.setText("header");
+        footer = new TextView(getContext());
+        footer.setBackgroundColor(Color.BLUE);
+        footer.setText("footer");
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -65,14 +101,6 @@ public class RecyclerAdapterFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             if (mType == 1) {
                 mSingleAdapter = new RecyclerSingleAdapter(getContext(), names, R.layout.item_type1);
-                TextView header = new TextView(getContext());
-                header.setBackgroundColor(Color.YELLOW);
-                header.setText("header");
-                mSingleAdapter.addHeaderView(header);
-                TextView footer = new TextView(getContext());
-                footer.setBackgroundColor(Color.BLUE);
-                footer.setText("footer");
-                mSingleAdapter.addFooterView(footer);
                 mSingleAdapter.setOnItemClickListener(new SuperAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(View itemView, int viewType, int position) {
