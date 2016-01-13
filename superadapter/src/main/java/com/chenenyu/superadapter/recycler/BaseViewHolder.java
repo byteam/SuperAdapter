@@ -75,6 +75,12 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
+    public BaseViewHolder setScaleType(int viewId, ImageView.ScaleType type) {
+        ImageView view = getView(viewId);
+        view.setScaleType(type);
+        return this;
+    }
+
     /**
      * Set adapter for AbsListView.
      *

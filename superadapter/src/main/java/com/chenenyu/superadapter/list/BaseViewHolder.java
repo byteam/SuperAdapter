@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 /**
  * ViewHolder
- * <p/>
+ * <p>
  * Contains convenient method for getter, setter and listener.
  */
 public class BaseViewHolder {
@@ -112,6 +112,14 @@ public class BaseViewHolder {
         return this;
     }
 
+    public BaseViewHolder setScaleType(int viewId, ImageView.ScaleType type) {
+        ImageView view = getView(viewId);
+        if (view != null) {
+            view.setScaleType(type);
+        }
+        return this;
+    }
+
     public BaseViewHolder setBackgroundColor(int viewId, int bgColor) {
         View view = getView(viewId);
         if (view != null) {
@@ -155,11 +163,7 @@ public class BaseViewHolder {
     public BaseViewHolder setAlpha(int viewId, @FloatRange(from = 0.0, to = 1.0) float value) {
         View view = getView(viewId);
         if (view != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                view.setAlpha(value);
-            } else {
-                ViewCompat.setAlpha(view, value);
-            }
+            ViewCompat.setAlpha(view, value);
         }
         return this;
     }
