@@ -62,7 +62,7 @@ public class BaseViewHolder {
         mItemView.setTag(this);
     }
 
-    private <T extends View> T getView(int viewId) {
+    public <T extends View> T getView(int viewId) {
         View view = childViews.get(viewId);
         if (view == null) {
             view = mItemView.findViewById(viewId);
