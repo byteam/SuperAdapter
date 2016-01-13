@@ -9,13 +9,16 @@
 
 In build.gradle:
 
-`compile 'com.chenenyu.superadapter:superadapter:2.1.0'`
+`compile 'com.chenenyu.superadapter:superadapter:latestVersion'`
 ## Eclipse:
 Add [latest Jar](https://github.com/chenenyu/SuperAdapter/releases) to libs dir manually.
 
 ## CHANGELOG
 * 2016/1/13 v2.1.0 
-* addHeaderView()/addFooterView() for RecyclerView.Adapter
+* addHeaderView()/addFooterView() for RecyclerView.Adapter.
+* 2016/1/13 v2.1.1
+* add convenient method: setScaleType().
+* bug fixed：Support public method getView() for ViewHolder in BaseAdapter.
 
 ## How to use
 

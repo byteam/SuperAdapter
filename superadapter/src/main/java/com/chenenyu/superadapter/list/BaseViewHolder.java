@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.ColorFilter;
 import android.net.Uri;
-import android.os.Build;
 import android.support.annotation.FloatRange;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
