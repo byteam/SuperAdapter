@@ -14,11 +14,13 @@ In build.gradle:
 Add [latest Jar](https://github.com/chenenyu/SuperAdapter/releases) to libs dir manually.
 
 ## CHANGELOG
+* 2016/1/15 v2.1.2
+* Bug fixed: set OnItemClickListener to nested adapter caused crash in RecyclerView.
+* 2016/1/14 v2.1.1
+* Add convenient method: setScaleType().
+* bug fixed：Support public method getView() for ViewHolder in BaseAdapter.
 * 2016/1/13 v2.1.0 
 * addHeaderView()/addFooterView() for RecyclerView.Adapter.
-* 2016/1/13 v2.1.1
-* add convenient method: setScaleType().
-* bug fixed：Support public method getView() for ViewHolder in BaseAdapter.
 
 ## How to use
 

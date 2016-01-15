@@ -12,11 +12,13 @@
 ## Eclipse:
 可以手动添加最新的[jar包](https://github.com/chenenyu/SuperAdapter/releases)到libs文件夹下，建议尽早迁移到Android Studio开发。
 ## 更新日志
-* 2016/1/13 v2.1.0 
-* RecyclerView.Adapter添加addHeaderView()/addFooterView()等相关方法。
+* 2016/1/15 v2.1.2
+* bug修复:当RecyclerView里面嵌套有adapter时,设置点击事件崩溃.
 * 2016/1/14 v2.1.1
 * 添加便捷方法setScaleType()
-* bug修复：为BaseAdapter的ViewHolder提供公开的getView()方法
+* bug修复:为BaseAdapter的ViewHolder提供公开的getView()方法.
+* 2016/1/13 v2.1.0
+* RecyclerView.Adapter添加addHeaderView()/addFooterView()等相关方法。
 
 ## 如何使用
 
