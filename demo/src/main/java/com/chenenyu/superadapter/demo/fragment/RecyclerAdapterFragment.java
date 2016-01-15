@@ -20,7 +20,7 @@ import com.chenenyu.superadapter.demo.adapter.RecyclerMultiAdapter;
 import com.chenenyu.superadapter.demo.adapter.RecyclerSingleAdapter;
 import com.chenenyu.superadapter.demo.model.MockModel;
 import com.chenenyu.superadapter.recycler.IMultiItemViewType;
-import com.chenenyu.superadapter.recycler.SuperAdapter;
+import com.chenenyu.superadapter.recycler.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +101,7 @@ public class RecyclerAdapterFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             if (mType == 1) {
                 mSingleAdapter = new RecyclerSingleAdapter(getContext(), names, R.layout.item_type1);
-                mSingleAdapter.setOnItemClickListener(new SuperAdapter.OnItemClickListener() {
+                mSingleAdapter.setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(View itemView, int viewType, int position) {
                         Log.d("onItemClick", "" + position);
