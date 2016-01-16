@@ -1,4 +1,4 @@
-package com.chenenyu.superadapter.recycler;
+package org.byteam.superadapter.recycler;
 
 import android.graphics.Bitmap;
 import android.net.Uri;

@@ -1,4 +1,4 @@
-package com.chenenyu.superadapter.list;
+package org.byteam.superadapter.list;
 
 import android.content.Context;
 import android.graphics.Bitmap;

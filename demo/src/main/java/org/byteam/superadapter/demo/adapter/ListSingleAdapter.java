@@ -1,10 +1,9 @@
-package com.chenenyu.superadapter.demo.adapter;
+package org.byteam.superadapter.demo.adapter;
 
 import android.content.Context;
 
-import com.chenenyu.superadapter.demo.R;
-import com.chenenyu.superadapter.list.BaseViewHolder;
-import com.chenenyu.superadapter.list.SuperAdapter;
+import org.byteam.superadapter.list.BaseViewHolder;
+import org.byteam.superadapter.list.SuperAdapter;
 
 import java.util.List;
 
@@ -16,6 +15,6 @@ public class ListSingleAdapter extends SuperAdapter<String> {
 
     @Override
     protected void onBind(int viewType, BaseViewHolder holder, int position, String item) {
-        holder.setText(R.id.tv_name, item);
+        holder.setText(org.byteam.superadapter.demo.R.id.tv_name, item);
     }
 }

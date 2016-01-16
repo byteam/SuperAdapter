@@ -1,4 +1,4 @@
-package com.chenenyu.superadapter.recycler;
+package org.byteam.superadapter.recycler;
 
 /**
  * Interface for multiple types.

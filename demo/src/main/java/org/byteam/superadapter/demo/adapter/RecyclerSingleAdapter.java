@@ -1,10 +1,9 @@
-package com.chenenyu.superadapter.demo.adapter;
+package org.byteam.superadapter.demo.adapter;
 
 import android.content.Context;
 
-import com.chenenyu.superadapter.demo.R;
-import com.chenenyu.superadapter.recycler.BaseViewHolder;
-import com.chenenyu.superadapter.recycler.SuperAdapter;
+import org.byteam.superadapter.recycler.BaseViewHolder;
+import org.byteam.superadapter.recycler.SuperAdapter;
 
 import java.util.List;
 
@@ -15,6 +14,6 @@ public class RecyclerSingleAdapter extends SuperAdapter<String> {
 
     @Override
     public void onBind(int viewType, BaseViewHolder holder, int position, String item) {
-        holder.setText(R.id.tv_name, item);
+        holder.setText(org.byteam.superadapter.demo.R.id.tv_name, item);
     }
 }

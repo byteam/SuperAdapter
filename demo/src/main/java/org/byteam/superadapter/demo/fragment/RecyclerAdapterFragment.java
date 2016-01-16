@@ -1,4 +1,4 @@
-package com.chenenyu.superadapter.demo.fragment;
+package org.byteam.superadapter.demo.fragment;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -15,12 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.chenenyu.superadapter.demo.R;
-import com.chenenyu.superadapter.demo.adapter.RecyclerMultiAdapter;
-import com.chenenyu.superadapter.demo.adapter.RecyclerSingleAdapter;
-import com.chenenyu.superadapter.demo.model.MockModel;
-import com.chenenyu.superadapter.recycler.IMultiItemViewType;
-import com.chenenyu.superadapter.recycler.OnItemClickListener;
+import org.byteam.superadapter.demo.adapter.RecyclerMultiAdapter;
+import org.byteam.superadapter.demo.adapter.RecyclerSingleAdapter;
+import org.byteam.superadapter.demo.model.MockModel;
+import org.byteam.superadapter.recycler.IMultiItemViewType;
+import org.byteam.superadapter.recycler.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,23 +59,23 @@ public class RecyclerAdapterFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(org.byteam.superadapter.demo.R.menu.menu_main, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.action_add_header:
+            case org.byteam.superadapter.demo.R.id.action_add_header:
                 mSingleAdapter.addHeaderView(header);
                 return true;
-            case R.id.action_remove_header:
+            case org.byteam.superadapter.demo.R.id.action_remove_header:
                 mSingleAdapter.removeHeaderView();
                 return true;
-            case R.id.action_add_footer:
+            case org.byteam.superadapter.demo.R.id.action_add_footer:
                 mSingleAdapter.addFooterView(footer);
                 return true;
-            case R.id.action_remove_footer:
+            case org.byteam.superadapter.demo.R.id.action_remove_footer:
                 mSingleAdapter.removeFooterView();
                 return true;
         }
@@ -86,7 +85,7 @@ public class RecyclerAdapterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        View view = inflater.inflate(org.byteam.superadapter.demo.R.layout.fragment_recyclerview, container, false);
         initData();
         header = new TextView(getContext());
         header.setBackgroundColor(Color.YELLOW);
@@ -100,7 +99,7 @@ public class RecyclerAdapterFragment extends Fragment {
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             if (mType == 1) {
-                mSingleAdapter = new RecyclerSingleAdapter(getContext(), names, R.layout.item_type1);
+                mSingleAdapter = new RecyclerSingleAdapter(getContext(), names, org.byteam.superadapter.demo.R.layout.item_type1);
                 mSingleAdapter.setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(View itemView, int viewType, int position) {
@@ -121,9 +120,9 @@ public class RecyclerAdapterFragment extends Fragment {
                     @Override
                     public int getLayoutId(int viewType) {
                         if (viewType == 0) {
-                            return R.layout.item_type1;
+                            return org.byteam.superadapter.demo.R.layout.item_type1;
                         }
-                        return R.layout.item_type2;
+                        return org.byteam.superadapter.demo.R.layout.item_type2;
                     }
                 });
                 recyclerView.setAdapter(mMultiAdapter);

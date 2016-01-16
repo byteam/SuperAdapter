@@ -1,4 +1,4 @@
-package com.chenenyu.superadapter.demo.fragment;
+package org.byteam.superadapter.demo.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,11 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.chenenyu.superadapter.demo.R;
-import com.chenenyu.superadapter.demo.adapter.ListMultiAdapter;
-import com.chenenyu.superadapter.demo.adapter.ListSingleAdapter;
-import com.chenenyu.superadapter.demo.model.MockModel;
-import com.chenenyu.superadapter.list.IMultiItemViewType;
+import org.byteam.superadapter.demo.R;
+import org.byteam.superadapter.demo.adapter.ListMultiAdapter;
+import org.byteam.superadapter.demo.adapter.ListSingleAdapter;
+import org.byteam.superadapter.demo.model.MockModel;
+import org.byteam.superadapter.list.IMultiItemViewType;
 
 import java.util.ArrayList;
 import java.util.List;

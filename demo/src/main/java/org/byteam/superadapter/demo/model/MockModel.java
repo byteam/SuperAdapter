@@ -1,4 +1,4 @@
-package com.chenenyu.superadapter.demo.model;
+package org.byteam.superadapter.demo.model;
 
 public class MockModel {
     private String name;

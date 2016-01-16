@@ -1,4 +1,4 @@
-package com.chenenyu.superadapter.list;
+package org.byteam.superadapter.list;
 
 /**
  * Interface for multiple types.

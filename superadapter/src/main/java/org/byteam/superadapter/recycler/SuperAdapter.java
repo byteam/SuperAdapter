@@ -1,4 +1,4 @@
-package com.chenenyu.superadapter.recycler;
+package org.byteam.superadapter.recycler;
 
 import android.content.Context;
 import android.view.View;
