@@ -1,4 +1,4 @@
-![Download](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg)
+![Download](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SuperAdapter-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/3027)
 # SuperAdapter
 *一个封装了BaseAdapter和RecyclerView.Adapter的简洁的Adapter。*
 
@@ -8,10 +8,12 @@
 
 在module的build.gradle中:
 
-`compile 'com.chenenyu.superadapter:superadapter:最新版本号'`
+`compile 'org.byteam.superadapter:superadapter:最新版本号'`
 ## Eclipse:
 可以手动添加最新的[jar包](https://github.com/chenenyu/SuperAdapter/releases)到libs文件夹下，建议尽早迁移到Android Studio开发。
 ## 更新日志
+* 2016/1/16 v2.2.0
+* 迁移到组织协作开发,抱歉为大家带来了困扰.
 * 2016/1/15 v2.1.2
 * bug修复:当RecyclerView里面嵌套有adapter时,设置点击事件崩溃.
 * 2016/1/14 v2.1.1
@@ -101,7 +103,7 @@ AdapterView(ListView, GridView)和RecyclerView的用法几乎完全一样。
 ## License
 
 ```
-Copyright 2015-2016 chenenyu.
+Copyright 2015-2016 byteam.org.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

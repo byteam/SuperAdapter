@@ -1,4 +1,4 @@
-![Download](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg)
+![Download](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SuperAdapter-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/3027)
 ## [Chinese Version 中文版](README-zh-rCN.md)
 # SuperAdapter
 *Adapter(ListAdapter, RecyclerView.Adapter) wrapper for android.*
@@ -9,16 +9,18 @@
 
 In build.gradle:
 
-`compile 'com.chenenyu.superadapter:superadapter:latestVersion'`
+`compile 'org.byteam.superadapter:superadapter:latestVersion'`
 ## Eclipse:
-Add [latest Jar](https://github.com/chenenyu/SuperAdapter/releases) to libs dir manually.
+Add [latest Jar](https://github.com/byteam/SuperAdapter/releases) to libs dir manually.
 
 ## CHANGELOG
+* 2016/1/16 v2.2.0
+* Transfer to organization for a teamwork.
 * 2016/1/15 v2.1.2
 * Bug fixed: set OnItemClickListener to nested adapter caused crash in RecyclerView.
 * 2016/1/14 v2.1.1
 * Add convenient method: setScaleType().
-* bug fixed：Support public method getView() for ViewHolder in BaseAdapter.
+* Bug fixed：Support public method getView() for ViewHolder in BaseAdapter.
 * 2016/1/13 v2.1.0 
 * addHeaderView()/addFooterView() for RecyclerView.Adapter.
 
@@ -101,7 +103,7 @@ Inspired by Ray.
 ## License
 
 ```
-Copyright 2015-2016 chenenyu.
+Copyright 2015-2016 byteam.org.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
