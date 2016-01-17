@@ -20,8 +20,8 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
     protected int mLayoutResId;
     protected IMultiItemViewType<T> mMultiItemViewType;
     protected LayoutInflater mLayoutInflater;
-    private Context mContext;
-    private List<T> mItems;
+    protected Context mContext;
+    protected List<T> mItems;
     private View mHeader;
     private View mFooter;
 
