@@ -20,6 +20,7 @@ import org.byteam.superadapter.demo.adapter.RecyclerSingleAdapter;
 import org.byteam.superadapter.demo.model.MockModel;
 import org.byteam.superadapter.recycler.IMultiItemViewType;
 import org.byteam.superadapter.recycler.OnItemClickListener;
+import org.byteam.superadapter.recycler.SuperAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +34,9 @@ public class RecyclerAdapterFragment extends Fragment {
     private int mType;
 
     private List<String> names = new ArrayList<>();
-    private RecyclerSingleAdapter mSingleAdapter;
+    private SuperAdapter mAdapter;
 
     private List<MockModel> models = new ArrayList<>();
-    private RecyclerMultiAdapter mMultiAdapter;
 
     private TextView header, footer;
 
@@ -67,16 +67,20 @@ public class RecyclerAdapterFragment extends Fragment {
         int id = item.getItemId();
         switch (id) {
             case org.byteam.superadapter.demo.R.id.action_add_header:
-                mSingleAdapter.addHeaderView(header);
+                if (!mAdapter.hasHeaderView())
+                    mAdapter.addHeaderView(header);
                 return true;
             case org.byteam.superadapter.demo.R.id.action_remove_header:
-                mSingleAdapter.removeHeaderView();
+                if (mAdapter.hasHeaderView())
+                    mAdapter.removeHeaderView();
                 return true;
             case org.byteam.superadapter.demo.R.id.action_add_footer:
-                mSingleAdapter.addFooterView(footer);
+                if (!mAdapter.hasFooterView())
+                    mAdapter.addFooterView(footer);
                 return true;
             case org.byteam.superadapter.demo.R.id.action_remove_footer:
-                mSingleAdapter.removeFooterView();
+                if (mAdapter.hasFooterView())
+                    mAdapter.removeFooterView();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -99,16 +103,16 @@ public class RecyclerAdapterFragment extends Fragment {
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             if (mType == 1) {
-                mSingleAdapter = new RecyclerSingleAdapter(getContext(), names, org.byteam.superadapter.demo.R.layout.item_type1);
-                mSingleAdapter.setOnItemClickListener(new OnItemClickListener() {
+                mAdapter = new RecyclerSingleAdapter(getContext(), names, org.byteam.superadapter.demo.R.layout.item_type1);
+                mAdapter.setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(View itemView, int viewType, int position) {
                         Log.d("onItemClick", "" + position);
                     }
                 });
-                recyclerView.setAdapter(mSingleAdapter);
+                recyclerView.setAdapter(mAdapter);
             } else if (mType == 2) {
-                mMultiAdapter = new RecyclerMultiAdapter(getContext(), models, new IMultiItemViewType<MockModel>() {
+                mAdapter = new RecyclerMultiAdapter(getContext(), models, new IMultiItemViewType<MockModel>() {
                     @Override
                     public int getItemViewType(int position, MockModel mockModel) {
                         if (position % 2 == 0) {
@@ -125,7 +129,7 @@ public class RecyclerAdapterFragment extends Fragment {
                         return org.byteam.superadapter.demo.R.layout.item_type2;
                     }
                 });
-                recyclerView.setAdapter(mMultiAdapter);
+                recyclerView.setAdapter(mAdapter);
             }
         }
         return view;
