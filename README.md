@@ -14,6 +14,8 @@ In build.gradle:
 Add [latest Jar](https://github.com/byteam/SuperAdapter/releases) to libs dir manually.
 
 ## CHANGELOG
+* 2016/1/18 v2.2.1
+* Bug fixed: #1
 * 2016/1/16 v2.2.0
 * Transfer to organization for a teamwork.
 * 2016/1/15 v2.1.2
@@ -30,8 +32,8 @@ If a simple adapter, it can be simplified like this:
 
 ```
 public class RecyclerSingleAdapter extends SuperAdapter<String> {
-    public RecyclerSingleAdapter(Context context, List<String> items, int layoutResId) {
-        super(context, items, layoutResId);
+    public RecyclerSingleAdapter(Context context, List<String> list, int layoutResId) {
+        super(context, list, layoutResId);
     }
 
     @Override
@@ -51,8 +53,8 @@ If a complex adapter, it can be simplified like this:
 
 ```
 public class RecyclerMultiAdapter extends SuperAdapter<MockModel> {
-    public RecyclerMultiAdapter(Context context, List<MockModel> items, IMultiItemViewType<MockModel> multiItemViewType) {
-        super(context, items, multiItemViewType);
+    public RecyclerMultiAdapter(Context context, List<MockModel> list, IMultiItemViewType<MockModel> multiItemViewType) {
+        super(context, list, multiItemViewType);
     }
 
     @Override
@@ -98,7 +100,7 @@ The usages between AdapterView(ListView, GridView) and RecyclerView are almost t
 
 Inspired by Ray.  
 
-**Welcome to submit pull requests and open iusses!  : )**
+**Welcome to submit pull requests and open issues!  : )**
 
 ## License
 
