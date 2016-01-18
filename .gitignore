@@ -5,6 +5,5 @@ local.properties
 .idea
 build
 *.iml
-gradle
 bintray.gradle
 androidTest
