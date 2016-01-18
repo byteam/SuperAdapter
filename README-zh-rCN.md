@@ -12,6 +12,8 @@
 ## Eclipse:
 可以手动添加最新的[jar包](https://github.com/chenenyu/SuperAdapter/releases)到libs文件夹下，建议尽早迁移到Android Studio开发。
 ## 更新日志
+* 2016/1/18 v2.2.1
+* Bug fixed: #1
 * 2016/1/16 v2.2.0
 * 迁移到组织协作开发,抱歉为大家带来了困扰.
 * 2016/1/15 v2.1.2
@@ -28,8 +30,8 @@
 
 ```
 public class RecyclerSingleAdapter extends SuperAdapter<String> {
-    public RecyclerSingleAdapter(Context context, List<String> items, int layoutResId) {
-        super(context, items, layoutResId);
+    public RecyclerSingleAdapter(Context context, List<String> list, int layoutResId) {
+        super(context, list, layoutResId);
     }
 
     @Override
@@ -53,8 +55,8 @@ recyclerView.setAdapter(mSingleAdapter);
 
 ```
 public class RecyclerMultiAdapter extends SuperAdapter<MockModel> {
-    public RecyclerMultiAdapter(Context context, List<MockModel> items, IMultiItemViewType<MockModel> multiItemViewType) {
-        super(context, items, multiItemViewType);
+    public RecyclerMultiAdapter(Context context, List<MockModel> list, IMultiItemViewType<MockModel> multiItemViewType) {
+        super(context, list, multiItemViewType);
     }
 
     @Override

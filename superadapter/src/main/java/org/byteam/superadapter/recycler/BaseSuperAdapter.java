@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Base of QuickAdapter.
+ * Base of SuperAdapter.
  * Created by Cheney on 15/11/28.
  */
 public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends RecyclerView.Adapter<VH>
@@ -21,20 +21,20 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
     protected IMultiItemViewType<T> mMultiItemViewType;
     protected LayoutInflater mLayoutInflater;
     protected Context mContext;
-    protected List<T> mItems;
+    protected List<T> mList;
     private View mHeader;
     private View mFooter;
 
-    public BaseSuperAdapter(Context context, List<T> items, int layoutResId) {
+    public BaseSuperAdapter(Context context, List<T> list, int layoutResId) {
         this.mContext = context;
-        this.mItems = items == null ? new ArrayList<T>() : new ArrayList<>(items);
+        this.mList = list == null ? new ArrayList<T>() : new ArrayList<>(list);
         this.mLayoutResId = layoutResId;
         this.mLayoutInflater = LayoutInflater.from(context);
     }
 
-    public BaseSuperAdapter(Context context, List<T> items, IMultiItemViewType<T> multiItemViewType) {
+    public BaseSuperAdapter(Context context, List<T> list, IMultiItemViewType<T> multiItemViewType) {
         this.mContext = context;
-        this.mItems = items == null ? new ArrayList<T>() : new ArrayList<>(items);
+        this.mList = list == null ? new ArrayList<T>() : new ArrayList<>(list);
         this.mMultiItemViewType = multiItemViewType;
         this.mLayoutInflater = LayoutInflater.from(context);
     }
@@ -44,7 +44,7 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
     }
 
     public List<T> getList() {
-        return mItems;
+        return mList;
     }
 
     @Override
@@ -59,7 +59,7 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
                 if (hasHeaderView()) {
                     position--;
                 }
-                return mMultiItemViewType.getItemViewType(position, mItems.get(position));
+                return mMultiItemViewType.getItemViewType(position, mList.get(position));
             }
             return 0;
         }
@@ -68,7 +68,7 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
 
     @Override
     public int getItemCount() {
-        int size = mItems == null ? 0 : mItems.size();
+        int size = mList == null ? 0 : mList.size();
         if (hasHeaderView())
             size++;
         if (hasFooterView())
@@ -92,9 +92,8 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
         if (hasHeaderView())
             position--;
         if (viewType != TYPE_HEADER && viewType != TYPE_FOOTER) {
-            onBind(viewType, holder, position, mItems.get(position));
+            onBind(viewType, holder, position, mList.get(position));
         }
-        // TODO: 16/1/12 是否需要考虑header和footer的情况
     }
 
     public abstract VH onCreate(ViewGroup parent, int viewType);
@@ -176,15 +175,15 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
     }
 
     public void add(T item) {
-        mItems.add(item);
-        int index = mItems.size() - 1;
+        mList.add(item);
+        int index = mList.size() - 1;
         if (hasHeaderView())
             index++;
         notifyItemInserted(index);
     }
 
     public void insert(int index, T item) {
-        mItems.add(index, item);
+        mList.add(index, item);
         if (hasHeaderView())
             index++;
         notifyItemInserted(index);
@@ -194,41 +193,41 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
         if (items == null || items.size() == 0) {
             return;
         }
-        int start = mItems.size();
-        mItems.addAll(items);
+        int start = mList.size();
+        mList.addAll(items);
         if (hasHeaderView())
             start++;
         notifyItemRangeInserted(start, items.size());
     }
 
     public void remove(T item) {
-        if (mItems.contains(item)) {
-            int index = mItems.indexOf(item);
+        if (mList.contains(item)) {
+            int index = mList.indexOf(item);
             remove(index);
         }
     }
 
     public void remove(int index) {
-        mItems.remove(index);
+        mList.remove(index);
         if (hasHeaderView())
             index++;
         notifyItemRemoved(index);
     }
 
     public void set(T oldItem, T newItem) {
-        set(mItems.indexOf(oldItem), newItem);
+        set(mList.indexOf(oldItem), newItem);
     }
 
     public void set(int index, T item) {
-        mItems.set(index, item);
+        mList.set(index, item);
         if (hasHeaderView())
             index++;
         notifyItemChanged(index);
     }
 
     public void replaceAll(List<T> items) {
-        mItems.clear();
-        mItems.addAll(items);
+        mList.clear();
+        mList.addAll(items);
         int start = 0;
         if (hasHeaderView())
             start++;
@@ -236,11 +235,11 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
     }
 
     public boolean contains(T item) {
-        return mItems.contains(item);
+        return mList.contains(item);
     }
 
     public void clear() {
-        mItems.clear();
+        mList.clear();
         notifyDataSetChanged();
     }
 
