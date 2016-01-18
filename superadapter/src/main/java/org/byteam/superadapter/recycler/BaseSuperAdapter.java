@@ -15,14 +15,13 @@ import java.util.List;
  */
 public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends RecyclerView.Adapter<VH>
         implements IHeaderFooter {
-    private Context mContext;
-    private List<T> mItems;
+    protected static final int TYPE_HEADER = -0x100;
+    protected static final int TYPE_FOOTER = -0x101;
     protected int mLayoutResId;
     protected IMultiItemViewType<T> mMultiItemViewType;
     protected LayoutInflater mLayoutInflater;
-
-    protected static final int TYPE_HEADER = -0x100;
-    protected static final int TYPE_FOOTER = -0x101;
+    protected Context mContext;
+    protected List<T> mItems;
     private View mHeader;
     private View mFooter;
 
@@ -57,6 +56,9 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
             viewType = TYPE_FOOTER;
         } else {
             if (mMultiItemViewType != null) {
+                if (hasHeaderView()) {
+                    position--;
+                }
                 return mMultiItemViewType.getItemViewType(position, mItems.get(position));
             }
             return 0;

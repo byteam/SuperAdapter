@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.chenenyu.superadapter.demo"
+        applicationId "org.byteam.superadapter.demo"
         minSdkVersion 9
         targetSdkVersion 23
         versionCode 3
