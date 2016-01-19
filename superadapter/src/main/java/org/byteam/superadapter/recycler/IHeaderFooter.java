@@ -3,7 +3,7 @@ package org.byteam.superadapter.recycler;
 import android.view.View;
 
 /**
- * Interface that contains methods for header and footer.
+ * Methods about header and footer.
  * Created by Cheney on 16/1/12.
  */
 interface IHeaderFooter {

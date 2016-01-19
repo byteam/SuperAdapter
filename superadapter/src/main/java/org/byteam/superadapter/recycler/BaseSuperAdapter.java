@@ -1,7 +1,10 @@
 package org.byteam.superadapter.recycler;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +17,8 @@ import java.util.List;
  * Created by Cheney on 15/11/28.
  */
 public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends RecyclerView.Adapter<VH>
-        implements IHeaderFooter {
+        implements IHeaderFooter, ILayoutManager {
+    private static final String TAG = "BaseSuperAdapter";
     protected static final int TYPE_HEADER = -0x100;
     protected static final int TYPE_FOOTER = -0x101;
     protected int mLayoutResId;
@@ -22,6 +26,7 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
     protected LayoutInflater mLayoutInflater;
     protected Context mContext;
     protected List<T> mList;
+    protected RecyclerView mRecyclerView;
     private View mHeader;
     private View mFooter;
 
@@ -143,6 +148,7 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
         if (hasHeaderView())
             throw new IllegalStateException("You have already added a header view.");
         mHeader = header;
+        ifGridLayoutManager();
         notifyItemInserted(0);
     }
 
@@ -151,7 +157,21 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
         if (hasFooterView())
             throw new IllegalStateException("You have already added a footer view.");
         mFooter = footer;
+        ifGridLayoutManager();
         notifyItemInserted(getItemCount() - 1);
+    }
+
+    private void ifGridLayoutManager() {
+        final RecyclerView.LayoutManager layoutManager = getLayoutManager();
+        if (layoutManager instanceof GridLayoutManager) {
+            ((GridLayoutManager) layoutManager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    return (isHeaderView(position) || isFooterView(position)) ?
+                            ((GridLayoutManager) layoutManager).getSpanCount() : 1;
+                }
+            });
+        }
     }
 
     @Override
@@ -173,6 +193,40 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
         }
         return false;
     }
+
+    @Override
+    public boolean hasLayoutManager() {
+        return mRecyclerView != null && mRecyclerView.getLayoutManager() != null;
+    }
+
+    @Override
+    public RecyclerView.LayoutManager getLayoutManager() {
+        return hasLayoutManager() ? mRecyclerView.getLayoutManager() : null;
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        if (mRecyclerView != null && mRecyclerView != recyclerView)
+            Log.i(TAG, "Does not support multiple RecyclerViews now.");
+        mRecyclerView = recyclerView;
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        mRecyclerView = null;
+    }
+
+    @Override
+    public void onViewAttachedToWindow(VH holder) {
+        ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
+        if (lp != null && lp instanceof StaggeredGridLayoutManager.LayoutParams) {
+            // add header or footer to StaggeredGridLayoutManager
+            if (isHeaderView(holder.getLayoutPosition()) || isFooterView(holder.getLayoutPosition())) {
+                ((StaggeredGridLayoutManager.LayoutParams) lp).setFullSpan(true);
+            }
+        }
+    }
+
 
     public void add(T item) {
         mList.add(item);
