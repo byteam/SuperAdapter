@@ -209,6 +209,8 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
         if (mRecyclerView != null && mRecyclerView != recyclerView)
             Log.i(TAG, "Does not support multiple RecyclerViews now.");
         mRecyclerView = recyclerView;
+        // Ensure a situation that add header or footer before setAdapter().
+        ifGridLayoutManager();
     }
 
     @Override
