@@ -3,6 +3,7 @@ package org.byteam.superadapter.list;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.FloatRange;
 import android.support.v4.view.ViewCompat;
@@ -92,6 +93,12 @@ public class BaseViewHolder {
         if (view != null) {
             view.setImageResource(imageResId);
         }
+        return this;
+    }
+
+    public BaseViewHolder setImageDrawable(int viewId, Drawable drawable) {
+        ImageView view = getView(viewId);
+        view.setImageDrawable(drawable);
         return this;
     }
 

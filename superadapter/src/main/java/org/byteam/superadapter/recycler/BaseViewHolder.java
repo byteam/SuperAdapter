@@ -1,6 +1,7 @@
 package org.byteam.superadapter.recycler;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.FloatRange;
 import android.support.v4.view.ViewCompat;
@@ -59,6 +60,12 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     public BaseViewHolder setImageResource(int viewId, int imageResId) {
         ImageView view = getView(viewId);
         view.setImageResource(imageResId);
+        return this;
+    }
+
+    public BaseViewHolder setImageDrawable(int viewId, Drawable drawable) {
+        ImageView view = getView(viewId);
+        view.setImageDrawable(drawable);
         return this;
     }
 
