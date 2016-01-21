@@ -14,6 +14,8 @@ In build.gradle:
 Add [latest Jar](https://github.com/byteam/SuperAdapter/releases) to libs dir manually.
 
 ## CHANGELOG
+* 2016/1/21 v2.2.2
+* Header and footer now support GridLayoutManager and StaggeredGridLayoutManager!
 * 2016/1/18 v2.2.1
 * Bug fixed: #1
 * 2016/1/16 v2.2.0
@@ -24,7 +26,7 @@ Add [latest Jar](https://github.com/byteam/SuperAdapter/releases) to libs dir ma
 * Add convenient method: setScaleType().
 * Bug fixed：Support public method getView() for ViewHolder in BaseAdapter.
 * 2016/1/13 v2.1.0 
-* addHeaderView()/addFooterView() for RecyclerView.Adapter.
+* addHeaderView()/addFooterView() for LinearLayoutManager.
 
 ## How to use
 
