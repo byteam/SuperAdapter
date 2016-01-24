@@ -283,11 +283,7 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
 
     public void replaceAll(List<T> items) {
         mList.clear();
-        mList.addAll(items);
-        int start = 0;
-        if (hasHeaderView())
-            start++;
-        notifyItemRangeInserted(start, items.size());
+        addAll(items);
     }
 
     public boolean contains(T item) {
