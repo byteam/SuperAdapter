@@ -164,11 +164,12 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
     private void ifGridLayoutManager() {
         final RecyclerView.LayoutManager layoutManager = getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
+            final GridLayoutManager.SpanSizeLookup originalSpanSizeLookup = ((GridLayoutManager) layoutManager).getSpanSizeLookup();
             ((GridLayoutManager) layoutManager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
                     return (isHeaderView(position) || isFooterView(position)) ?
-                            ((GridLayoutManager) layoutManager).getSpanCount() : 1;
+                            ((GridLayoutManager) layoutManager).getSpanCount() : originalSpanSizeLookup.getSpanSize(position);
                 }
             });
         }
