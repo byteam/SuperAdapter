@@ -282,7 +282,7 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
     }
 
     public void replaceAll(List<T> items) {
-        mList.clear();
+        clear();
         addAll(items);
     }
 

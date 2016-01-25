@@ -12,19 +12,21 @@
 ## Eclipse:
 可以手动添加最新的[jar包](https://github.com/chenenyu/SuperAdapter/releases)到libs文件夹下，建议尽早迁移到Android Studio开发。
 ## 更新日志
+* 2016/1/21 v2.2.3
+* 修改`replaceAll()`方法。
 * 2016/1/21 v2.2.2
-* 现在支持为GridLayoutManager和StaggeredGridLayoutManager添加header和footer啦!
+* 现在支持为GridLayoutManager和StaggeredGridLayoutManager添加header和footer!
 * 2016/1/18 v2.2.1
-* Bug fixed: #1
+* Bug fixed: #1。
 * 2016/1/16 v2.2.0
-* 迁移到组织协作开发,抱歉为大家带来了困扰.
+* 迁移到组织协作开发。
 * 2016/1/15 v2.1.2
-* bug修复:当RecyclerView里面嵌套有adapter时,设置点击事件崩溃.
+* bug修复:当RecyclerView里面嵌套有adapter时,设置点击事件崩溃。
 * 2016/1/14 v2.1.1
-* 添加便捷方法setScaleType()
-* bug修复:为BaseAdapter的ViewHolder提供公开的getView()方法.
+* 添加便捷方法`setScaleType()`。
+* bug修复:为BaseAdapter的ViewHolder提供公开的`getView()`方法。
 * 2016/1/13 v2.1.0
-* LinearLayoutManager添加addHeaderView()/addFooterView()等相关方法。
+* LinearLayoutManager添加`addHeaderView()`/`addFooterView()`等相关方法。
 
 ## 如何使用
 

@@ -14,19 +14,21 @@ In build.gradle:
 Add [latest Jar](https://github.com/byteam/SuperAdapter/releases) to libs dir manually.
 
 ## CHANGELOG
+* 2016/1/25 v2.2.3
+* Fix method `replaceAll()`.
 * 2016/1/21 v2.2.2
 * Header and footer now support GridLayoutManager and StaggeredGridLayoutManager!
 * 2016/1/18 v2.2.1
-* Bug fixed: #1
+* Bug fixed: #1.
 * 2016/1/16 v2.2.0
 * Transfer to organization for a teamwork.
 * 2016/1/15 v2.1.2
-* Bug fixed: set OnItemClickListener to nested adapter caused crash in RecyclerView.
+* Bug fixed: set `OnItemClickListener` to nested adapter caused crash in RecyclerView.
 * 2016/1/14 v2.1.1
 * Add convenient method: setScaleType().
-* Bug fixed：Support public method getView() for ViewHolder in BaseAdapter.
+* Bug fixed：Support public method `getView()` for ViewHolder in BaseAdapter.
 * 2016/1/13 v2.1.0 
-* addHeaderView()/addFooterView() for LinearLayoutManager.
+* `addHeaderView()`/`addFooterView()` for LinearLayoutManager.
 
 ## How to use
 
