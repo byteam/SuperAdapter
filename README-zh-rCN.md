@@ -12,8 +12,8 @@
 ## Eclipse:
 可以手动添加最新的[jar包](https://github.com/chenenyu/SuperAdapter/releases)到libs文件夹下，建议尽早迁移到Android Studio开发。
 ## 更新日志
-* 2016/1/21 v2.2.3
-* 修改`replaceAll()`方法。
+* 2016/1/25 v2.2.3
+* 修复：自定义`SpanSizeLookUp`被GridLayoutManager覆盖。
 * 2016/1/21 v2.2.2
 * 现在支持为GridLayoutManager和StaggeredGridLayoutManager添加header和footer!
 * 2016/1/18 v2.2.1

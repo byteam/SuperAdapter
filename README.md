@@ -15,7 +15,7 @@ Add [latest Jar](https://github.com/byteam/SuperAdapter/releases) to libs dir ma
 
 ## CHANGELOG
 * 2016/1/25 v2.2.3
-* Fix method `replaceAll()`.
+* Fixed: custom `SpanSizeLookUp` is overridden by header or footer in GridLayoutManager.
 * 2016/1/21 v2.2.2
 * Header and footer now support GridLayoutManager and StaggeredGridLayoutManager!
 * 2016/1/18 v2.2.1
