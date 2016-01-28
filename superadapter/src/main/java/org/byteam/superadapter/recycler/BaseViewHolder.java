@@ -72,7 +72,6 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     public BaseViewHolder setImageBitmap(int viewId, Bitmap bitmap) {
         ImageView view = getView(viewId);
         view.setImageBitmap(bitmap);
-        view.setImageBitmap(null);
         return this;
     }
 
