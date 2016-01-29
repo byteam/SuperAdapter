@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
     protected static final int TYPE_HEADER = -0x100;
     protected static final int TYPE_FOOTER = -0x101;
     protected int mLayoutResId;
+    private OnItemClickListener mOnItemClickListener;
     protected IMultiItemViewType<T> mMultiItemViewType;
     protected LayoutInflater mLayoutInflater;
     protected Context mContext;
@@ -42,6 +44,10 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
         this.mList = list == null ? new ArrayList<T>() : new ArrayList<>(list);
         this.mMultiItemViewType = multiItemViewType;
         this.mLayoutInflater = LayoutInflater.from(context);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.mOnItemClickListener = onItemClickListener;
     }
 
     public Context getContext() {
@@ -87,8 +93,20 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
     }
 
     @Override
-    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return onCreate(parent, viewType);
+    public VH onCreateViewHolder(ViewGroup parent, final int viewType) {
+        final VH holder = onCreate(parent, viewType);
+        if (!(holder.itemView instanceof AdapterView)) {
+            // 提前设置点击事件，避免在setAdapter之后设置点击事件可能无效的问题
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        mOnItemClickListener.onItemClick(v, viewType, holder.getLayoutPosition());
+                    }
+                }
+            });
+        }
+        return holder;
     }
 
     @Override
