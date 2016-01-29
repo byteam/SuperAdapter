@@ -26,7 +26,7 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T, BaseViewHolder
     }
 
     @Override
-    public BaseViewHolder onCreate(ViewGroup parent, final int viewType) {
+    public BaseViewHolder onCreate(ViewGroup parent, int viewType) {
         final BaseViewHolder holder;
         if (viewType == TYPE_HEADER && hasHeaderView()) {
             return new BaseViewHolder(getHeaderView());
