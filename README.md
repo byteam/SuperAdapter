@@ -14,6 +14,8 @@ In build.gradle:
 Add [latest Jar](https://github.com/byteam/SuperAdapter/releases) to libs dir manually.
 
 ## CHANGELOG
+* 2016/2/24 v2.2.4
+* Add `setOnLongClickListener` and some convenient methods for recycler adapter.
 * 2016/1/25 v2.2.3
 * Fixed: custom `SpanSizeLookUp` is overridden by header or footer in GridLayoutManager.
 * 2016/1/21 v2.2.2

@@ -24,6 +24,7 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
     protected static final int TYPE_FOOTER = -0x101;
     protected int mLayoutResId;
     private OnItemClickListener mOnItemClickListener;
+    private OnItemLongClickListener mOnItemLongClickListener;
     protected IMultiItemViewType<T> mMultiItemViewType;
     protected LayoutInflater mLayoutInflater;
     protected Context mContext;
@@ -103,6 +104,16 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
                     if (mOnItemClickListener != null) {
                         mOnItemClickListener.onItemClick(v, viewType, holder.getLayoutPosition());
                     }
+                }
+            });
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (mOnItemLongClickListener != null) {
+                        mOnItemLongClickListener.onItemLongClick(v, viewType, holder.getLayoutPosition());
+                        return true;
+                    }
+                    return false;
                 }
             });
         }

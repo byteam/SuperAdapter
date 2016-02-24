@@ -7,6 +7,7 @@ import android.support.annotation.FloatRange;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.text.method.MovementMethod;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.BaseAdapter;
@@ -54,6 +55,12 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         } else {
             textView.setText(text);
         }
+        return this;
+    }
+
+    public BaseViewHolder setMovementMethod(int viewId, MovementMethod method) {
+        TextView textView = getView(viewId);
+        textView.setMovementMethod(method);
         return this;
     }
 
