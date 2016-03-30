@@ -51,6 +51,10 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
         this.mOnItemClickListener = onItemClickListener;
     }
 
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+        this.mOnItemLongClickListener = onItemLongClickListener;
+    }
+
     public Context getContext() {
         return mContext;
     }
