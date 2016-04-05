@@ -59,8 +59,8 @@ If a complex adapter, it can be simplified like this:
 
 ```
 public class RecyclerMultiAdapter extends SuperAdapter<MockModel> {
-    public RecyclerMultiAdapter(Context context, List<MockModel> list, IMultiItemViewType<MockModel> multiItemViewType) {
-        super(context, list, multiItemViewType);
+    public RecyclerMultiAdapter(Context context, List<MockModel> list, IMultiItemViewType<MockModel> mulItemViewType) {
+        super(context, list, mulItemViewType);
     }
 
     @Override

@@ -1,6 +1,5 @@
 .DS_Store
 .gradle
-gradle.properties
 local.properties
 .idea
 build
