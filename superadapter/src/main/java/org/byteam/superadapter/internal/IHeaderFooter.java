@@ -1,4 +1,4 @@
-package org.byteam.superadapter.recycler;
+package org.byteam.superadapter.internal;
 
 import android.view.View;
 
