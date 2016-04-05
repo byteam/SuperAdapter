@@ -13,9 +13,7 @@ import android.widget.Adapter;
 import android.widget.ImageView;
 
 /**
- * <p>
- * Some convenient methods called like a chain.
- * </p>
+ * <p>Some convenient methods called like a chain.</p>
  * Created by Cheney on 16/4/1.
  */
 interface ChainSetter<VH> {

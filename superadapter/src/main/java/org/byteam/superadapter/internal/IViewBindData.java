@@ -4,9 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * <p>
- * Create and bind data to item view.
- * </p>
+ * <p>Create and bind data to item view.</p>
  * Created by Cheney on 16/3/31.
  */
 interface IViewBindData<T, VH> {

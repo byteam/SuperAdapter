@@ -12,7 +12,7 @@ import org.byteam.superadapter.internal.SuperViewHolder;
 import java.util.List;
 
 /**
- * Adapter which offers view holder.
+ * <p>The core class.</p>
  * Created by Cheney on 16/3/30.
  */
 public abstract class SuperAdapter<T> extends BaseSuperAdapter<T> implements CRUD<T> {

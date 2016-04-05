@@ -22,9 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p>
- * Base adapter.
- * </p>
+ * <p>Base adapter.</p>
  * Created by Cheney on 16/3/30.
  */
 public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperViewHolder>
@@ -65,8 +63,8 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
     /**
      * Constructor for multiple item view type.
      *
-     * @param context           Context
-     * @param list              Data list.
+     * @param context         Context
+     * @param list            Data list.
      * @param mulItemViewType If null, plz override {@link #offerMultiItemViewType()}.
      */
     public BaseSuperAdapter(Context context, List<T> list, IMulItemViewType<T> mulItemViewType) {

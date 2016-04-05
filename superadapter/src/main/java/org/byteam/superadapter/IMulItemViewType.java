@@ -2,7 +2,7 @@ package org.byteam.superadapter;
 
 
 /**
- * Interface for multiple types.
+ * <p>Interface for multiple view types.</p>
  * Created by Cheney on 15/11/28.
  */
 public interface IMulItemViewType<T> {
@@ -13,7 +13,7 @@ public interface IMulItemViewType<T> {
     int getViewTypeCount();
 
     /**
-     * ItemView type, a non-negative integer is better.
+     * Item view type, a non-negative integer is better.
      *
      * @param position current position of ViewHolder
      * @param t        model item
@@ -22,9 +22,9 @@ public interface IMulItemViewType<T> {
     int getItemViewType(int position, T t);
 
     /**
-     * Layout Res
+     * Layout res.
      *
-     * @param viewType {@link #getItemViewType(int, Object)}
+     * @param viewType {@link #getItemViewType(int, T)}
      * @return {@link android.support.annotation.LayoutRes}
      */
     int getLayoutId(int viewType);

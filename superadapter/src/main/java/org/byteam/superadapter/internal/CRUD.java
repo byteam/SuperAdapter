@@ -3,9 +3,7 @@ package org.byteam.superadapter.internal;
 import java.util.List;
 
 /**
- * <p>
- * Select, insert, update, delete.
- * </p>
+ * <p>Select, insert, update, delete.</p>
  * Created by Cheney on 16/4/1.
  */
 public interface CRUD<T> {
