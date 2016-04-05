@@ -9,10 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import org.byteam.superadapter.demo.R;
-import org.byteam.superadapter.demo.adapter.ListMultiAdapter;
-import org.byteam.superadapter.demo.adapter.ListSingleAdapter;
+import org.byteam.superadapter.demo.adapter.MultipleAdapter;
+import org.byteam.superadapter.demo.adapter.SingleAdapter;
 import org.byteam.superadapter.demo.model.MockModel;
-import org.byteam.superadapter.list.IMultiItemViewType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,19 +20,20 @@ import java.util.List;
  * Fragment contains ListView.
  * Created by Cheney on 15/12/19.
  */
-public class ListAdapterFragment extends Fragment {
+public class ListViewFragment extends Fragment {
+    private static final String TYPE = "type";
     private int mType;
 
     private List<String> names = new ArrayList<>();
-    private ListSingleAdapter singleAdapter;
+    private SingleAdapter singleAdapter;
 
     private List<MockModel> models = new ArrayList<>();
-    private ListMultiAdapter multiAdapter;
+    private MultipleAdapter multiAdapter;
 
-    public static ListAdapterFragment newInstance(int type) {
-        ListAdapterFragment fragment = new ListAdapterFragment();
+    public static ListViewFragment newInstance(int type) {
+        ListViewFragment fragment = new ListViewFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("type", type);
+        bundle.putInt(TYPE, type);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -43,7 +43,7 @@ public class ListAdapterFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mType = getArguments().getInt("type", 1);
+            mType = getArguments().getInt(TYPE, 1);
         }
     }
 
@@ -54,31 +54,32 @@ public class ListAdapterFragment extends Fragment {
         ListView listView = (ListView) view;
         initData();
         if (mType == 1) {
-            singleAdapter = new ListSingleAdapter(getContext(), names, R.layout.item_type1);
+            singleAdapter = new SingleAdapter(getContext(), names, R.layout.item_type1);
             listView.setAdapter(singleAdapter);
         } else if (mType == 2) {
-            multiAdapter = new ListMultiAdapter(getContext(), models, new IMultiItemViewType<MockModel>() {
-                @Override
-                public int getItemViewType(int position, MockModel mockModel) {
-                    if (position % 2 == 0) {
-                        return 0;
-                    }
-                    return 1;
-                }
-
-                @Override
-                public int getLayoutId(int viewType) {
-                    if (viewType == 0) {
-                        return R.layout.item_type1;
-                    }
-                    return R.layout.item_type2;
-                }
-
-                @Override
-                public int getViewTypeCount() {
-                    return 2;
-                }
-            });
+//            multiAdapter = new MultipleAdapter(getContext(), models, new IMulItemViewType<MockModel>() {
+//                @Override
+//                public int getItemViewType(int position, MockModel mockModel) {
+//                    if (position % 2 == 0) {
+//                        return 0;
+//                    }
+//                    return 1;
+//                }
+//
+//                @Override
+//                public int getLayoutId(int viewType) {
+//                    if (viewType == 0) {
+//                        return R.layout.item_type1;
+//                    }
+//                    return R.layout.item_type2;
+//                }
+//
+//                @Override
+//                public int getViewTypeCount() {
+//                    return 2;
+//                }
+//            });
+            multiAdapter = new MultipleAdapter(getContext(), models, null);
             listView.setAdapter(multiAdapter);
         }
         return view;

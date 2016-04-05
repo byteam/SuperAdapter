@@ -12,25 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import org.byteam.superadapter.demo.fragment.ListAdapterFragment;
-import org.byteam.superadapter.demo.fragment.RecyclerAdapterFragment;
+import org.byteam.superadapter.demo.fragment.ListViewFragment;
+import org.byteam.superadapter.demo.fragment.RecyclerViewFragment;
 
 public class MainActivity extends AppCompatActivity {
-
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +25,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -53,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Merry Christmas! Need your follow and star on Github",
+                Snackbar.make(view, "https://github.com/byteam/SuperAdapter",
                         Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -76,16 +60,16 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment = null;
             switch (position) {
                 case 0:
-                    fragment = ListAdapterFragment.newInstance(1);
+                    fragment = ListViewFragment.newInstance(1);
                     break;
                 case 1:
-                    fragment = ListAdapterFragment.newInstance(2);
+                    fragment = ListViewFragment.newInstance(2);
                     break;
                 case 2:
-                    fragment = RecyclerAdapterFragment.newInstance(1);
+                    fragment = RecyclerViewFragment.newInstance(1);
                     break;
                 case 3:
-                    fragment = RecyclerAdapterFragment.newInstance(2);
+                    fragment = RecyclerViewFragment.newInstance(2);
                     break;
             }
             return fragment;

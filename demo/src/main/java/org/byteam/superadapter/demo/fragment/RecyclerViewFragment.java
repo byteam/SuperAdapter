@@ -15,12 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.byteam.superadapter.demo.adapter.RecyclerMultiAdapter;
-import org.byteam.superadapter.demo.adapter.RecyclerSingleAdapter;
+import org.byteam.superadapter.OnItemClickListener;
+import org.byteam.superadapter.SimpleMulItemViewType;
+import org.byteam.superadapter.SuperAdapter;
+import org.byteam.superadapter.demo.R;
+import org.byteam.superadapter.demo.adapter.MultipleAdapter;
+import org.byteam.superadapter.demo.adapter.SingleAdapter;
 import org.byteam.superadapter.demo.model.MockModel;
-import org.byteam.superadapter.recycler.IMultiItemViewType;
-import org.byteam.superadapter.recycler.OnItemClickListener;
-import org.byteam.superadapter.recycler.SuperAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +30,12 @@ import java.util.List;
  * Fragment contains RecyclerView.
  * Created by Cheney on 15/12/19.
  */
-public class RecyclerAdapterFragment extends Fragment {
+public class RecyclerViewFragment extends Fragment {
 
     private int mType;
+    private static final String TYPE = "type";
+
+    private RecyclerView recyclerView;
 
     private List<String> names = new ArrayList<>();
     private SuperAdapter mAdapter;
@@ -40,10 +44,10 @@ public class RecyclerAdapterFragment extends Fragment {
 
     private TextView header, footer;
 
-    public static RecyclerAdapterFragment newInstance(int type) {
-        RecyclerAdapterFragment fragment = new RecyclerAdapterFragment();
+    public static RecyclerViewFragment newInstance(int type) {
+        RecyclerViewFragment fragment = new RecyclerViewFragment();
         Bundle args = new Bundle();
-        args.putInt("type", type);
+        args.putInt(TYPE, type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,7 +57,7 @@ public class RecyclerAdapterFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         if (getArguments() != null) {
-            mType = getArguments().getInt("type", 1);
+            mType = getArguments().getInt(TYPE, 1);
         }
     }
 
@@ -67,8 +71,10 @@ public class RecyclerAdapterFragment extends Fragment {
         int id = item.getItemId();
         switch (id) {
             case org.byteam.superadapter.demo.R.id.action_add_header:
-                if (!mAdapter.hasHeaderView())
+                if (!mAdapter.hasHeaderView()) {
                     mAdapter.addHeaderView(header);
+                    recyclerView.scrollToPosition(0);
+                }
                 return true;
             case org.byteam.superadapter.demo.R.id.action_remove_header:
                 if (mAdapter.hasHeaderView())
@@ -100,10 +106,10 @@ public class RecyclerAdapterFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             if (mType == 1) {
-                mAdapter = new RecyclerSingleAdapter(getContext(), names, org.byteam.superadapter.demo.R.layout.item_type1);
+                mAdapter = new SingleAdapter(getContext(), names, R.layout.item_type1);
                 mAdapter.setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(View itemView, int viewType, int position) {
@@ -112,7 +118,8 @@ public class RecyclerAdapterFragment extends Fragment {
                 });
                 recyclerView.setAdapter(mAdapter);
             } else if (mType == 2) {
-                mAdapter = new RecyclerMultiAdapter(getContext(), models, new IMultiItemViewType<MockModel>() {
+                mAdapter = new MultipleAdapter(getContext(), models, new SimpleMulItemViewType<MockModel>() {
+
                     @Override
                     public int getItemViewType(int position, MockModel mockModel) {
                         if (position % 2 == 0) {

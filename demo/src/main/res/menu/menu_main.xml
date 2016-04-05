@@ -5,17 +5,17 @@
     <item android:id="@+id/action_add_header"
           android:orderInCategory="100"
           android:title="add header"
-          app:showAsAction="ifRoom"/>
+          app:showAsAction="never"/>
     <item android:id="@+id/action_remove_header"
           android:orderInCategory="100"
           android:title="remove header"
-          app:showAsAction="ifRoom"/>
+          app:showAsAction="never"/>
     <item android:id="@+id/action_add_footer"
           android:orderInCategory="100"
           android:title="add footer"
-          app:showAsAction="ifRoom"/>
+          app:showAsAction="never"/>
     <item android:id="@+id/action_remove_footer"
           android:orderInCategory="100"
           android:title="remove footer"
-          app:showAsAction="ifRoom"/>
+          app:showAsAction="never"/>
 </menu>
