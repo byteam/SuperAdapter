@@ -131,9 +131,9 @@ public class RecyclerViewFragment extends Fragment {
                     @Override
                     public int getLayoutId(int viewType) {
                         if (viewType == 0) {
-                            return org.byteam.superadapter.demo.R.layout.item_type1;
+                            return R.layout.item_type1;
                         }
-                        return org.byteam.superadapter.demo.R.layout.item_type2;
+                        return R.layout.item_type2;
                     }
                 });
                 recyclerView.setAdapter(mAdapter);
