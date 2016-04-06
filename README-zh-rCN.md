@@ -1,117 +1,162 @@
-![Download](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SuperAdapter-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/3027)
+![Download](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg) ![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SuperAdapter-brightgreen.svg?style=flat)
 # SuperAdapter
 *一个封装了BaseAdapter和RecyclerView.Adapter的简洁的Adapter。*
 
-**旨在减少Adapter冗余的代码。** 你不必再写ViewHolder以及其他必须覆写的方法，也不必再惆怅怎样方便的为RecyclerView的item设置点击事件，SuperAdapter为你做好了一切！你只需要实现`onBind()`方法就够了。  
+**旨在减少Adapter冗余的代码。** 你不必再写ViewHolder以及其他必须覆写的方法，只需要实现`onBind()`方法就够了。  
 
 ## Android Studio:
 
 在module的build.gradle中:
 
-`compile 'org.byteam.superadapter:superadapter:最新版本号'`
+`compile 'org.byteam.superadapter:superadapter:最新版本号@aar'`
 ## Eclipse:
 可以手动添加最新的[jar包](https://github.com/chenenyu/SuperAdapter/releases)到libs文件夹下，建议尽早迁移到Android Studio开发。
-## 更新日志
-* 2016/2/24 v2.2.4
-* 添加`setOnLongClickListener`方法以及一些操作ViewHolder的便捷方法。
-* 2016/1/25 v2.2.3
-* 修复：自定义`SpanSizeLookUp`被GridLayoutManager覆盖。
-* 2016/1/21 v2.2.2
-* 现在支持为GridLayoutManager和StaggeredGridLayoutManager添加header和footer!
-* 2016/1/18 v2.2.1
-* Bug fixed: #1。
-* 2016/1/16 v2.2.0
-* 迁移到组织协作开发。
-* 2016/1/15 v2.1.2
-* bug修复:当RecyclerView里面嵌套有adapter时,设置点击事件崩溃。
-* 2016/1/14 v2.1.1
-* 添加便捷方法`setScaleType()`。
-* bug修复:为BaseAdapter的ViewHolder提供公开的`getView()`方法。
-* 2016/1/13 v2.1.0
-* LinearLayoutManager添加`addHeaderView()`/`addFooterView()`等相关方法。
+## 特性
+* 减少大量代码*3!
+* 支持Header和footer。
+* 支持item的点击事件。
+* 隐藏ViewHolder相关代码。
+* 一个SuperAdapter同时支持`BaseAdapter`和`RecyclerView.Adapter`。
+* 封装Adapter数据源变动操作。
 
 ## 如何使用
 
 如果是个单布局的Adapter，可以简写为如下示例代码:  
 
 ```
-public class RecyclerSingleAdapter extends SuperAdapter<String> {
-    public RecyclerSingleAdapter(Context context, List<String> list, int layoutResId) {
-        super(context, list, layoutResId);
-    }
+public class SingleAdapter extends SuperAdapter<String> {
+	public SingleAdapter(Context context, List<String> list, int layoutResId) {
+		super(context, list, layoutResId);
+	}
 
-    @Override
-    public void onBind(int viewType, BaseViewHolder holder, int position, String item) {
-    	// 便捷的绑定数据的方法
-        holder.setText(R.id.tv_name, item);
-        // 或者手动查找View，然后赋值，如下：
-        // TextView tvName = getView(R.id.tv_name);
-        // tvName.setText(item);
-    }
+	@Override
+	public void onBind(SuperViewHolder holder, int viewType, int position, String item) {
+		holder.setText(R.id.tv_name, item);
+	}
 }
 ```  
 
-然后调用:  
+然后在Activity(or Fragment)中调用:  
 
 ```
-mSingleAdapter = new RecyclerSingleAdapter(getContext(), names, R.layout.item_type1);  
+mSingleAdapter = new RecyclerSingleAdapter(getContext(), names, R.layout.your_item);  
 recyclerView.setAdapter(mSingleAdapter);
 ```  
 如果是个多布局的Adapter，可以简写为如下示例代码:  
 
 ```
-public class RecyclerMultiAdapter extends SuperAdapter<MockModel> {
-    public RecyclerMultiAdapter(Context context, List<MockModel> list, IMultiItemViewType<MockModel> mulItemViewType) {
-        super(context, list, mulItemViewType);
-    }
+public class MultipleAdapter extends SuperAdapter<MockModel> {
+	public MultipleAdapter(Context context, List<MockModel> list, IMulItemViewType<MockModel> multiItemViewType) {
+		super(context, list, multiItemViewType);
+	}
 
-    @Override
-    public void onBind(int viewType, BaseViewHolder holder, int position, MockModel item) {
-        switch (viewType) {
-            case 0:
-                holder.setText(R.id.tv_name, item.getName());
-                break;
-            case 1:
-                holder.setText(R.id.tv_name, item.getName());
-                holder.setImageResource(R.id.iv_portrait, R.mipmap.ic_launcher);
-                holder.setText(R.id.tv_age, String.valueOf(item.getAge()));
-                break;
-        }
-    }
+	@Override
+	public void onBind(SuperViewHolder holder, int viewType, int position, MockModel item) {
+		switch (viewType) {
+			case 0:
+				holder.setText(org.byteam.superadapter.demo.R.id.tv_name, item.getName());
+				break;
+			case 1:
+				holder.setText(org.byteam.superadapter.demo.R.id.tv_name, item.getName());
+				holder.setImageResource(org.byteam.superadapter.demo.R.id.iv_portrait, org.byteam.superadapter.demo.R.mipmap.ic_launcher);
+				holder.setText(org.byteam.superadapter.demo.R.id.tv_age, String.valueOf(item.getAge()));
+				break;
+		}
+	}
 }
 ```  
 
 然后调用（注意构造方法的参数与单布局的区别）:  
 
 ```
-mMultiAdapter = new RecyclerMultiAdapter(getContext(), models, new IMultiItemViewType<MockModel>() {
+multiAdapter = new MultipleAdapter(getContext(), models, new IMulItemViewType<MockModel>() {
+				@Override
+				public int getItemViewType(int position, MockModel mockModel) {
+					if (position % 2 == 0) {
+						return 0;
+					}
+					return 1;
+				}
+
+				@Override
+				public int getLayoutId(int viewType) {
+					if (viewType == 0) {
+						return R.layout.item_type1;
+					}
+					return R.layout.item_type2;
+				}
+
+				@Override
+				public int getViewTypeCount() {
+					return 2;
+				}
+			});
+recyclerView.setAdapter(mMultiAdapter);
+```  
+
+如果不想在创建Adapter时提供IMulItemViewType接口，也可以在Adapter中重写`offerMultiItemViewType()`方法：  
+
+```
+@Override
+protected IMulItemViewType<MockModel> offerMultiItemViewType() {
+	return new IMulItemViewType<MockModel>() {
+		@Override
+		public int getViewTypeCount() {
+				return 2;
+		}
+
+		@Override
+		public int getItemViewType(int position, MockModel mockModel) {
+			if (position % 2 == 0) {
+				return 0;
+			}
+			return 1;
+		}
+
+		@Override
+		public int getLayoutId(int viewType) {
+			if (viewType == 0) {
+				return org.byteam.superadapter.demo.R.layout.item_type1;
+			}
+			return org.byteam.superadapter.demo.R.layout.item_type2;
+		}
+	};
+}
+```  
+
+然后在创建Adapter时提供`null`：  
+`multiAdapter = new MultipleAdapter(getContext(), models, null);`  
+  
+如果使用的是RecyclerView，在使用多布局时，还可以使用`SimpleMulItemViewType`类，因为`getViewTypeCount()`方法仅在使用ListView、GridView等控件时是必须的: 
+ 
+```
+mAdapter = new MultipleAdapter(getContext(), models, new SimpleMulItemViewType<MockModel>() {
 	@Override
 	public int getItemViewType(int position, MockModel mockModel) {
-    	if (position % 2 == 0) {
-        	return 0;
-        }
-        return 1;
+		if (position % 2 == 0) {
+			return 0;
+		}
+		return 1;
 	}
 
 	@Override
 	public int getLayoutId(int viewType) {
-    	if (viewType == 0) {
-        	return R.layout.item_type1;
-    	}
-   		return R.layout.item_type2;
-    }
+		if (viewType == 0) {
+			return R.layout.item_type1;
+		}
+		return R.layout.item_type2;
+	}
 });
-recyclerView.setAdapter(mMultiAdapter);
+recyclerView.setAdapter(mAdapter);
 ```  
-AdapterView(ListView, GridView)和RecyclerView的用法几乎完全一样。
-  
+
 
 **欢迎提交代码、bug以及讨论  : )**
 
 ## License
 
 ```
-Copyright 2015-2016 byteam.org.
+Copyright 2016 byteam.org.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
