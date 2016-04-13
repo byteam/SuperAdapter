@@ -4,6 +4,7 @@ import android.content.Context;
 
 import org.byteam.superadapter.IMulItemViewType;
 import org.byteam.superadapter.SuperAdapter;
+import org.byteam.superadapter.demo.R;
 import org.byteam.superadapter.demo.model.MockModel;
 import org.byteam.superadapter.internal.SuperViewHolder;
 
@@ -18,12 +19,12 @@ public class MultipleAdapter extends SuperAdapter<MockModel> {
     public void onBind(SuperViewHolder holder, int viewType, int position, MockModel item) {
         switch (viewType) {
             case 0:
-                holder.setText(org.byteam.superadapter.demo.R.id.tv_name, item.getName());
+                holder.setText(R.id.tv_name, item.getName());
                 break;
             case 1:
-                holder.setText(org.byteam.superadapter.demo.R.id.tv_name, item.getName());
-                holder.setImageResource(org.byteam.superadapter.demo.R.id.iv_portrait, org.byteam.superadapter.demo.R.mipmap.ic_launcher);
-                holder.setText(org.byteam.superadapter.demo.R.id.tv_age, String.valueOf(item.getAge()));
+                holder.setText(R.id.tv_name, item.getName());
+                holder.setImageResource(R.id.iv_portrait, R.mipmap.ic_launcher);
+                holder.setText(R.id.tv_age, String.valueOf(item.getAge()));
                 break;
         }
     }
@@ -47,9 +48,9 @@ public class MultipleAdapter extends SuperAdapter<MockModel> {
             @Override
             public int getLayoutId(int viewType) {
                 if (viewType == 0) {
-                    return org.byteam.superadapter.demo.R.layout.item_type1;
+                    return R.layout.item_type1;
                 }
-                return org.byteam.superadapter.demo.R.layout.item_type2;
+                return R.layout.item_type2;
             }
         };
     }
