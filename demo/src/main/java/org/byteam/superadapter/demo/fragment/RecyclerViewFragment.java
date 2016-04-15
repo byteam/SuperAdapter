@@ -70,23 +70,28 @@ public class RecyclerViewFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case org.byteam.superadapter.demo.R.id.action_add_header:
+            case R.id.action_add_header:
                 if (!mAdapter.hasHeaderView()) {
                     mAdapter.addHeaderView(header);
                     recyclerView.scrollToPosition(0);
                 }
                 return true;
-            case org.byteam.superadapter.demo.R.id.action_remove_header:
+            case R.id.action_remove_header:
                 if (mAdapter.hasHeaderView())
                     mAdapter.removeHeaderView();
                 return true;
-            case org.byteam.superadapter.demo.R.id.action_add_footer:
+            case R.id.action_add_footer:
                 if (!mAdapter.hasFooterView())
                     mAdapter.addFooterView(footer);
                 return true;
-            case org.byteam.superadapter.demo.R.id.action_remove_footer:
+            case R.id.action_remove_footer:
                 if (mAdapter.hasFooterView())
                     mAdapter.removeFooterView();
+                return true;
+            case R.id.action_addall_data:
+                if (mAdapter != null) {
+                    mAdapter.addAll(models);
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);

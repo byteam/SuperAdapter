@@ -18,4 +18,9 @@
           android:orderInCategory="100"
           android:title="remove footer"
           app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_addall_data"
+        android:orderInCategory="100"
+        android:title="addAll data"
+          app:showAsAction="never"/>
 </menu>
