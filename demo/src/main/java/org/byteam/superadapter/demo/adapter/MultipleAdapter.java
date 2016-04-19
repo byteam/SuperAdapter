@@ -16,7 +16,7 @@ public class MultipleAdapter extends SuperAdapter<MockModel> {
     }
 
     @Override
-    public void onBind(SuperViewHolder holder, int viewType, int position, MockModel item) {
+    public void onBind(SuperViewHolder holder, int viewType, int layoutPosition, MockModel item) {
         switch (viewType) {
             case 0:
                 holder.setText(R.id.tv_name, item.getName());

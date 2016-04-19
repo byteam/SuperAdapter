@@ -14,7 +14,7 @@ public class SingleAdapter extends SuperAdapter<String> {
     }
 
     @Override
-    public void onBind(SuperViewHolder holder, int viewType, int position, String item) {
+    public void onBind(SuperViewHolder holder, int viewType, int layoutPosition, String item) {
         holder.setText(R.id.tv_name, item);
     }
 }
