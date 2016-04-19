@@ -311,10 +311,8 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
     @Override
     public void onBindViewHolder(SuperViewHolder holder, int position) {
         int viewType = getItemViewType(position);
-        if (hasHeaderView())
-            position--;
         if (viewType != TYPE_HEADER && viewType != TYPE_FOOTER) {
-            onBind(holder, viewType, position, mList.get(position));
+            onBind(holder, viewType, position, mList.get(hasHeaderView() ? --position : position));
         }
     }
 

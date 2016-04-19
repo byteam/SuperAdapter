@@ -1,7 +1,10 @@
 ## 更新日志 / CHANGELOG
+* 2016/4/19 v3.0.0-beta1
+* 现在`onBind()`方法里的position参数考虑存在header的情况，即是当前item在整个layout中的位置。
+* The param `int position` in method `onBind()` now includes header(if exists).
 * 2016/4/06 v3.0.0-alpha1
 * 整合BaseAdapter和RecyclerView.Adapter，现在只有一个SuperAdapter，全面重构！
-* Revolution! Merge SuperAdater. Interface-oriented.
+* Revolution! Merge SuperAdapter. Interface-oriented.
 * 2016/2/24 v2.2.4
 * 添加`setOnLongClickListener`方法以及一些操作ViewHolder的便捷方法。
 * Add `setOnLongClickListener` and some convenient methods for recycler adapter.

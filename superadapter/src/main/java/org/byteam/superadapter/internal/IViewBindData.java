@@ -20,10 +20,10 @@ interface IViewBindData<T, VH> {
     /**
      * Method for binding data to view.
      *
-     * @param holder   ViewHolder
-     * @param viewType {@link BaseSuperAdapter#getItemViewType(int)}
-     * @param position position
-     * @param item     data
+     * @param holder         ViewHolder
+     * @param viewType       {@link BaseSuperAdapter#getItemViewType(int)}
+     * @param layoutPosition position
+     * @param item           data
      */
-    void onBind(VH holder, int viewType, int position, T item);
+    void onBind(VH holder, int viewType, int layoutPosition, T item);
 }
