@@ -89,7 +89,7 @@ public class RecyclerViewFragment extends Fragment {
                     mAdapter.removeFooterView();
                 return true;
             case R.id.action_addall_data:
-                if (mAdapter != null) {
+                if (mAdapter != null && mType == 2) {
                     mAdapter.addAll(models);
                 }
                 return true;
