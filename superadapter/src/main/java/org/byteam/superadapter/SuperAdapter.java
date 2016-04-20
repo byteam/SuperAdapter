@@ -38,19 +38,13 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T> implements CRU
     @Override
     public SuperViewHolder onCreate(View convertView, ViewGroup parent, int viewType) {
         final SuperViewHolder holder;
-        if (viewType == TYPE_HEADER && hasHeaderView()) {
-            return new SuperViewHolder(getHeaderView());
-        } else if (viewType == TYPE_FOOTER && hasFooterView()) {
-            return new SuperViewHolder(getFooterView());
-        }
-
         if (mMulItemViewType != null) {
-            holder = SuperViewHolder.get(convertView, mLayoutInflater.inflate(
-                    mMulItemViewType.getLayoutId(viewType), parent, false));
+            holder = SuperViewHolder.get(convertView, convertView == null ?
+                    mLayoutInflater.inflate(mMulItemViewType.getLayoutId(viewType), parent, false) : null);
         } else {
-            holder = SuperViewHolder.get(convertView, mLayoutInflater.inflate(mLayoutResId, parent, false));
+            holder = SuperViewHolder.get(convertView, convertView == null ?
+                    mLayoutInflater.inflate(mLayoutResId, parent, false) : null);
         }
-
         return holder;
     }
 

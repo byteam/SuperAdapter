@@ -284,13 +284,20 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
 
     @Override
     public SuperViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
-        final SuperViewHolder holder = onCreate(null, parent, viewType);
+        final SuperViewHolder holder;
+        if (viewType == TYPE_HEADER && hasHeaderView()) {
+            return new SuperViewHolder(getHeaderView());
+        } else if (viewType == TYPE_FOOTER && hasFooterView()) {
+            return new SuperViewHolder(getFooterView());
+        } else {
+            holder = onCreate(null, parent, viewType);
+        }
         if (!(holder.itemView instanceof AdapterView)) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mOnItemClickListener != null) {
-                        mOnItemClickListener.onItemClick(v, viewType, holder.getLayoutPosition());
+                        mOnItemClickListener.onItemClick(v, viewType, holder.getAdapterPosition());
                     }
                 }
             });
@@ -298,7 +305,7 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
                 @Override
                 public boolean onLongClick(View v) {
                     if (mOnItemLongClickListener != null) {
-                        mOnItemLongClickListener.onItemLongClick(v, viewType, holder.getLayoutPosition());
+                        mOnItemLongClickListener.onItemLongClick(v, viewType, holder.getAdapterPosition());
                         return true;
                     }
                     return false;
