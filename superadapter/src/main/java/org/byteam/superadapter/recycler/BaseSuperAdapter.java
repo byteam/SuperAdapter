@@ -281,6 +281,9 @@ public abstract class BaseSuperAdapter<T, VH extends BaseViewHolder> extends Rec
 
     public void addAll(List<T> items) {
         if (items == null || items.size() == 0) {
+            if (isEmpty()) {
+                notifyDataSetChanged();
+            }
             return;
         }
         int start = mList.size();
