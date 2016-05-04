@@ -389,8 +389,8 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
     @Override
     public boolean removeHeaderView() {
         if (hasHeaderView()) {
-            notifyItemRemoved(0);
             mHeader = null;
+            notifyItemRemoved(0);
             return true;
         }
         return false;
@@ -399,8 +399,8 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
     @Override
     public boolean removeFooterView() {
         if (hasFooterView()) {
-            notifyItemRemoved(getItemCount() - 1);
             mFooter = null;
+            notifyItemRemoved(getItemCount() - 1);
             return true;
         }
         return false;
