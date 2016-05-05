@@ -1,6 +1,7 @@
 package org.byteam.superadapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import java.util.List;
  * Created by Cheney on 16/3/30.
  */
 public abstract class SuperAdapter<T> extends BaseSuperAdapter<T> implements CRUD<T> {
-
+    private final String TAG = "SuperAdapter";
     private LayoutInflater mLayoutInflater;
 
     /**
@@ -37,39 +38,48 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T> implements CRU
 
     @Override
     public SuperViewHolder onCreate(View convertView, ViewGroup parent, int viewType) {
-        final SuperViewHolder holder;
+        int resource;
         if (mMulItemViewType != null) {
-            holder = SuperViewHolder.get(convertView, convertView == null ?
-                    mLayoutInflater.inflate(mMulItemViewType.getLayoutId(viewType), parent, false) : null);
+            resource = mMulItemViewType.getLayoutId(viewType);
         } else {
-            holder = SuperViewHolder.get(convertView, convertView == null ?
-                    mLayoutInflater.inflate(mLayoutResId, parent, false) : null);
+            resource = mLayoutResId;
         }
-        return holder;
+        return SuperViewHolder.get(convertView, convertView == null ?
+                mLayoutInflater.inflate(resource, parent, false) : null);
     }
+
+    /**
+     * ------------------------------------ CRUD ------------------------------------
+     */
 
     @Override
     public final void add(T item) {
         mList.add(item);
-        int index = mList.size() - 1;
+        int location = mList.size() - 1;
         if (hasHeaderView())
-            index++;
-        notifyItemInserted(index);
+            location++;
+        notifyItemInserted(location);
         notifyDataSetHasChanged();
     }
 
     @Override
-    public final void insert(int index, T item) {
-        mList.add(index, item);
+    public void add(int location, T item) {
+        mList.add(location, item);
         if (hasHeaderView())
-            index++;
-        notifyItemInserted(index);
+            location++;
+        notifyItemInserted(location);
         notifyDataSetHasChanged();
+    }
+
+    @Override
+    public final void insert(int location, T item) {
+        add(location, item);
     }
 
     @Override
     public final void addAll(List<T> items) {
         if (items == null || items.size() == 0) {
+            Log.i(TAG, "The list you added is null or empty.");
             return;
         }
         int start = mList.size();
@@ -81,20 +91,46 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T> implements CRU
     }
 
     @Override
+    public void addAll(int location, List<T> items) {
+        if (items == null || items.size() == 0) {
+            Log.i(TAG, "The list you added is null or empty.");
+            return;
+        }
+        mList.addAll(items);
+        if (hasHeaderView())
+            location++;
+        notifyItemRangeInserted(location, items.size());
+        notifyDataSetHasChanged();
+    }
+
+    @Override
     public final void remove(T item) {
         if (contains(item)) {
-            int index = mList.indexOf(item);
-            remove(index);
+            remove(mList.indexOf(item));
         }
     }
 
     @Override
-    public final void remove(int index) {
-        mList.remove(index);
+    public final void remove(int location) {
+        mList.remove(location);
         if (hasHeaderView())
-            index++;
-        notifyItemRemoved(index);
+            location++;
+        notifyItemRemoved(location);
         notifyDataSetHasChanged();
+    }
+
+    @Override
+    public void removeAll(List<T> items) {
+        mList.removeAll(items);
+        notifyDataSetChanged(); // RecyclerView
+        notifyDataSetHasChanged(); // ListView
+    }
+
+    @Override
+    public void retainAll(List<T> items) {
+        mList.retainAll(items);
+        notifyDataSetChanged(); // RecyclerView
+        notifyDataSetHasChanged(); // ListView
     }
 
     @Override
@@ -103,11 +139,11 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T> implements CRU
     }
 
     @Override
-    public final void set(int index, T item) {
-        mList.set(index, item);
+    public final void set(int location, T item) {
+        mList.set(location, item);
         if (hasHeaderView())
-            index++;
-        notifyItemChanged(index);
+            location++;
+        notifyItemChanged(location);
         notifyDataSetHasChanged();
     }
 
@@ -120,6 +156,11 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T> implements CRU
     @Override
     public final boolean contains(T item) {
         return mList.contains(item);
+    }
+
+    @Override
+    public boolean containsAll(List<T> items) {
+        return mList.containsAll(items);
     }
 
     @Override
