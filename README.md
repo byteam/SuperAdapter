@@ -15,7 +15,7 @@ or if you want to exclude the internal dependency of recyclerview, try something
 ```
 compile('org.byteam.superadapter:superadapter:latestVersion') {
         exclude group: 'com.android.support', module: 'recyclerview-v7'
-    }
+}
 ```
 
 ## Eclipse:
