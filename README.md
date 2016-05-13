@@ -9,7 +9,15 @@
 
 In build.gradle:
 
-`compile 'org.byteam.superadapter:superadapter:latestVersion@aar'`
+`compile 'org.byteam.superadapter:superadapter:latestVersion'`
+
+or if you want to exclude the internal dependency of recyclerview, try something like this:
+```
+compile('org.byteam.superadapter:superadapter:latestVersion') {
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+    }
+```
+
 ## Eclipse:
 Add [latest Jar](https://github.com/byteam/SuperAdapter/releases) to libs dir manually.
 
