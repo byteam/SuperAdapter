@@ -1,4 +1,8 @@
 ![Download](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg) ![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SuperAdapter-brightgreen.svg?style=flat)
+
+QQ群：271849001(新)
+
+![QQ群二维码](img/qq_qun.png)
 # SuperAdapter
 *一个封装了BaseAdapter和RecyclerView.Adapter的简洁的Adapter。*
 
