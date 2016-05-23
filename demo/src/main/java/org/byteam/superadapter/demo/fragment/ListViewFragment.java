@@ -11,10 +11,10 @@ import android.widget.ListView;
 import org.byteam.superadapter.demo.R;
 import org.byteam.superadapter.demo.adapter.MultipleAdapter;
 import org.byteam.superadapter.demo.adapter.SingleAdapter;
-import org.byteam.superadapter.demo.model.MockModel;
+import org.byteam.superadapter.demo.model.DataUtils;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * Fragment contains ListView.
@@ -24,10 +24,8 @@ public class ListViewFragment extends Fragment {
     private static final String TYPE = "type";
     private int mType;
 
-    private List<String> names = new ArrayList<>();
     private SingleAdapter singleAdapter;
 
-    private List<MockModel> models = new ArrayList<>();
     private MultipleAdapter multiAdapter;
 
     public static ListViewFragment newInstance(int type) {
@@ -52,12 +50,11 @@ public class ListViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_listview, container, false);
         ListView listView = (ListView) view;
-        initData();
         if (mType == 1) {
-            singleAdapter = new SingleAdapter(getContext(), names, R.layout.item_type1);
+            singleAdapter = new SingleAdapter(getContext(), new ArrayList<>(Arrays.asList(DataUtils.names)), R.layout.item_type1);
             listView.setAdapter(singleAdapter);
         } else if (mType == 2) {
-//            multiAdapter = new MultipleAdapter(getContext(), models, new IMulItemViewType<MockModel>() {
+//            multiAdapter = new MultipleAdapter(getContext(), DataUtils.generateData(), new IMulItemViewType<MockModel>() {
 //                @Override
 //                public int getItemViewType(int position, MockModel mockModel) {
 //                    if (position % 2 == 0) {
@@ -79,32 +76,10 @@ public class ListViewFragment extends Fragment {
 //                    return 2;
 //                }
 //            });
-            multiAdapter = new MultipleAdapter(getContext(), models, null);
+            multiAdapter = new MultipleAdapter(getContext(), DataUtils.generateData(), null);
             listView.setAdapter(multiAdapter);
         }
         return view;
     }
 
-    private void initData() {
-        names.add("John");
-        names.add("Michelle");
-        names.add("Amy");
-        names.add("Kim");
-        names.add("Mary");
-        names.add("David");
-        names.add("Sunny");
-        names.add("James");
-        names.add("Maria");
-        names.add("Betty");
-        names.add("Brian");
-        names.add("Candy");
-        names.add("Charles");
-        names.add("Vicky");
-        names.add("James");
-
-        int size = names.size();
-        for (int i = 0; i < size; i++) {
-            models.add(new MockModel(names.get(i), 16 + (int) (Math.random() * 24)));
-        }
-    }
 }

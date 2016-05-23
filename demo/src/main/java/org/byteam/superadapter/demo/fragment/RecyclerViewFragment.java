@@ -21,10 +21,11 @@ import org.byteam.superadapter.SuperAdapter;
 import org.byteam.superadapter.demo.R;
 import org.byteam.superadapter.demo.adapter.MultipleAdapter;
 import org.byteam.superadapter.demo.adapter.SingleAdapter;
+import org.byteam.superadapter.demo.model.DataUtils;
 import org.byteam.superadapter.demo.model.MockModel;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * Fragment contains RecyclerView.
@@ -37,10 +38,7 @@ public class RecyclerViewFragment extends Fragment {
 
     private RecyclerView recyclerView;
 
-    private List<String> names = new ArrayList<>();
     private SuperAdapter mAdapter;
-
-    private List<MockModel> models = new ArrayList<>();
 
     private TextView header, footer;
 
@@ -63,7 +61,7 @@ public class RecyclerViewFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(org.byteam.superadapter.demo.R.menu.menu_main, menu);
+        inflater.inflate(R.menu.menu_main, menu);
     }
 
     @Override
@@ -88,9 +86,14 @@ public class RecyclerViewFragment extends Fragment {
                 if (mAdapter.hasFooterView())
                     mAdapter.removeFooterView();
                 return true;
-            case R.id.action_addall_data:
+            case R.id.action_addAll_data:
                 if (mAdapter != null && mType == 2) {
-                    mAdapter.addAll(models);
+                    mAdapter.addAll(DataUtils.generateData());
+                }
+                return true;
+            case R.id.action_replaceAll_data:
+                if (mAdapter != null && mType == 2) {
+                    mAdapter.replaceAll(DataUtils.generateData());
                 }
                 return true;
         }
@@ -101,7 +104,6 @@ public class RecyclerViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(org.byteam.superadapter.demo.R.layout.fragment_recyclerview, container, false);
-        initData();
         header = new TextView(getContext());
         header.setBackgroundColor(Color.YELLOW);
         header.setText("header");
@@ -114,7 +116,7 @@ public class RecyclerViewFragment extends Fragment {
             recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             if (mType == 1) {
-                mAdapter = new SingleAdapter(getContext(), names, R.layout.item_type1);
+                mAdapter = new SingleAdapter(getContext(), new ArrayList<>(Arrays.asList(DataUtils.names)), R.layout.item_type1);
                 mAdapter.setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(View itemView, int viewType, int position) {
@@ -123,51 +125,28 @@ public class RecyclerViewFragment extends Fragment {
                 });
                 recyclerView.setAdapter(mAdapter);
             } else if (mType == 2) {
-                mAdapter = new MultipleAdapter(getContext(), models, new SimpleMulItemViewType<MockModel>() {
+                mAdapter = new MultipleAdapter(getContext(), DataUtils.generateData(),
+                        new SimpleMulItemViewType<MockModel>() {
+                            @Override
+                            public int getItemViewType(int position, MockModel mockModel) {
+                                if (position % 2 == 0) {
+                                    return 0;
+                                }
+                                return 1;
+                            }
 
-                    @Override
-                    public int getItemViewType(int position, MockModel mockModel) {
-                        if (position % 2 == 0) {
-                            return 0;
-                        }
-                        return 1;
-                    }
-
-                    @Override
-                    public int getLayoutId(int viewType) {
-                        if (viewType == 0) {
-                            return R.layout.item_type1;
-                        }
-                        return R.layout.item_type2;
-                    }
-                });
+                            @Override
+                            public int getLayoutId(int viewType) {
+                                if (viewType == 0) {
+                                    return R.layout.item_type1;
+                                }
+                                return R.layout.item_type2;
+                            }
+                        });
                 recyclerView.setAdapter(mAdapter);
             }
         }
         return view;
-    }
-
-    private void initData() {
-        names.add("John");
-        names.add("Michelle");
-        names.add("Amy");
-        names.add("Kim");
-        names.add("Mary");
-        names.add("David");
-        names.add("Sunny");
-        names.add("James");
-        names.add("Maria");
-        names.add("Betty");
-        names.add("Brian");
-        names.add("Candy");
-        names.add("Charles");
-        names.add("Vicky");
-        names.add("James");
-
-        int size = names.size();
-        for (int i = 0; i < size; i++) {
-            models.add(new MockModel(names.get(i), 16 + (int) (Math.random() * 24)));
-        }
     }
 
 }
