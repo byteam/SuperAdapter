@@ -22,7 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p>Base adapter.</p>
+ * <p>
+ * Base adapter.
+ * </p>
  * Created by Cheney on 16/3/30.
  */
 public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperViewHolder>
@@ -40,9 +42,9 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
 
-    protected RecyclerView mRecyclerView;
-    protected static final int TYPE_HEADER = -0x100;
-    protected static final int TYPE_FOOTER = -0x101;
+    private RecyclerView mRecyclerView;
+    private static final int TYPE_HEADER = -0x100;
+    private static final int TYPE_FOOTER = -0x101;
     private View mHeader;
     private View mFooter;
 
@@ -134,13 +136,13 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
 
     // BaseAdapter
     public void notifyDataSetHasChanged() {
-        if (mDataSetObservable != null)
+        if (mDataSetObservable != null && mRecyclerView == null)
             mDataSetObservable.notifyChanged();
     }
 
     // BaseAdapter
     public void notifyDataSetInvalidated() {
-        if (mDataSetObservable != null)
+        if (mDataSetObservable != null && mRecyclerView == null)
             mDataSetObservable.notifyInvalidated();
     }
 
@@ -186,7 +188,7 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
      */
     @Override
     public int getItemCount() {
-        int size = mList == null ? 0 : mList.size();
+        int size = getCount();
         if (hasHeaderView())
             size++;
         if (hasFooterView())
@@ -399,8 +401,9 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
     @Override
     public boolean removeFooterView() {
         if (hasFooterView()) {
+            int footerPosition = getItemCount() - 1;
             mFooter = null;
-            notifyItemRemoved(getItemCount() - 1);
+            notifyItemRemoved(footerPosition);
             return true;
         }
         return false;
