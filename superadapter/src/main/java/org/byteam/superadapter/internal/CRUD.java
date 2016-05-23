@@ -11,6 +11,7 @@ public interface CRUD<T> {
 
     void add(int location, T item);
 
+    @Deprecated
     void insert(int location, T item);
 
     void addAll(List<T> items);

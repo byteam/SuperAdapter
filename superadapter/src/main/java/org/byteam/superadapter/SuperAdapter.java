@@ -13,7 +13,9 @@ import org.byteam.superadapter.internal.SuperViewHolder;
 import java.util.List;
 
 /**
- * <p>The core class.</p>
+ * <p>
+ * The core class.
+ * </p>
  * Created by Cheney on 16/3/30.
  */
 public abstract class SuperAdapter<T> extends BaseSuperAdapter<T> implements CRUD<T> {
@@ -72,14 +74,15 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T> implements CRU
     }
 
     @Override
+    @Deprecated
     public final void insert(int location, T item) {
         add(location, item);
     }
 
     @Override
     public final void addAll(List<T> items) {
-        if (items == null || items.size() == 0) {
-            Log.i(TAG, "The list you added is null or empty.");
+        if (items == null || items.isEmpty()) {
+            Log.w(TAG, "addAll: The list you passed contains no elements.");
             return;
         }
         int start = mList.size();
@@ -92,8 +95,8 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T> implements CRU
 
     @Override
     public void addAll(int location, List<T> items) {
-        if (items == null || items.size() == 0) {
-            Log.i(TAG, "The list you added is null or empty.");
+        if (items == null || items.isEmpty()) {
+            Log.w(TAG, "addAll: The list you passed contains no elements.");
             return;
         }
         mList.addAll(items);
@@ -123,14 +126,14 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T> implements CRU
     public void removeAll(List<T> items) {
         mList.removeAll(items);
         notifyDataSetChanged(); // RecyclerView
-        notifyDataSetHasChanged(); // ListView
+        notifyDataSetHasChanged(); // AdapterView
     }
 
     @Override
     public void retainAll(List<T> items) {
         mList.retainAll(items);
         notifyDataSetChanged(); // RecyclerView
-        notifyDataSetHasChanged(); // ListView
+        notifyDataSetHasChanged(); // AdapterView
     }
 
     @Override
@@ -149,8 +152,30 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T> implements CRU
 
     @Override
     public final void replaceAll(List<T> items) {
-        clear();
-        addAll(items);
+        if (items == null || items.isEmpty()) {
+            Log.w(TAG, "replaceAll: The list you passed contains no elements.");
+            return;
+        }
+        if (mList.isEmpty()) {
+            addAll(items);
+        } else {
+            int start = hasHeaderView() ? 1 : 0;
+            int originalSize = getCount();
+            int newSize = items.size();
+            mList.clear();
+            mList.addAll(items);
+            if (originalSize > newSize) {
+                notifyItemRangeChanged(start, newSize);
+                notifyItemRangeRemoved(start + newSize, originalSize - newSize);
+            } else if (originalSize == newSize) {
+                notifyItemRangeChanged(start, newSize);
+            } else {
+                notifyItemRangeChanged(start, originalSize);
+                notifyItemRangeInserted(start + originalSize, newSize - originalSize);
+            }
+            notifyDataSetHasChanged(); // AdapterView
+        }
+
     }
 
     @Override
@@ -165,8 +190,10 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T> implements CRU
 
     @Override
     public final void clear() {
-        mList.clear();
-        notifyDataSetChanged();
-        notifyDataSetHasChanged();
+        if (!mList.isEmpty()) {
+            mList.clear();
+            notifyItemRangeRemoved(hasHeaderView() ? 1 : 0, getCount());
+            notifyDataSetHasChanged(); // AdapterView
+        }
     }
 }
