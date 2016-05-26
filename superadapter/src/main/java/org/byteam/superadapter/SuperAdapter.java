@@ -85,11 +85,11 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T> implements CRU
             Log.w(TAG, "addAll: The list you passed contains no elements.");
             return;
         }
-        int start = mList.size();
+        int location = getCount();
         mList.addAll(items);
         if (hasHeaderView())
-            start++;
-        notifyItemRangeInserted(start, items.size());
+            location++;
+        notifyItemRangeInserted(location, items.size());
         notifyDataSetHasChanged();
     }
 
@@ -99,9 +99,13 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T> implements CRU
             Log.w(TAG, "addAll: The list you passed contains no elements.");
             return;
         }
-        mList.addAll(items);
+        if (location < 0 || location > getCount()) {
+            Log.w(TAG, "addAll: IndexOutOfBoundsException");
+            return;
+        }
         if (hasHeaderView())
             location++;
+        mList.addAll(location, items);
         notifyItemRangeInserted(location, items.size());
         notifyDataSetHasChanged();
     }
