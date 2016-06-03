@@ -196,7 +196,11 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T> implements CRU
     public final void clear() {
         if (!mList.isEmpty()) {
             mList.clear();
-            notifyItemRangeRemoved(hasHeaderView() ? 1 : 0, getCount());
+            // FIXME: 2016/6/3 v3.4
+            // RV源码bug(https://code.google.com/p/android/issues/detail?id=77846),
+            // 导致不能使用 notifyItemRangeRemoved(hasHeaderView() ? 1 : 0, getCount());
+            // 这里使用notifyDataSetChanged();代替，没有动画效果。
+            notifyDataSetChanged();  // RecyclerView
             notifyDataSetHasChanged(); // AdapterView
         }
     }
