@@ -4,32 +4,34 @@
       tools:context="org.byteam.superadapter.demo.MainActivity">
     <item
         android:id="@+id/action_add_header"
-        android:orderInCategory="100"
         android:title="add header"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_remove_header"
-        android:orderInCategory="100"
         android:title="remove header"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_add_footer"
-        android:orderInCategory="100"
         android:title="add footer"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_remove_footer"
-        android:orderInCategory="100"
         android:title="remove footer"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/action_insert_data"
+        android:title="insert data"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/action_addAll_data"
-        android:orderInCategory="100"
         android:title="addAll data"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_replaceAll_data"
-        android:orderInCategory="100"
         android:title="replaceAll data"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_clear_data"
+        android:title="clear data"
         app:showAsAction="never"/>
 </menu>

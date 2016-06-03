@@ -86,6 +86,13 @@ public class RecyclerViewFragment extends Fragment {
                 if (mAdapter.hasFooterView())
                     mAdapter.removeFooterView();
                 return true;
+            case R.id.action_insert_data:
+                if (mType == 2) {
+                    mAdapter.add(0, DataUtils.generateData().get(0));
+                } else {
+                    mAdapter.add(0, Arrays.asList(DataUtils.names).get(0));
+                }
+                return true;
             case R.id.action_addAll_data:
                 if (mAdapter != null && mType == 2) {
                     mAdapter.addAll(DataUtils.generateData());
@@ -95,6 +102,9 @@ public class RecyclerViewFragment extends Fragment {
                 if (mAdapter != null && mType == 2) {
                     mAdapter.replaceAll(DataUtils.generateData());
                 }
+                return true;
+            case R.id.action_clear_data:
+                mAdapter.clear();
                 return true;
         }
         return super.onOptionsItemSelected(item);
