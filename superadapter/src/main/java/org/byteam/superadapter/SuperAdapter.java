@@ -179,7 +179,6 @@ public abstract class SuperAdapter<T> extends BaseSuperAdapter<T> implements CRU
             }
             notifyDataSetHasChanged(); // AdapterView
         }
-
     }
 
     @Override
