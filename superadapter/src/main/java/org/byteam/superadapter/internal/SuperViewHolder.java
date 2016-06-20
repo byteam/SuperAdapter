@@ -43,8 +43,16 @@ public class SuperViewHolder extends RecyclerView.ViewHolder implements ChainSet
         return holder;
     }
 
-    @SuppressWarnings("unchecked")
+    /**
+     * Deprecated. Use {@link #findViewById(int)} instead for a better understanding.
+     */
+    @Deprecated
     public <T extends View> T getView(int id) {
+        return findViewById(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends View> T findViewById(int id) {
         View childView = childViews.get(id);
         if (childView == null) {
             childView = itemView.findViewById(id);
@@ -56,187 +64,187 @@ public class SuperViewHolder extends RecyclerView.ViewHolder implements ChainSet
 
     @Override
     public SuperViewHolder setText(int viewId, CharSequence text) {
-        TextView textView = getView(viewId);
+        TextView textView = findViewById(viewId);
         textView.setText(text);
         return this;
     }
 
     @Override
     public SuperViewHolder setTextColor(int viewId, int textColor) {
-        TextView view = getView(viewId);
+        TextView view = findViewById(viewId);
         view.setTextColor(textColor);
         return this;
     }
 
     @Override
     public SuperViewHolder setTextColor(int viewId, ColorStateList colorStateList) {
-        TextView view = getView(viewId);
+        TextView view = findViewById(viewId);
         view.setTextColor(colorStateList);
         return this;
     }
 
     @Override
     public SuperViewHolder setMovementMethod(int viewId, MovementMethod method) {
-        TextView textView = getView(viewId);
+        TextView textView = findViewById(viewId);
         textView.setMovementMethod(method);
         return this;
     }
 
     @Override
     public SuperViewHolder setImageResource(int viewId, int imgResId) {
-        ImageView view = getView(viewId);
+        ImageView view = findViewById(viewId);
         view.setImageResource(imgResId);
         return this;
     }
 
     @Override
     public SuperViewHolder setImageDrawable(int viewId, Drawable drawable) {
-        ImageView view = getView(viewId);
+        ImageView view = findViewById(viewId);
         view.setImageDrawable(drawable);
         return this;
     }
 
     @Override
     public SuperViewHolder setImageBitmap(int viewId, Bitmap bitmap) {
-        ImageView view = getView(viewId);
+        ImageView view = findViewById(viewId);
         view.setImageBitmap(bitmap);
         return this;
     }
 
     @Override
     public SuperViewHolder setImageUri(int viewId, Uri imageUri) {
-        ImageView view = getView(viewId);
+        ImageView view = findViewById(viewId);
         view.setImageURI(imageUri);
         return this;
     }
 
     @Override
     public SuperViewHolder setScaleType(int viewId, ImageView.ScaleType type) {
-        ImageView view = getView(viewId);
+        ImageView view = findViewById(viewId);
         view.setScaleType(type);
         return this;
     }
 
     @Override
     public SuperViewHolder setBackgroundColor(int viewId, int bgColor) {
-        View view = getView(viewId);
+        View view = findViewById(viewId);
         view.setBackgroundColor(bgColor);
         return this;
     }
 
     @Override
     public SuperViewHolder setBackgroundResource(int viewId, int bgRes) {
-        View view = getView(viewId);
+        View view = findViewById(viewId);
         view.setBackgroundResource(bgRes);
         return this;
     }
 
     @Override
     public SuperViewHolder setColorFilter(int viewId, ColorFilter colorFilter) {
-        ImageView view = getView(viewId);
+        ImageView view = findViewById(viewId);
         view.setColorFilter(colorFilter);
         return this;
     }
 
     @Override
     public SuperViewHolder setColorFilter(int viewId, int colorFilter) {
-        ImageView view = getView(viewId);
+        ImageView view = findViewById(viewId);
         view.setColorFilter(colorFilter);
         return this;
     }
 
     @Override
     public SuperViewHolder setAlpha(int viewId, @FloatRange(from = 0.0, to = 1.0) float value) {
-        View view = getView(viewId);
+        View view = findViewById(viewId);
         ViewCompat.setAlpha(view, value);
         return this;
     }
 
     @Override
     public SuperViewHolder setVisibility(int viewId, int visibility) {
-        View view = getView(viewId);
+        View view = findViewById(viewId);
         view.setVisibility(visibility);
         return this;
     }
 
     @Override
     public SuperViewHolder setMax(int viewId, int max) {
-        ProgressBar view = getView(viewId);
+        ProgressBar view = findViewById(viewId);
         view.setMax(max);
         return this;
     }
 
     @Override
     public SuperViewHolder setProgress(int viewId, int progress) {
-        ProgressBar view = getView(viewId);
+        ProgressBar view = findViewById(viewId);
         view.setProgress(progress);
         return this;
     }
 
     @Override
     public SuperViewHolder setRating(int viewId, float rating) {
-        RatingBar view = getView(viewId);
+        RatingBar view = findViewById(viewId);
         view.setRating(rating);
         return this;
     }
 
     @Override
     public SuperViewHolder setTag(int viewId, Object tag) {
-        View view = getView(viewId);
+        View view = findViewById(viewId);
         view.setTag(tag);
         return this;
     }
 
     @Override
     public SuperViewHolder setTag(int viewId, int key, Object tag) {
-        View view = getView(viewId);
+        View view = findViewById(viewId);
         view.setTag(key, tag);
         return this;
     }
 
     @Override
     public SuperViewHolder setEnabled(int viewId, boolean enabled) {
-        View view = getView(viewId);
+        View view = findViewById(viewId);
         view.setEnabled(enabled);
         return this;
     }
 
     @Override
     public SuperViewHolder setAdapter(int viewId, Adapter adapter) {
-        AdapterView<Adapter> view = getView(viewId);
+        AdapterView<Adapter> view = findViewById(viewId);
         view.setAdapter(adapter);
         return this;
     }
 
     @Override
     public SuperViewHolder setAdapter(int viewId, RecyclerView.Adapter adapter) {
-        RecyclerView view = getView(viewId);
+        RecyclerView view = findViewById(viewId);
         view.setAdapter(adapter);
         return this;
     }
 
     @Override
     public SuperViewHolder setChecked(int viewId, boolean checked) {
-        Checkable view = getView(viewId);
+        Checkable view = findViewById(viewId);
         view.setChecked(checked);
         return this;
     }
 
     @Override
     public SuperViewHolder setOnClickListener(int viewId, View.OnClickListener listener) {
-        getView(viewId).setOnClickListener(listener);
+        findViewById(viewId).setOnClickListener(listener);
         return this;
     }
 
     @Override
     public SuperViewHolder setOnLongClickListener(int viewId, View.OnLongClickListener listener) {
-        getView(viewId).setOnLongClickListener(listener);
+        findViewById(viewId).setOnLongClickListener(listener);
         return this;
     }
 
     @Override
     public SuperViewHolder setOnTouchListener(int viewId, View.OnTouchListener listener) {
-        getView(viewId).setOnTouchListener(listener);
+        findViewById(viewId).setOnTouchListener(listener);
         return this;
     }
 }
