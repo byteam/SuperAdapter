@@ -6,19 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.byteam.superadapter.internal.BaseSuperAdapter;
 import org.byteam.superadapter.internal.CRUD;
+import org.byteam.superadapter.internal.ListSupportAdapter;
 import org.byteam.superadapter.internal.SuperViewHolder;
 
 import java.util.List;
 
 /**
  * <p>
- * The core class.
+ * The adapter you need to implement.
  * </p>
  * Created by Cheney on 16/3/30.
  */
-public abstract class SuperAdapter<T> extends BaseSuperAdapter<T> implements CRUD<T> {
+public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements CRUD<T> {
     private final String TAG = "SuperAdapter";
     private LayoutInflater mLayoutInflater;
 

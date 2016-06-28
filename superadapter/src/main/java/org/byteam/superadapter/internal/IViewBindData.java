@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 interface IViewBindData<T, VH> {
 
     /**
-     * @param convertView Support by {@link BaseSuperAdapter#getView(int, View, ViewGroup)}.
+     * @param convertView Support by {@link ListSupportAdapter#getView(int, View, ViewGroup)}.
      * @param parent      Target container(ListView, GridView, RecyclerView,Spinner, etc.).
      * @param viewType    Choose the layout resource according to view type.
      * @return Created view holder.

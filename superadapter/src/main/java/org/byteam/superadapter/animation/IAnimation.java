@@ -12,7 +12,7 @@ public interface IAnimation {
 
     void openLoadAnimation();
 
-    void openLoadAnimation(BaseAnimation animation);
+    void openLoadAnimation(long duration, BaseAnimation animation);
 
     void setOnlyOnce(boolean onlyOnce);
 

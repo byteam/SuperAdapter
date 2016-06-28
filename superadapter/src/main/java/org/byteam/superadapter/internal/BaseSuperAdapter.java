@@ -1,21 +1,23 @@
 package org.byteam.superadapter.internal;
 
+import android.animation.Animator;
 import android.content.Context;
-import android.database.DataSetObservable;
-import android.database.DataSetObserver;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
-import android.widget.SpinnerAdapter;
 
 import org.byteam.superadapter.IMulItemViewType;
 import org.byteam.superadapter.OnItemClickListener;
 import org.byteam.superadapter.OnItemLongClickListener;
+import org.byteam.superadapter.animation.AlphaInAnimation;
+import org.byteam.superadapter.animation.BaseAnimation;
+import org.byteam.superadapter.animation.IAnimation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +29,7 @@ import java.util.List;
  * Created by Cheney on 16/3/30.
  */
 public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperViewHolder>
-        implements ListAdapter, SpinnerAdapter, IViewBindData<T, SuperViewHolder>,
-        ILayoutManager, IHeaderFooter {
-    // BaseAdapter
-    private DataSetObservable mDataSetObservable;
+        implements IViewBindData<T, SuperViewHolder>, IAnimation, ILayoutManager, IHeaderFooter {
 
     protected Context mContext;
     protected List<T> mList; // DataSources.
@@ -41,11 +40,20 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
 
-    private RecyclerView mRecyclerView;
-    private static final int TYPE_HEADER = -0x100;
-    private static final int TYPE_FOOTER = -0x101;
+    protected RecyclerView mRecyclerView;
+
+    protected static final int TYPE_HEADER = -0x100;
+    protected static final int TYPE_FOOTER = -0x101;
     private View mHeader;
     private View mFooter;
+
+    private Interpolator mInterpolator = new LinearInterpolator();
+    private long mDuration = 300;
+    private boolean mLoadAnimationEnable;
+    private boolean mOnlyOnce = true;
+    private BaseAnimation mLoadAnimation;
+    private int mLastPosition = -1;
+
 
     /**
      * Constructor for single item view type.
@@ -74,13 +82,6 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
         this.mMulItemViewType = mulItemViewType == null ? offerMultiItemViewType() : mulItemViewType;
     }
 
-    /**
-     * @return Offered an {@link IMulItemViewType} by override this method.
-     */
-    protected IMulItemViewType<T> offerMultiItemViewType() {
-        return null;
-    }
-
     public Context getContext() {
         return mContext;
     }
@@ -98,78 +99,18 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
     }
 
     /**
-     * @see android.widget.BaseAdapter#areAllItemsEnabled().
+     * @return Offered an {@link IMulItemViewType} by override this method.
      */
-    @Override
-    public boolean areAllItemsEnabled() {
-        return true;
+    protected IMulItemViewType<T> offerMultiItemViewType() {
+        return null;
     }
 
-    /**
-     * @see android.widget.BaseAdapter#isEnabled(int).
-     */
-    @Override
-    public boolean isEnabled(int position) {
-        return true;
-    }
-
-    @Override
-    public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        return getView(position, convertView, parent);
-    }
-
-    @Override
-    public void registerDataSetObserver(DataSetObserver observer) {
-        mDataSetObservable = new DataSetObservable();
-        mDataSetObservable.registerObserver(observer);
-    }
-
-    @Override
-    public void unregisterDataSetObserver(DataSetObserver observer) {
-        mDataSetObservable.unregisterObserver(observer);
-        mDataSetObservable = null;
-    }
-
-    // BaseAdapter
-    public void notifyDataSetHasChanged() {
-        if (mDataSetObservable != null && mRecyclerView == null)
-            mDataSetObservable.notifyChanged();
-    }
-
-    // BaseAdapter
-    public void notifyDataSetInvalidated() {
-        if (mDataSetObservable != null && mRecyclerView == null)
-            mDataSetObservable.notifyInvalidated();
-    }
-
-    /**
-     * @see android.widget.BaseAdapter#getCount().
-     */
-    @Override
     public int getCount() {
         return mList == null ? 0 : mList.size();
     }
 
     /**
-     * @see android.widget.BaseAdapter#getItem(int).
-     */
-    @Override
-    public T getItem(int position) {
-        if (position >= mList.size())
-            return null;
-        return mList.get(position);
-    }
-
-    /**
-     * @see android.widget.BaseAdapter#getItemId(int).
-     */
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    /**
-     * How many items are in the data set represented by this RecyclerView.Adapter.
+     * How many items are represented by this RecyclerView.Adapter.
      *
      * @return Count of items.
      */
@@ -181,57 +122,6 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
         if (hasFooterView())
             size++;
         return size;
-    }
-
-    /**
-     * @see android.widget.BaseAdapter#getView(int, View, ViewGroup)
-     */
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        SuperViewHolder holder = onCreate(convertView, parent, getItemViewType(position));
-        T item = getItem(position);
-        onBind(holder, getItemViewType(position), position, item);
-        return holder.itemView;
-    }
-
-    /**
-     * @see android.widget.BaseAdapter#getItemViewType(int).
-     */
-    @Override
-    public int getItemViewType(int position) {
-        int viewType;
-        if (isHeaderView(position)) {
-            viewType = TYPE_HEADER;
-        } else if (isFooterView(position)) {
-            viewType = TYPE_FOOTER;
-        } else {
-            if (mMulItemViewType != null) {
-                if (hasHeaderView()) {
-                    position--;
-                }
-                return mMulItemViewType.getItemViewType(position, mList.get(position));
-            }
-            return 0;
-        }
-        return viewType;
-    }
-
-    /**
-     * @see android.widget.BaseAdapter#getViewTypeCount().
-     */
-    @Override
-    public int getViewTypeCount() {
-        if (mMulItemViewType != null)
-            return mMulItemViewType.getViewTypeCount();
-        return 1;
-    }
-
-    /**
-     * @see android.widget.BaseAdapter#isEmpty().
-     */
-    @Override
-    public boolean isEmpty() {
-        return getCount() == 0;
     }
 
     @Override
@@ -249,7 +139,7 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
                 @Override
                 public void onClick(View v) {
                     if (mOnItemClickListener != null) {
-                        mOnItemClickListener.onItemClick(v, viewType, holder.getAdapterPosition());
+                        mOnItemClickListener.onItemClick(v, viewType, holder.getLayoutPosition());
                     }
                 }
             });
@@ -257,7 +147,7 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
                 @Override
                 public boolean onLongClick(View v) {
                     if (mOnItemLongClickListener != null) {
-                        mOnItemLongClickListener.onItemLongClick(v, viewType, holder.getAdapterPosition());
+                        mOnItemLongClickListener.onItemLongClick(v, viewType, holder.getLayoutPosition());
                         return true;
                     }
                     return false;
@@ -272,8 +162,13 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
         int viewType = getItemViewType(position);
         if (viewType != TYPE_HEADER && viewType != TYPE_FOOTER) {
             onBind(holder, viewType, position, mList.get(hasHeaderView() ? --position : position));
+            addLoadAnimation(holder); // Load animation
         }
     }
+
+    /**
+     * ------------------------------------ Header / Footer ------------------------------------
+     */
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
@@ -394,4 +289,48 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
             });
         }
     }
+
+    /**
+     * ------------------------------------ Load animation ------------------------------------
+     */
+
+    @Override
+    public void openLoadAnimation() {
+        openLoadAnimation(mDuration, new AlphaInAnimation());
+    }
+
+    @Override
+    public void openLoadAnimation(long duration, BaseAnimation animation) {
+        if (duration > 0) {
+            mDuration = duration;
+        } else {
+            Log.w("SuperAdapter", "Invalid animation duration");
+        }
+        mLoadAnimationEnable = true;
+        mLoadAnimation = animation;
+    }
+
+    @Override
+    public void setOnlyOnce(boolean onlyOnce) {
+        mOnlyOnce = onlyOnce;
+    }
+
+    @Override
+    public final void addLoadAnimation(RecyclerView.ViewHolder holder) {
+        if (mLoadAnimationEnable) {
+            if (!mOnlyOnce || holder.getLayoutPosition() > mLastPosition) {
+                BaseAnimation animation = mLoadAnimation == null ? new AlphaInAnimation() : mLoadAnimation;
+                for (Animator anim : animation.getAnimators(holder.itemView)) {
+                    startAnim(anim, holder.getLayoutPosition());
+                }
+                mLastPosition = holder.getLayoutPosition();
+            }
+        }
+    }
+
+    public void startAnim(Animator anim, int index) {
+        anim.setDuration(mDuration).start();
+        anim.setInterpolator(mInterpolator);
+    }
+
 }
