@@ -49,7 +49,7 @@ public class ListViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_listview, container, false);
-        ListView listView = (ListView) view;
+        final ListView listView = (ListView) view;
         if (mType == 1) {
             singleAdapter = new SingleAdapter(getContext(), new ArrayList<>(Arrays.asList(DataUtils.names)), R.layout.item_type1);
             listView.setAdapter(singleAdapter);
