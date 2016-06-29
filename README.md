@@ -13,14 +13,7 @@ QQ群：271849001(新)
 
 In build.gradle:
 
-`compile 'org.byteam.superadapter:superadapter:latestVersion'`
-
-or if you want to exclude the internal dependency of recyclerview, try something like this:
-```
-compile('org.byteam.superadapter:superadapter:latestVersion') {
-        exclude group: 'com.android.support', module: 'recyclerview-v7'
-}
-```
+`compile 'org.byteam.superadapter:superadapter:latestVersion@aar'`
 
 ## Eclipse:
 Add [latest Jar](https://github.com/byteam/SuperAdapter/releases) to libs dir manually.
@@ -168,7 +161,7 @@ recyclerView.setAdapter(mAdapter);
 Open default animation:  
 `adapter.openLoadAnimation();`  
  or  
-`openLoadAnimation(long duration, new SlideInBottomAnimation());`  
+`adapter.openLoadAnimation(long duration, new SlideInBottomAnimation());`
 if you want to show animation when item shows each time:  
 `adapter.setOnlyOnce(false);`  
 Note that you can set custom animation by implementing **[BaseAnimation](superadapter/src/main/java/org/byteam/superadapter/animation/BaseAnimation.java)**.  
