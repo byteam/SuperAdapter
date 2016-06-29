@@ -1,4 +1,5 @@
-![Download](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg) ![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SuperAdapter-brightgreen.svg?style=flat)
+![Download](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg) ![API](https://img.shields.io/badge/API-11%2B-brightgreen.svg?style=flat) ![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SuperAdapter-brightgreen.svg?style=flat) 
+
 ### [Chinese Version 中文版](http://www.jianshu.com/p/d6a76fd3ea5b)
 QQ群：271849001(新)  
 
@@ -31,10 +32,11 @@ Add [latest Jar](https://github.com/byteam/SuperAdapter/releases) to libs dir ma
 * Hide view holder.
 * Supports both `BaseAdapter` and `RecyclerView.Adapter`.
 * Wraps CRUD.
+* Loading animation supporting!
 
 ## How to use
 
-If a simple adapter, it can be simplified like this:  
+### Simple adapter
 
 ```
 public class SingleAdapter extends SuperAdapter<String> {
@@ -55,7 +57,7 @@ Then:
 mSingleAdapter = new RecyclerSingleAdapter(getContext(), names, R.layout.your_item);  
 recyclerView.setAdapter(mSingleAdapter);
 ```  
-If a complex adapter, it can be simplified like this:  
+### Multiple item types adapter
 
 ```
 public class MultipleAdapter extends SuperAdapter<MockModel> {
@@ -162,8 +164,17 @@ mAdapter = new MultipleAdapter(getContext(), models, new SimpleMulItemViewType<M
 recyclerView.setAdapter(mAdapter);
 ```  
 
+### Load animation:
+Open default animation:  
+`adapter.openLoadAnimation();`  
+ or  
+`openLoadAnimation(long duration, new SlideInBottomAnimation());`  
+if you want to show animation when item shows each time:  
+`adapter.setOnlyOnce(false);`  
+Note that you can set custom animation by implementing **`BaseAnimation`**.  
 
-**Welcome to submit pull requests and open issues!  : )**
+
+**Welcome to submit PRs and open issues!  : )**
 
 ## License
 
