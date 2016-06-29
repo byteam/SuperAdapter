@@ -56,8 +56,8 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
 
     @Override
     public final void add(T item) {
-        mList.add(item);
-        int location = mList.size() - 1;
+        mData.add(item);
+        int location = mData.size() - 1;
         if (hasHeaderView())
             location++;
         notifyItemInserted(location);
@@ -66,7 +66,7 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
 
     @Override
     public void add(int location, T item) {
-        mList.add(location, item);
+        mData.add(location, item);
         if (hasHeaderView())
             location++;
         notifyItemInserted(location);
@@ -86,7 +86,7 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
             return;
         }
         int location = getCount();
-        mList.addAll(items);
+        mData.addAll(items);
         if (hasHeaderView())
             location++;
         notifyItemRangeInserted(location, items.size());
@@ -105,7 +105,7 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
         }
         if (hasHeaderView())
             location++;
-        mList.addAll(location, items);
+        mData.addAll(location, items);
         notifyItemRangeInserted(location, items.size());
         notifyDataSetHasChanged();
     }
@@ -113,13 +113,13 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
     @Override
     public final void remove(T item) {
         if (contains(item)) {
-            remove(mList.indexOf(item));
+            remove(mData.indexOf(item));
         }
     }
 
     @Override
     public final void remove(int location) {
-        mList.remove(location);
+        mData.remove(location);
         if (hasHeaderView())
             location++;
         notifyItemRemoved(location);
@@ -128,26 +128,26 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
 
     @Override
     public void removeAll(List<T> items) {
-        mList.removeAll(items);
+        mData.removeAll(items);
         notifyDataSetChanged(); // RecyclerView
         notifyDataSetHasChanged(); // AdapterView
     }
 
     @Override
     public void retainAll(List<T> items) {
-        mList.retainAll(items);
+        mData.retainAll(items);
         notifyDataSetChanged(); // RecyclerView
         notifyDataSetHasChanged(); // AdapterView
     }
 
     @Override
     public final void set(T oldItem, T newItem) {
-        set(mList.indexOf(oldItem), newItem);
+        set(mData.indexOf(oldItem), newItem);
     }
 
     @Override
     public final void set(int location, T item) {
-        mList.set(location, item);
+        mData.set(location, item);
         if (hasHeaderView())
             location++;
         notifyItemChanged(location);
@@ -160,14 +160,14 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
             Log.w(TAG, "replaceAll: The list you passed contains no elements.");
             return;
         }
-        if (mList.isEmpty()) {
+        if (mData.isEmpty()) {
             addAll(items);
         } else {
             int start = hasHeaderView() ? 1 : 0;
             int originalSize = getCount();
             int newSize = items.size();
-            mList.clear();
-            mList.addAll(items);
+            mData.clear();
+            mData.addAll(items);
             if (originalSize > newSize) {
                 notifyItemRangeChanged(start, newSize);
                 notifyItemRangeRemoved(start + newSize, originalSize - newSize);
@@ -183,18 +183,18 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
 
     @Override
     public final boolean contains(T item) {
-        return mList.contains(item);
+        return mData.contains(item);
     }
 
     @Override
     public boolean containsAll(List<T> items) {
-        return mList.containsAll(items);
+        return mData.containsAll(items);
     }
 
     @Override
     public final void clear() {
-        if (!mList.isEmpty()) {
-            mList.clear();
+        if (!mData.isEmpty()) {
+            mData.clear();
             // FIXME: 2016/6/3 v3.4
             // RV源码bug(https://code.google.com/p/android/issues/detail?id=77846),
             // 导致不能使用 notifyItemRangeRemoved(hasHeaderView() ? 1 : 0, getCount());

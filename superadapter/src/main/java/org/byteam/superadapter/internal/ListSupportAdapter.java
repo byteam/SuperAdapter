@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.SpinnerAdapter;
 
 import org.byteam.superadapter.IMulItemViewType;
@@ -81,7 +82,7 @@ public abstract class ListSupportAdapter<T> extends BaseSuperAdapter<T>
      */
     @Override
     public int getCount() {
-        return super.getCount();
+        return mData == null ? 0 : mData.size();
     }
 
     /**
@@ -89,9 +90,9 @@ public abstract class ListSupportAdapter<T> extends BaseSuperAdapter<T>
      */
     @Override
     public T getItem(int position) {
-        if (position >= mList.size())
+        if (position >= mData.size())
             return null;
-        return mList.get(position);
+        return mData.get(position);
     }
 
     /**
@@ -118,25 +119,15 @@ public abstract class ListSupportAdapter<T> extends BaseSuperAdapter<T>
     }
 
     /**
+     * Note that you must override this method if using <code>ListView</code> with multiple item types.
+     * <p>
+     * 在使用ListView的多布局的情况下,你必须重写此方法,因为ListView和RV的实现机制不同。
+     *
      * @see android.widget.BaseAdapter#getItemViewType(int).
      */
     @Override
     public int getItemViewType(int position) {
-        int viewType;
-        if (isHeaderView(position)) {
-            viewType = TYPE_HEADER;
-        } else if (isFooterView(position)) {
-            viewType = TYPE_FOOTER;
-        } else {
-            if (mMulItemViewType != null) {
-                if (hasHeaderView()) {
-                    position--;
-                }
-                return mMulItemViewType.getItemViewType(position, mList.get(position));
-            }
-            return 0;
-        }
-        return viewType;
+        return super.getItemViewType(position);
     }
 
     /**
@@ -157,4 +148,40 @@ public abstract class ListSupportAdapter<T> extends BaseSuperAdapter<T>
         return getCount() == 0;
     }
 
+
+    @Override
+    public void addHeaderView(View header) {
+        if (mAbsListView != null && mAbsListView instanceof ListView) {
+            ((ListView) mAbsListView).addHeaderView(header);
+        } else {
+            super.addHeaderView(header);
+        }
+    }
+
+    @Override
+    public boolean hasHeaderView() {
+        if (mAbsListView != null && mAbsListView instanceof ListView) {
+            return ((ListView) mAbsListView).getHeaderViewsCount() > 0;
+        } else {
+            return super.hasHeaderView();
+        }
+    }
+
+    @Override
+    public void addFooterView(View footer) {
+        if (mAbsListView != null && mAbsListView instanceof ListView) {
+            ((ListView) mAbsListView).addFooterView(footer);
+        } else {
+            super.addFooterView(footer);
+        }
+    }
+
+    @Override
+    public boolean hasFooterView() {
+        if (mAbsListView != null && mAbsListView instanceof ListView) {
+            return ((ListView) mAbsListView).getFooterViewsCount() > 0;
+        } else {
+            return super.hasFooterView();
+        }
+    }
 }

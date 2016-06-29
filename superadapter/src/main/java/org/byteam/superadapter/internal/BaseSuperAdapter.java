@@ -17,7 +17,6 @@ import org.byteam.superadapter.OnItemClickListener;
 import org.byteam.superadapter.OnItemLongClickListener;
 import org.byteam.superadapter.animation.AlphaInAnimation;
 import org.byteam.superadapter.animation.BaseAnimation;
-import org.byteam.superadapter.animation.IAnimation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,7 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
         implements IViewBindData<T, SuperViewHolder>, IAnimation, ILayoutManager, IHeaderFooter {
 
     protected Context mContext;
-    protected List<T> mList; // DataSources.
+    protected List<T> mData;
 
     protected int mLayoutResId;
     protected IMulItemViewType<T> mMulItemViewType;
@@ -64,7 +63,7 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
      */
     public BaseSuperAdapter(Context context, List<T> list, int layoutResId) {
         this.mContext = context;
-        this.mList = list == null ? new ArrayList<T>() : new ArrayList<>(list);
+        this.mData = list == null ? new ArrayList<T>() : new ArrayList<>(list);
         this.mLayoutResId = layoutResId;
         this.mMulItemViewType = null;
     }
@@ -78,7 +77,7 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
      */
     public BaseSuperAdapter(Context context, List<T> list, IMulItemViewType<T> mulItemViewType) {
         this.mContext = context;
-        this.mList = list == null ? new ArrayList<T>() : new ArrayList<>(list);
+        this.mData = list == null ? new ArrayList<T>() : new ArrayList<>(list);
         this.mMulItemViewType = mulItemViewType == null ? offerMultiItemViewType() : mulItemViewType;
     }
 
@@ -86,8 +85,16 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
         return mContext;
     }
 
+    /**
+     * Deprecated. Use {@link #getData()} instead.
+     */
+    @Deprecated
     public List<T> getList() {
-        return mList;
+        return mData;
+    }
+
+    public List<T> getData() {
+        return mData;
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -105,10 +112,6 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
         return null;
     }
 
-    public int getCount() {
-        return mList == null ? 0 : mList.size();
-    }
-
     /**
      * How many items are represented by this RecyclerView.Adapter.
      *
@@ -116,12 +119,31 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
      */
     @Override
     public int getItemCount() {
-        int size = getCount();
+        int size = mData == null ? 0 : mData.size();
         if (hasHeaderView())
             size++;
         if (hasFooterView())
             size++;
         return size;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        int viewType;
+        if (isHeaderView(position)) {
+            viewType = TYPE_HEADER;
+        } else if (isFooterView(position)) {
+            viewType = TYPE_FOOTER;
+        } else {
+            if (mMulItemViewType != null) {
+                if (hasHeaderView()) {
+                    position--;
+                }
+                return mMulItemViewType.getItemViewType(position, mData.get(position));
+            }
+            return 0;
+        }
+        return viewType;
     }
 
     @Override
@@ -139,7 +161,7 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
                 @Override
                 public void onClick(View v) {
                     if (mOnItemClickListener != null) {
-                        mOnItemClickListener.onItemClick(v, viewType, holder.getLayoutPosition());
+                        mOnItemClickListener.onItemClick(v, viewType, holder.getAdapterPosition());
                     }
                 }
             });
@@ -147,7 +169,7 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
                 @Override
                 public boolean onLongClick(View v) {
                     if (mOnItemLongClickListener != null) {
-                        mOnItemLongClickListener.onItemLongClick(v, viewType, holder.getLayoutPosition());
+                        mOnItemLongClickListener.onItemLongClick(v, viewType, holder.getAdapterPosition());
                         return true;
                     }
                     return false;
@@ -161,7 +183,7 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
     public void onBindViewHolder(SuperViewHolder holder, int position) {
         int viewType = getItemViewType(position);
         if (viewType != TYPE_HEADER && viewType != TYPE_FOOTER) {
-            onBind(holder, viewType, position, mList.get(hasHeaderView() ? --position : position));
+            onBind(holder, viewType, position, mData.get(hasHeaderView() ? --position : position));
             addLoadAnimation(holder); // Load animation
         }
     }
