@@ -171,7 +171,7 @@ Open default animation:
 `openLoadAnimation(long duration, new SlideInBottomAnimation());`  
 if you want to show animation when item shows each time:  
 `adapter.setOnlyOnce(false);`  
-Note that you can set custom animation by implementing **`BaseAnimation`**.  
+Note that you can set custom animation by implementing **[BaseAnimation](superadapter/src/main/java/org/byteam/superadapter/animation/BaseAnimation.java)**.  
 
 
 **Welcome to submit PRs and open issues!  : )**
