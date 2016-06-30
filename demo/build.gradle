@@ -8,8 +8,8 @@ android {
         applicationId "org.byteam.superadapter.demo"
         minSdkVersion 11
         targetSdkVersion 24
-        versionCode 3
-        versionName "3.5"
+        versionCode 1
+        versionName "2016/6/29"
     }
     buildTypes {
         release {
