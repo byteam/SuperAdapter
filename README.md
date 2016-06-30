@@ -161,7 +161,7 @@ recyclerView.setAdapter(mAdapter);
 Open default animation:  
 `adapter.openLoadAnimation();`  
  or  
-`adapter.openLoadAnimation(long duration, new SlideInBottomAnimation());`
+`adapter.openLoadAnimation(long duration, new SlideInBottomAnimation());`  
 if you want to show animation when item shows each time:  
 `adapter.setOnlyOnce(false);`  
 Note that you can set custom animation by implementing **[BaseAnimation](superadapter/src/main/java/org/byteam/superadapter/animation/BaseAnimation.java)**.  
