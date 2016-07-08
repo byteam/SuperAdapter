@@ -103,9 +103,9 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
             Log.w(TAG, "addAll: IndexOutOfBoundsException");
             return;
         }
+        mData.addAll(location, items);
         if (hasHeaderView())
             location++;
-        mData.addAll(location, items);
         notifyItemRangeInserted(location, items.size());
         notifyDataSetHasChanged();
     }
