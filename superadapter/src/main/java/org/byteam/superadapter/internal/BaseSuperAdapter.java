@@ -195,7 +195,7 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         if (mRecyclerView != null && mRecyclerView != recyclerView)
-            Log.i("BaseSuperAdapter", "Does not support multiple RecyclerViews now.");
+            Log.i("SuperAdapter", "Does not support multiple RecyclerViews now.");
         mRecyclerView = recyclerView;
         // Ensure a situation that add header or footer before setAdapter().
         ifGridLayoutManager();
@@ -208,10 +208,9 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
 
     @Override
     public void onViewAttachedToWindow(SuperViewHolder holder) {
-        ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
-        if (lp != null && lp instanceof StaggeredGridLayoutManager.LayoutParams) {
-            // add header or footer to StaggeredGridLayoutManager
-            if (isHeaderView(holder.getLayoutPosition()) || isFooterView(holder.getLayoutPosition())) {
+        if (isHeaderView(holder.getLayoutPosition()) || isFooterView(holder.getLayoutPosition())) {
+            ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
+            if (lp != null && lp instanceof StaggeredGridLayoutManager.LayoutParams) {
                 ((StaggeredGridLayoutManager.LayoutParams) lp).setFullSpan(true);
             }
         }
@@ -242,6 +241,7 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
         if (hasHeaderView())
             throw new IllegalStateException("You have already added a header view.");
         mHeader = header;
+        setLayoutParams(mHeader);
         ifGridLayoutManager();
         notifyItemInserted(0);
     }
@@ -251,8 +251,28 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
         if (hasFooterView())
             throw new IllegalStateException("You have already added a footer view.");
         mFooter = footer;
+        setLayoutParams(mFooter);
         ifGridLayoutManager();
         notifyItemInserted(getItemCount() - 1);
+    }
+
+    private void setLayoutParams(View view) {
+        if (hasHeaderView() || hasFooterView()) {
+            RecyclerView.LayoutManager layoutManager = getLayoutManager();
+            if (layoutManager instanceof StaggeredGridLayoutManager) {
+                view.setLayoutParams(new StaggeredGridLayoutManager.LayoutParams(
+                        StaggeredGridLayoutManager.LayoutParams.MATCH_PARENT,
+                        StaggeredGridLayoutManager.LayoutParams.WRAP_CONTENT));
+            } else if (layoutManager instanceof GridLayoutManager) {
+                view.setLayoutParams(new GridLayoutManager.LayoutParams(
+                        GridLayoutManager.LayoutParams.MATCH_PARENT,
+                        GridLayoutManager.LayoutParams.WRAP_CONTENT));
+            } else {
+                view.setLayoutParams(new RecyclerView.LayoutParams(
+                        RecyclerView.LayoutParams.MATCH_PARENT,
+                        RecyclerView.LayoutParams.WRAP_CONTENT));
+            }
+        }
     }
 
     @Override
@@ -297,18 +317,20 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
     }
 
     private void ifGridLayoutManager() {
-        final RecyclerView.LayoutManager layoutManager = getLayoutManager();
-        if (layoutManager instanceof GridLayoutManager) {
-            final GridLayoutManager.SpanSizeLookup originalSpanSizeLookup =
-                    ((GridLayoutManager) layoutManager).getSpanSizeLookup();
-            ((GridLayoutManager) layoutManager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-                @Override
-                public int getSpanSize(int position) {
-                    return (isHeaderView(position) || isFooterView(position)) ?
-                            ((GridLayoutManager) layoutManager).getSpanCount() :
-                            originalSpanSizeLookup.getSpanSize(position);
-                }
-            });
+        if (hasHeaderView() || hasFooterView()) {
+            final RecyclerView.LayoutManager layoutManager = getLayoutManager();
+            if (layoutManager instanceof GridLayoutManager) {
+                final GridLayoutManager.SpanSizeLookup originalSpanSizeLookup =
+                        ((GridLayoutManager) layoutManager).getSpanSizeLookup();
+                ((GridLayoutManager) layoutManager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                    @Override
+                    public int getSpanSize(int position) {
+                        return (isHeaderView(position) || isFooterView(position)) ?
+                                ((GridLayoutManager) layoutManager).getSpanCount() :
+                                originalSpanSizeLookup.getSpanSize(position);
+                    }
+                });
+            }
         }
     }
 
