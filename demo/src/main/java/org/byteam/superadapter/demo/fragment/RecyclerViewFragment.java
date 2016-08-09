@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -135,6 +136,7 @@ public class RecyclerViewFragment extends Fragment {
                 });
                 recyclerView.setAdapter(mAdapter);
             } else if (mType == 2) {
+                recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
                 mAdapter = new MultipleAdapter(getContext(), DataUtils.generateData(),
                         new SimpleMulItemViewType<MockModel>() {
                             @Override
