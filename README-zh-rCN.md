@@ -14,13 +14,6 @@ QQ群：271849001(新)
 
 `compile 'org.byteam.superadapter:superadapter:最新版本号'`
 
-如果你不想使用SuperAdapter内部依赖的RecyclerView，而是使用自己指定的版本，试试：
-```
-compile('org.byteam.superadapter:superadapter:最新版本号') {
-        exclude group: 'com.android.support', module: 'recyclerview-v7'
-}
-```
-
 ## Eclipse:
 可以手动添加最新的[jar包](https://github.com/chenenyu/SuperAdapter/releases)到libs文件夹下，建议尽早迁移到Android Studio开发。
 ## 特性
