@@ -63,7 +63,7 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
      */
     public BaseSuperAdapter(Context context, List<T> list, int layoutResId) {
         this.mContext = context;
-        this.mData = list == null ? new ArrayList<T>() : new ArrayList<>(list);
+        this.mData = list == null ? new ArrayList<T>() : list;
         this.mLayoutResId = layoutResId;
         this.mMulItemViewType = null;
     }
@@ -77,7 +77,7 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
      */
     public BaseSuperAdapter(Context context, List<T> list, IMulItemViewType<T> mulItemViewType) {
         this.mContext = context;
-        this.mData = list == null ? new ArrayList<T>() : new ArrayList<>(list);
+        this.mData = list == null ? new ArrayList<T>() : list;
         this.mMulItemViewType = mulItemViewType == null ? offerMultiItemViewType() : mulItemViewType;
     }
 
