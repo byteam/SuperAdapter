@@ -1,0 +1,79 @@
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = "org.byteam.superadapter"
+version = "3.6.3"
+
+def siteUrl = 'https://github.com/byteam/SuperAdapter'
+def issuesUrl = 'https://github.com/byteam/SuperAdapter/issues'
+def gitUrl = 'https://github.com/byteam/SuperAdapter.git'
+
+install {
+    repositories.mavenInstaller.pom.project {
+        packaging 'aar'
+        name 'SuperAdapter'
+        description 'Adapter(BaseAdapter, RecyclerView.Adapter) wrapper for android.'
+        url siteUrl
+
+        licenses {
+            license {
+                name 'The Apache Software License, Version 2.0'
+                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            }
+        }
+        developers {
+            developer {
+                id 'chenenyu'
+                name 'Enyu Chen'
+                email 'echocey@gmail.com'
+            }
+        }
+    }
+}
+
+task jar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    options.encoding = 'UTF-8'
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    failOnError false
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    from javadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+artifacts {
+//    archives jar
+    archives javadocJar
+    archives sourcesJar
+}
+
+bintray {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = "SuperAdapter"
+        websiteUrl = siteUrl
+        issueTrackerUrl = issuesUrl
+        vcsUrl = gitUrl
+        labels = ["android", "RecyclerView", "Adapter"]
+        licenses = ["Apache-2.0"]
+        publicDownloadNumbers = true
+        publish = true
+    }
+}
