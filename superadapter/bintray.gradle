@@ -1,9 +1,6 @@
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
-group = "org.byteam.superadapter"
-version = "3.6.3"
-
 def siteUrl = 'https://github.com/byteam/SuperAdapter'
 def issuesUrl = 'https://github.com/byteam/SuperAdapter/issues'
 def gitUrl = 'https://github.com/byteam/SuperAdapter.git'
