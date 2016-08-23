@@ -157,7 +157,7 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
     @Override
     public final void replaceAll(List<T> items) {
         if (items == null || items.isEmpty()) {
-            Log.w(TAG, "replaceAll: The list you passed contains no elements.");
+            clear();
             return;
         }
         if (mData.isEmpty()) {
@@ -177,7 +177,7 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
                 notifyItemRangeChanged(start, originalSize);
                 notifyItemRangeInserted(start + originalSize, newSize - originalSize);
             }
-            notifyDataSetHasChanged(); // AdapterView
+            notifyDataSetHasChanged();
         }
     }
 
@@ -193,14 +193,11 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
 
     @Override
     public final void clear() {
-        if (!mData.isEmpty()) {
+        int count = getCount();
+        if (count > 0) {
             mData.clear();
-            // FIXME: 2016/6/3 v3.4
-            // RV源码bug(https://code.google.com/p/android/issues/detail?id=77846),
-            // 导致不能使用 notifyItemRangeRemoved(hasHeaderView() ? 1 : 0, getCount());
-            // 这里使用notifyDataSetChanged();代替，没有动画效果。
-            notifyDataSetChanged();  // RecyclerView
-            notifyDataSetHasChanged(); // AdapterView
+            notifyItemRangeRemoved(hasHeaderView() ? 1 : 0, count);
+            notifyDataSetHasChanged();
         }
     }
 }
