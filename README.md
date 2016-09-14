@@ -13,7 +13,7 @@ QQ群：271849001(新)
 
 In build.gradle:
 
-`compile 'org.byteam.superadapter:superadapter:latestVersion'`
+`compile 'org.byteam.superadapter:superadapter:3.+'`
 
 ## Eclipse:
 Add [latest Jar](https://github.com/byteam/SuperAdapter/releases) to libs dir manually.
