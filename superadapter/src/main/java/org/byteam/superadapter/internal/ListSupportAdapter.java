@@ -153,8 +153,18 @@ public abstract class ListSupportAdapter<T> extends BaseSuperAdapter<T>
     public void addHeaderView(View header) {
         if (mAbsListView != null && mAbsListView instanceof ListView) {
             ((ListView) mAbsListView).addHeaderView(header);
+            mHeader = header;
         } else {
             super.addHeaderView(header);
+        }
+    }
+
+    @Override
+    public boolean removeHeaderView() {
+        if (mAbsListView != null && mAbsListView instanceof ListView) {
+            return ((ListView) mAbsListView).removeHeaderView(mHeader);
+        } else {
+            return super.removeHeaderView();
         }
     }
 
@@ -171,8 +181,18 @@ public abstract class ListSupportAdapter<T> extends BaseSuperAdapter<T>
     public void addFooterView(View footer) {
         if (mAbsListView != null && mAbsListView instanceof ListView) {
             ((ListView) mAbsListView).addFooterView(footer);
+            mFooter = footer;
         } else {
             super.addFooterView(footer);
+        }
+    }
+
+    @Override
+    public boolean removeFooterView() {
+        if (mAbsListView != null && mAbsListView instanceof ListView) {
+            return ((ListView) mAbsListView).removeFooterView(mFooter);
+        } else {
+            return super.removeFooterView();
         }
     }
 

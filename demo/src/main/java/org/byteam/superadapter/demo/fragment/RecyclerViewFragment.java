@@ -114,7 +114,7 @@ public class RecyclerViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(org.byteam.superadapter.demo.R.layout.fragment_recyclerview, container, false);
+        View view = inflater.inflate(R.layout.fragment_recyclerview, container, false);
         header = new TextView(getContext());
         header.setBackgroundColor(Color.YELLOW);
         header.setText("header");

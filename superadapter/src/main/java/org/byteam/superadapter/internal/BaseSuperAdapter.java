@@ -43,8 +43,8 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
 
     protected static final int TYPE_HEADER = -0x100;
     protected static final int TYPE_FOOTER = -0x101;
-    private View mHeader;
-    private View mFooter;
+    protected View mHeader;
+    protected View mFooter;
 
     private Interpolator mInterpolator = new LinearInterpolator();
     private long mDuration = 300;

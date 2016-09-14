@@ -1,11 +1,11 @@
 apply plugin: 'com.android.library'
 
 group = "org.byteam.superadapter"
-version = "3.6.3"
+version = "3.6.4"
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         minSdkVersion 11
