@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.byteam.superadapter.DefaultDiffCallback;
 import org.byteam.superadapter.OnItemClickListener;
 import org.byteam.superadapter.SimpleMulItemViewType;
 import org.byteam.superadapter.SuperAdapter;
@@ -27,6 +28,8 @@ import org.byteam.superadapter.demo.model.MockModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static org.byteam.superadapter.demo.model.DataUtils.generateData;
 
 /**
  * Fragment contains RecyclerView.
@@ -89,19 +92,41 @@ public class RecyclerViewFragment extends Fragment {
                 return true;
             case R.id.action_insert_data:
                 if (mType == 2) {
-                    mAdapter.add(0, DataUtils.generateData().get(0));
+                    mAdapter.add(0, generateData().get(0));
                 } else {
                     mAdapter.add(0, Arrays.asList(DataUtils.names).get(0));
                 }
                 return true;
             case R.id.action_addAll_data:
                 if (mAdapter != null && mType == 2) {
-                    mAdapter.addAll(DataUtils.generateData());
+                    mAdapter.addAll(generateData());
                 }
                 return true;
             case R.id.action_replaceAll_data:
                 if (mAdapter != null && mType == 2) {
-                    mAdapter.replaceAll(DataUtils.generateData());
+                    mAdapter.replaceAll(generateData());
+                }
+                return true;
+            case R.id.action_diff:
+                if (mAdapter != null && mType == 2) {
+                    DefaultDiffCallback<MockModel> callback = new DefaultDiffCallback<MockModel>(
+                            mAdapter.getData(), DataUtils.generateData()) {
+                        @Override
+                        public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                            // If your items have unique ids, this method should check their id equality.
+                            return true;
+                        }
+
+                        @Override
+                        public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                            MockModel oldModel = getOldList().get(oldItemPosition);
+                            MockModel newModel = getNewList().get(newItemPosition);
+
+                            return oldModel.getName().equals(newModel.getName()) &&
+                                    oldModel.getAge() == newModel.getAge();
+                        }
+                    };
+                    mAdapter.diff(callback);
                 }
                 return true;
             case R.id.action_clear_data:
@@ -137,7 +162,7 @@ public class RecyclerViewFragment extends Fragment {
                 recyclerView.setAdapter(mAdapter);
             } else if (mType == 2) {
                 recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-                mAdapter = new MultipleAdapter(getContext(), DataUtils.generateData(),
+                mAdapter = new MultipleAdapter(getContext(), generateData(),
                         new SimpleMulItemViewType<MockModel>() {
                             @Override
                             public int getItemViewType(int position, MockModel mockModel) {

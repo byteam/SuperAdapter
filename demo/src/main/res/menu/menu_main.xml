@@ -31,6 +31,10 @@
         android:title="replaceAll data"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/action_diff"
+        android:title="diff"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/action_clear_data"
         android:title="clear data"
         app:showAsAction="never"/>

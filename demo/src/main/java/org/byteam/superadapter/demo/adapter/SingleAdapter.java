@@ -8,16 +8,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.byteam.superadapter.SuperAdapter;
+import org.byteam.superadapter.SuperViewHolder;
 import org.byteam.superadapter.animation.AlphaInAnimation;
 import org.byteam.superadapter.demo.R;
-import org.byteam.superadapter.internal.SuperViewHolder;
 
 import java.util.List;
 
 public class SingleAdapter extends SuperAdapter<String> {
     public SingleAdapter(Context context, List<String> list, int layoutResId) {
         super(context, list, layoutResId);
-        openLoadAnimation(500, new AlphaInAnimation());
+        enableLoadAnimation(500, new AlphaInAnimation());
         setOnlyOnce(false);
     }
 

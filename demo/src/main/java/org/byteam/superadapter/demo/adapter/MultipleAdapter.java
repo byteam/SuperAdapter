@@ -4,18 +4,17 @@ import android.content.Context;
 
 import org.byteam.superadapter.IMulItemViewType;
 import org.byteam.superadapter.SuperAdapter;
+import org.byteam.superadapter.SuperViewHolder;
 import org.byteam.superadapter.animation.SlideInBottomAnimation;
 import org.byteam.superadapter.demo.R;
 import org.byteam.superadapter.demo.model.MockModel;
-import org.byteam.superadapter.internal.SuperViewHolder;
 
 import java.util.List;
 
 public class MultipleAdapter extends SuperAdapter<MockModel> {
     public MultipleAdapter(Context context, List<MockModel> list, IMulItemViewType<MockModel> multiItemViewType) {
         super(context, list, multiItemViewType);
-        openLoadAnimation(500, new SlideInBottomAnimation());
-        setOnlyOnce(false);
+        enableLoadAnimation(500, new SlideInBottomAnimation());
     }
 
     @Override
