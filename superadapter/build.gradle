@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 
 group = "org.byteam.superadapter"
-version = "3.6.4"
+version = "3.6.5"
 
 android {
     compileSdkVersion 24
@@ -23,7 +23,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    provided 'com.android.support:recyclerview-v7:24.2.0'
+    provided 'com.android.support:recyclerview-v7:24.2.1'
 }
 
 apply from: 'bintray.gradle'
