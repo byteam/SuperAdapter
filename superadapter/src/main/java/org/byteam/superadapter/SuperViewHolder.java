@@ -1,4 +1,4 @@
-package org.byteam.superadapter.internal;
+package org.byteam.superadapter;
 
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -20,7 +20,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 /**
- * <p>Universal view holder.</p>
+ * Universal view holder.
+ * <p>
  * Created by Cheney on 16/3/30.
  */
 public class SuperViewHolder extends RecyclerView.ViewHolder implements ChainSetter<SuperViewHolder> {

@@ -1,4 +1,4 @@
-package org.byteam.superadapter.internal;
+package org.byteam.superadapter;
 
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -13,7 +13,8 @@ import android.widget.Adapter;
 import android.widget.ImageView;
 
 /**
- * <p>Some convenient methods called like a chain.</p>
+ * Some convenient methods called like a chain.
+ * <p>
  * Created by Cheney on 16/4/1.
  */
 interface ChainSetter<VH> {

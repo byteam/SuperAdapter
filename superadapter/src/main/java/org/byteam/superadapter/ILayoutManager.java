@@ -1,9 +1,10 @@
-package org.byteam.superadapter.internal;
+package org.byteam.superadapter;
 
 import android.support.v7.widget.RecyclerView;
 
 /**
- * <p>Methods about layout manager.</p>
+ * Methods about layout manager.
+ * <p>
  * Created by Cheney on 16/1/18.
  */
 interface ILayoutManager {

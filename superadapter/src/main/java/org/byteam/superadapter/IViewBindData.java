@@ -1,10 +1,11 @@
-package org.byteam.superadapter.internal;
+package org.byteam.superadapter;
 
 import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * <p>Create and bind data to item view.</p>
+ * Create and bind data to item view.
+ * <p>
  * Created by Cheney on 16/3/31.
  */
 interface IViewBindData<T, VH> {
@@ -21,7 +22,7 @@ interface IViewBindData<T, VH> {
      * Method for binding data to view.
      *
      * @param holder         ViewHolder
-     * @param viewType       {@link BaseSuperAdapter#getItemViewType(int)}
+     * @param viewType       {@link RecyclerSupportAdapter#getItemViewType(int)}
      * @param layoutPosition position
      * @param item           data
      */

@@ -1,4 +1,4 @@
-package org.byteam.superadapter.internal;
+package org.byteam.superadapter;
 
 import android.animation.Animator;
 import android.content.Context;
@@ -12,9 +12,6 @@ import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
 
-import org.byteam.superadapter.IMulItemViewType;
-import org.byteam.superadapter.OnItemClickListener;
-import org.byteam.superadapter.OnItemLongClickListener;
 import org.byteam.superadapter.animation.AlphaInAnimation;
 import org.byteam.superadapter.animation.BaseAnimation;
 
@@ -22,13 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p>
  * Base adapter.
- * </p>
+ * <p>
  * Created by Cheney on 16/3/30.
  */
-public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperViewHolder>
+abstract class RecyclerSupportAdapter<T> extends RecyclerView.Adapter<SuperViewHolder>
         implements IViewBindData<T, SuperViewHolder>, IAnimation, ILayoutManager, IHeaderFooter {
+
+    protected final String TAG = "SuperAdapter";
 
     protected Context mContext;
     protected List<T> mData;
@@ -48,7 +46,7 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
 
     private Interpolator mInterpolator = new LinearInterpolator();
     private long mDuration = 300;
-    private boolean mLoadAnimationEnable;
+    private boolean mLoadAnimationEnabled;
     private boolean mOnlyOnce = true;
     private BaseAnimation mLoadAnimation;
     private int mLastPosition = -1;
@@ -61,7 +59,7 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
      * @param list        Data list.
      * @param layoutResId {@link android.support.annotation.LayoutRes}
      */
-    public BaseSuperAdapter(Context context, List<T> list, int layoutResId) {
+    public RecyclerSupportAdapter(Context context, List<T> list, int layoutResId) {
         this.mContext = context;
         this.mData = list == null ? new ArrayList<T>() : list;
         this.mLayoutResId = layoutResId;
@@ -75,7 +73,7 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
      * @param list            Data list.
      * @param mulItemViewType If null, plz override {@link #offerMultiItemViewType()}.
      */
-    public BaseSuperAdapter(Context context, List<T> list, IMulItemViewType<T> mulItemViewType) {
+    public RecyclerSupportAdapter(Context context, List<T> list, IMulItemViewType<T> mulItemViewType) {
         this.mContext = context;
         this.mData = list == null ? new ArrayList<T>() : list;
         this.mMulItemViewType = mulItemViewType == null ? offerMultiItemViewType() : mulItemViewType;
@@ -97,6 +95,10 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
         return mData;
     }
 
+    public void setData(List<T> data) {
+        mData = data;
+    }
+
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.mOnItemClickListener = onItemClickListener;
     }
@@ -106,7 +108,7 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
     }
 
     /**
-     * @return Offered an {@link IMulItemViewType} by override this method.
+     * @return Offered an {@link IMulItemViewType} by overriding this method.
      */
     protected IMulItemViewType<T> offerMultiItemViewType() {
         return null;
@@ -180,6 +182,11 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
     }
 
     @Override
+    public void onBindViewHolder(SuperViewHolder holder, int position, List<Object> payloads) {
+        super.onBindViewHolder(holder, position, payloads);
+    }
+
+    @Override
     public void onBindViewHolder(SuperViewHolder holder, int position) {
         int viewType = getItemViewType(position);
         if (viewType != TYPE_HEADER && viewType != TYPE_FOOTER) {
@@ -195,7 +202,7 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         if (mRecyclerView != null && mRecyclerView != recyclerView)
-            Log.i("SuperAdapter", "Does not support multiple RecyclerViews now.");
+            Log.i(TAG, "Does not support multiple RecyclerViews now.");
         mRecyclerView = recyclerView;
         // Ensure a situation that add header or footer before setAdapter().
         ifGridLayoutManager();
@@ -339,19 +346,25 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
      */
 
     @Override
-    public void openLoadAnimation() {
-        openLoadAnimation(mDuration, new AlphaInAnimation());
+    public void enableLoadAnimation() {
+        enableLoadAnimation(mDuration, new AlphaInAnimation());
     }
 
     @Override
-    public void openLoadAnimation(long duration, BaseAnimation animation) {
+    public void enableLoadAnimation(long duration, BaseAnimation animation) {
         if (duration > 0) {
             mDuration = duration;
         } else {
-            Log.w("SuperAdapter", "Invalid animation duration");
+            Log.w(TAG, "Invalid animation duration");
         }
-        mLoadAnimationEnable = true;
+        mLoadAnimationEnabled = true;
         mLoadAnimation = animation;
+    }
+
+    @Override
+    public void cancelLoadAnimation() {
+        mLoadAnimationEnabled = false;
+        mLoadAnimation = null;
     }
 
     @Override
@@ -360,21 +373,17 @@ public abstract class BaseSuperAdapter<T> extends RecyclerView.Adapter<SuperView
     }
 
     @Override
-    public final void addLoadAnimation(RecyclerView.ViewHolder holder) {
-        if (mLoadAnimationEnable) {
+    public void addLoadAnimation(RecyclerView.ViewHolder holder) {
+        if (mLoadAnimationEnabled) {
             if (!mOnlyOnce || holder.getLayoutPosition() > mLastPosition) {
                 BaseAnimation animation = mLoadAnimation == null ? new AlphaInAnimation() : mLoadAnimation;
                 for (Animator anim : animation.getAnimators(holder.itemView)) {
-                    startAnim(anim, holder.getLayoutPosition());
+                    anim.setInterpolator(mInterpolator);
+                    anim.setDuration(mDuration).start();
                 }
                 mLastPosition = holder.getLayoutPosition();
             }
         }
-    }
-
-    public void startAnim(Animator anim, int index) {
-        anim.setDuration(mDuration).start();
-        anim.setInterpolator(mInterpolator);
     }
 
 }

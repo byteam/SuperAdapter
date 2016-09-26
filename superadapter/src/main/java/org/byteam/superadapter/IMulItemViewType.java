@@ -2,7 +2,8 @@ package org.byteam.superadapter;
 
 
 /**
- * <p>Interface for multiple view types.</p>
+ * Interface for multiple view types.
+ * <p>
  * Created by Cheney on 15/11/28.
  */
 public interface IMulItemViewType<T> {

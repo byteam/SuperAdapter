@@ -1,4 +1,4 @@
-package org.byteam.superadapter.internal;
+package org.byteam.superadapter;
 
 import android.content.Context;
 import android.database.DataSetObservable;
@@ -10,17 +10,14 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SpinnerAdapter;
 
-import org.byteam.superadapter.IMulItemViewType;
-
 import java.util.List;
 
 /**
- * Middle adapter for {@link android.widget.BaseAdapter} supporting.
- *
- * @Author: chenenyu
- * @Created: 16/6/28 15:25.
+ * Bridge adapter for {@link android.widget.BaseAdapter} supporting.
+ * <p>
+ * Created by Cheney on 16/6/28.
  */
-public abstract class ListSupportAdapter<T> extends BaseSuperAdapter<T>
+abstract class ListSupportAdapter<T> extends RecyclerSupportAdapter<T>
         implements ListAdapter, SpinnerAdapter {
 
     private AbsListView mAbsListView;

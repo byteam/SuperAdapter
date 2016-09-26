@@ -1,9 +1,10 @@
-package org.byteam.superadapter.internal;
+package org.byteam.superadapter;
 
 import android.view.View;
 
 /**
- * <p>Methods about header and footer.</p>
+ * Methods about header and footer.
+ * <p>
  * Created by Cheney on 16/1/12.
  */
 interface IHeaderFooter {

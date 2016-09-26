@@ -1,12 +1,13 @@
-package org.byteam.superadapter.internal;
+package org.byteam.superadapter;
 
 import java.util.List;
 
 /**
- * <p>Select, insert, update, delete.</p>
+ * Select, insert, update, delete.
+ * <p>
  * Created by Cheney on 16/4/1.
  */
-public interface CRUD<T> {
+interface CRUD<T> {
     void add(T item);
 
     void add(int location, T item);
@@ -37,4 +38,6 @@ public interface CRUD<T> {
     boolean containsAll(List<T> items);
 
     void clear();
+
+    void diff(DefaultDiffCallback<T> callback);
 }

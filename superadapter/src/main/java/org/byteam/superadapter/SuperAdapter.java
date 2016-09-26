@@ -1,25 +1,21 @@
 package org.byteam.superadapter;
 
 import android.content.Context;
+import android.os.AsyncTask;
+import android.support.v7.util.DiffUtil;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.byteam.superadapter.internal.CRUD;
-import org.byteam.superadapter.internal.ListSupportAdapter;
-import org.byteam.superadapter.internal.SuperViewHolder;
-
 import java.util.List;
 
 /**
- * <p>
  * The adapter you need to implement.
- * </p>
+ * <p>
  * Created by Cheney on 16/3/30.
  */
 public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements CRUD<T> {
-    private final String TAG = "SuperAdapter";
     private LayoutInflater mLayoutInflater;
 
     /**
@@ -200,4 +196,59 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
             notifyDataSetHasChanged();
         }
     }
+
+    /**
+     * Calculate the difference between two lists and output a list of update operations
+     * that converts the first list into the second one.
+     * <p>
+     * <pre>
+     *     List oldList = mAdapter.getData();
+     *     DefaultDiffCallback<T> callback = new DefaultDiffCallback(oldList, newList);
+     *     mAdapter.diff(callback);
+     * </pre>
+     * Note: This method only works on version 24.2.0 or above.
+     *
+     * @param callback {@link DefaultDiffCallback}
+     */
+    @Override
+    public void diff(final DefaultDiffCallback<T> callback) {
+        if (mRecyclerView == null) {
+            throw new IllegalStateException("'diff(DefaultDiffCallback)' only works with RecyclerView");
+        }
+
+        if (callback == null || callback.getNewListSize() < 1) {
+            Log.w(TAG, "Invalid size of the new list.");
+            return;
+        }
+
+        if (!is24_2_0()) {
+            Log.e(TAG, "This method only works on version 24.2.0or above.");
+            return;
+        }
+
+        new AsyncTask<Void, Void, DiffUtil.DiffResult>() {
+            @Override
+            protected DiffUtil.DiffResult doInBackground(Void... params) {
+                return DiffUtil.calculateDiff(callback);
+            }
+
+            @Override
+            protected void onPostExecute(DiffUtil.DiffResult diffResult) {
+                setData(callback.getNewList());
+                if (diffResult != null) {
+                    diffResult.dispatchUpdatesTo(SuperAdapter.this);
+                }
+            }
+        }.execute();
+    }
+
+    private boolean is24_2_0() {
+        try {
+            Class.forName("android.support.v7.util.DiffUtil");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+
 }
