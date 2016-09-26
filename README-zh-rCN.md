@@ -1,4 +1,4 @@
-![Download](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg) ![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SuperAdapter-brightgreen.svg?style=flat)
+![Version](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg)![API](https://img.shields.io/badge/API-11%2B-brightgreen.svg?style=flat)![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SuperAdapter-brightgreen.svg?style=flat)
 
 QQ群：271849001(新)
 
@@ -13,6 +13,8 @@ QQ群：271849001(新)
 在module的build.gradle中:
 
 `compile 'org.byteam.superadapter:superadapter:最新版本号'`
+
+当前最新版本号为：![Version](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg)
 
 ## Eclipse:
 可以手动添加最新的[jar包](https://github.com/chenenyu/SuperAdapter/releases)到libs文件夹下，建议尽早迁移到Android Studio开发。
@@ -39,14 +41,14 @@ public class SingleAdapter extends SuperAdapter<String> {
 		holder.setText(R.id.tv_name, item);
 	}
 }
-```  
+```
 
 然后在Activity(or Fragment)中调用:  
 
 ```
 mSingleAdapter = new RecyclerSingleAdapter(getContext(), names, R.layout.your_item);  
 recyclerView.setAdapter(mSingleAdapter);
-```  
+```
 如果是个多布局的Adapter，可以简写为如下示例代码:  
 
 ```
@@ -69,7 +71,7 @@ public class MultipleAdapter extends SuperAdapter<MockModel> {
 		}
 	}
 }
-```  
+```
 
 然后调用（注意构造方法的参数与单布局的区别）:  
 
@@ -97,7 +99,7 @@ multiAdapter = new MultipleAdapter(getContext(), models, new IMulItemViewType<Mo
 				}
 			});
 recyclerView.setAdapter(mMultiAdapter);
-```  
+```
 
 如果不想在创建Adapter时提供IMulItemViewType接口，也可以在Adapter中重写`offerMultiItemViewType()`方法：  
 
@@ -127,13 +129,13 @@ protected IMulItemViewType<MockModel> offerMultiItemViewType() {
 		}
 	};
 }
-```  
+```
 
 然后在创建Adapter时提供`null`：  
 `multiAdapter = new MultipleAdapter(getContext(), models, null);`  
-  
+
 如果使用的是RecyclerView，在使用多布局时，还可以使用`SimpleMulItemViewType`类，因为`getViewTypeCount()`方法仅在使用ListView、GridView等控件时是必须的: 
- 
+
 ```
 mAdapter = new MultipleAdapter(getContext(), models, new SimpleMulItemViewType<MockModel>() {
 	@Override
@@ -153,7 +155,7 @@ mAdapter = new MultipleAdapter(getContext(), models, new SimpleMulItemViewType<M
 	}
 });
 recyclerView.setAdapter(mAdapter);
-```  
+```
 
 
 **欢迎提交代码、bug以及讨论  : )**
