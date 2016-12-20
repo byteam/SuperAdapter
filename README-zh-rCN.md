@@ -1,4 +1,4 @@
-![Version](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg)![API](https://img.shields.io/badge/API-11%2B-brightgreen.svg?style=flat)![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SuperAdapter-brightgreen.svg?style=flat)
+![Version](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg)![API](https://img.shields.io/badge/API-9%2B-orange.svg)![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SuperAdapter-brightgreen.svg?style=flat)
 
 QQ群：271849001(新)
 

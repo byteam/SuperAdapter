@@ -1,4 +1,4 @@
-![Version](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg) ![API](https://img.shields.io/badge/API-11%2B-brightgreen.svg?style=flat) ![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SuperAdapter-brightgreen.svg?style=flat) 
+![Version](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg) ![API](https://img.shields.io/badge/API-9%2B-orange.svg) ![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SuperAdapter-brightgreen.svg?style=flat) 
 
 ### [Chinese Version 中文版](http://www.jianshu.com/p/d6a76fd3ea5b)
 QQ群：271849001(新)  
@@ -13,7 +13,11 @@ QQ群：271849001(新)
 
 In build.gradle: 
 
-`compile 'org.byteam.superadapter:superadapter:x.y.z'`
+````groovy
+compile 'com.android.support:recyclerview-v7:...'
+...
+compile 'org.byteam.superadapter:superadapter:x.y.z'
+````
 
 Current latest version: ![Version](https://api.bintray.com/packages/chenenyu/maven/SuperAdapter/images/download.svg)
 
