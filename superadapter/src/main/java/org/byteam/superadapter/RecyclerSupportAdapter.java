@@ -2,6 +2,7 @@ package org.byteam.superadapter;
 
 import android.animation.Animator;
 import android.content.Context;
+import android.os.Build;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -26,23 +27,23 @@ import java.util.List;
 abstract class RecyclerSupportAdapter<T> extends RecyclerView.Adapter<SuperViewHolder>
         implements IViewBindData<T, SuperViewHolder>, IAnimation, ILayoutManager, IHeaderFooter {
 
-    protected final String TAG = "SuperAdapter";
+    final String TAG = "SuperAdapter";
 
-    protected Context mContext;
-    protected List<T> mData;
+    final Context mContext;
+    List<T> mData;
 
-    protected int mLayoutResId;
-    protected IMulItemViewType<T> mMulItemViewType;
+    int mLayoutResId;
+    IMulItemViewType<T> mMulItemViewType;
 
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
 
-    protected RecyclerView mRecyclerView;
+    RecyclerView mRecyclerView;
 
-    protected static final int TYPE_HEADER = -0x100;
-    protected static final int TYPE_FOOTER = -0x101;
-    protected View mHeader;
-    protected View mFooter;
+    private final int TYPE_HEADER = -0x100;
+    private final int TYPE_FOOTER = -0x101;
+    View mHeader;
+    View mFooter;
 
     private Interpolator mInterpolator = new LinearInterpolator();
     private long mDuration = 300;
@@ -50,7 +51,6 @@ abstract class RecyclerSupportAdapter<T> extends RecyclerView.Adapter<SuperViewH
     private boolean mOnlyOnce = true;
     private BaseAnimation mLoadAnimation;
     private int mLastPosition = -1;
-
 
     /**
      * Constructor for single item view type.
@@ -158,7 +158,7 @@ abstract class RecyclerSupportAdapter<T> extends RecyclerView.Adapter<SuperViewH
         } else {
             holder = onCreate(null, parent, viewType);
         }
-        if (!(holder.itemView instanceof AdapterView)) {
+        if (!(holder.itemView instanceof AdapterView) && !(holder.itemView instanceof RecyclerView)) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -374,7 +374,7 @@ abstract class RecyclerSupportAdapter<T> extends RecyclerView.Adapter<SuperViewH
 
     @Override
     public void addLoadAnimation(RecyclerView.ViewHolder holder) {
-        if (mLoadAnimationEnabled) {
+        if (mLoadAnimationEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             if (!mOnlyOnce || holder.getLayoutPosition() > mLastPosition) {
                 BaseAnimation animation = mLoadAnimation == null ? new AlphaInAnimation() : mLoadAnimation;
                 for (Animator anim : animation.getAnimators(holder.itemView)) {

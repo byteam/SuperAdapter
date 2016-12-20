@@ -2,6 +2,8 @@ package org.byteam.superadapter;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,8 +37,8 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
     }
 
     @Override
-    public SuperViewHolder onCreate(View convertView, ViewGroup parent, int viewType) {
-        int resource;
+    public SuperViewHolder onCreate(@Nullable View convertView, ViewGroup parent, int viewType) {
+        @LayoutRes int resource;
         if (mMulItemViewType != null) {
             resource = mMulItemViewType.getLayoutId(viewType);
         } else {

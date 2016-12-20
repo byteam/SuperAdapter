@@ -1,5 +1,6 @@
 package org.byteam.superadapter;
 
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,7 +17,7 @@ interface IViewBindData<T, VH> {
      * @param viewType    Choose the layout resource according to view type.
      * @return Created view holder.
      */
-    VH onCreate(View convertView, ViewGroup parent, int viewType);
+    VH onCreate(@Nullable View convertView, ViewGroup parent, int viewType);
 
     /**
      * Method for binding data to view.

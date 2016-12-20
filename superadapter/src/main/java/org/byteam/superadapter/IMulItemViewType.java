@@ -1,6 +1,8 @@
 package org.byteam.superadapter;
 
 
+import android.support.annotation.LayoutRes;
+
 /**
  * Interface for multiple view types.
  * <p>
@@ -28,5 +30,6 @@ public interface IMulItemViewType<T> {
      * @param viewType {@link #getItemViewType(int, T)}
      * @return {@link android.support.annotation.LayoutRes}
      */
+    @LayoutRes
     int getLayoutId(int viewType);
 }

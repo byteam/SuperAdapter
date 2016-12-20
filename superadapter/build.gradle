@@ -13,6 +13,7 @@ android {
         versionCode 27
         versionName version
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -20,7 +21,6 @@ android {
         }
     }
 }
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     provided 'com.android.support:recyclerview-v7:25.1.0'
