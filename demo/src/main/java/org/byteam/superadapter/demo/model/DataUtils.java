@@ -9,7 +9,6 @@ import java.util.List;
  * </p>
  * Created by Chen on 2016/5/23.
  */
-
 public final class DataUtils {
     public static String[] names = {"John", "Michelle", "Amy", "Kim", "Mary", "David", "Sunny",
             "James", "Maria", "Betty", "Brian", "Candy", "Charles", "Vicky", "James"};

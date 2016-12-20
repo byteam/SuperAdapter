@@ -98,8 +98,10 @@ public class RecyclerViewFragment extends Fragment {
                 }
                 return true;
             case R.id.action_addAll_data:
-                if (mAdapter != null && mType == 2) {
+                if (mType == 2) {
                     mAdapter.addAll(generateData());
+                } else {
+                    mAdapter.addAll(new ArrayList<>(Arrays.asList(DataUtils.names)));
                 }
                 return true;
             case R.id.action_replaceAll_data:
