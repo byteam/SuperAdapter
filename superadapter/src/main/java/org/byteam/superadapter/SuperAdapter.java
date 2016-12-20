@@ -152,6 +152,11 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
 
     @Override
     public final void replaceAll(List<T> items) {
+        if (mData == items) {
+            notifyDataSetChanged();
+            notifyDataSetHasChanged();
+            return;
+        }
         if (items == null || items.isEmpty()) {
             clear();
             return;
@@ -200,53 +205,50 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
     /**
      * Calculate the difference between two lists and output a list of update operations
      * that converts the first list into the second one.
-     * <p>
      * <pre>
      *     List oldList = mAdapter.getData();
      *     DefaultDiffCallback<T> callback = new DefaultDiffCallback(oldList, newList);
      *     mAdapter.diff(callback);
      * </pre>
-     * Note: This method only works on version 24.2.0 or above.
+     * Note: This method only works on revision 24.2.0 or above.
      *
      * @param callback {@link DefaultDiffCallback}
      */
     @Override
     public void diff(final DefaultDiffCallback<T> callback) {
+        if (checkDiff(callback)) {
+            new AsyncTask<Void, Void, DiffUtil.DiffResult>() {
+                @Override
+                protected DiffUtil.DiffResult doInBackground(Void... params) {
+                    return DiffUtil.calculateDiff(callback);
+                }
+
+                @Override
+                protected void onPostExecute(DiffUtil.DiffResult diffResult) {
+                    setData(callback.getNewList());
+                    if (diffResult != null) {
+                        diffResult.dispatchUpdatesTo(SuperAdapter.this);
+                    }
+                }
+            }.execute();
+        }
+    }
+
+    private boolean checkDiff(DiffUtil.Callback callback) {
         if (mRecyclerView == null) {
             throw new IllegalStateException("'diff(DefaultDiffCallback)' only works with RecyclerView");
         }
 
         if (callback == null || callback.getNewListSize() < 1) {
             Log.w(TAG, "Invalid size of the new list.");
-            return;
+            return false;
         }
 
-        if (!is24_2_0()) {
-            Log.e(TAG, "This method only works on version 24.2.0or above.");
-            return;
-        }
-
-        new AsyncTask<Void, Void, DiffUtil.DiffResult>() {
-            @Override
-            protected DiffUtil.DiffResult doInBackground(Void... params) {
-                return DiffUtil.calculateDiff(callback);
-            }
-
-            @Override
-            protected void onPostExecute(DiffUtil.DiffResult diffResult) {
-                setData(callback.getNewList());
-                if (diffResult != null) {
-                    diffResult.dispatchUpdatesTo(SuperAdapter.this);
-                }
-            }
-        }.execute();
-    }
-
-    private boolean is24_2_0() {
         try {
             Class.forName("android.support.v7.util.DiffUtil");
             return true;
         } catch (ClassNotFoundException e) {
+            Log.e(TAG, "This method only works on revision 24.2.0 or above.", e);
             return false;
         }
     }
