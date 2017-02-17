@@ -2,6 +2,7 @@ package org.byteam.superadapter;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.annotation.CallSuper;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
@@ -36,6 +37,7 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
         this.mLayoutInflater = LayoutInflater.from(context);
     }
 
+    @CallSuper
     @Override
     public SuperViewHolder onCreate(@Nullable View convertView, ViewGroup parent, int viewType) {
         @LayoutRes int resource;
