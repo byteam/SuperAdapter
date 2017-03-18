@@ -29,7 +29,7 @@ abstract class RecyclerSupportAdapter<T> extends RecyclerView.Adapter<SuperViewH
 
     final String TAG = "SuperAdapter";
 
-    final Context mContext;
+    private final Context mContext;
     List<T> mData;
 
     int mLayoutResId;
@@ -179,11 +179,6 @@ abstract class RecyclerSupportAdapter<T> extends RecyclerView.Adapter<SuperViewH
             });
         }
         return holder;
-    }
-
-    @Override
-    public void onBindViewHolder(SuperViewHolder holder, int position, List<Object> payloads) {
-        super.onBindViewHolder(holder, position, payloads);
     }
 
     @Override

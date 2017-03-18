@@ -32,7 +32,6 @@ abstract class ListSupportAdapter<T> extends RecyclerSupportAdapter<T>
         super(context, list, mulItemViewType);
     }
 
-
     /**
      * @see android.widget.BaseAdapter#areAllItemsEnabled().
      */
@@ -65,8 +64,11 @@ abstract class ListSupportAdapter<T> extends RecyclerSupportAdapter<T>
     }
 
     public void notifyDataSetHasChanged() {
-        if (mRecyclerView == null)
+        if (mRecyclerView == null) {
             mDataSetObservable.notifyChanged();
+        } else {
+            notifyDataSetChanged();
+        }
     }
 
     public void notifyDataSetInvalidated() {
