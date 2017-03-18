@@ -43,7 +43,7 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
             View itemView = mLayoutInflater.inflate(mMulItemViewType == null ?
                     mLayoutResId : mMulItemViewType.getLayoutId(viewType), parent, false);
             return SuperViewHolder.get(null, itemView);
-        } else { // Not RV
+        } else { // When convertView != null, parent must be an AbsListView.
             return SuperViewHolder.get(convertView, null);
         }
     }
