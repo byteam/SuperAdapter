@@ -1,6 +1,7 @@
 package org.byteam.superadapter.demo.adapter;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import org.byteam.superadapter.demo.R;
 import java.util.List;
 
 public class SingleAdapter extends SuperAdapter<String> {
-    public SingleAdapter(Context context, List<String> list, int layoutResId) {
+    public SingleAdapter(Context context, List<String> list, @LayoutRes int layoutResId) {
         super(context, list, layoutResId);
         enableLoadAnimation(500, new AlphaInAnimation());
         setOnlyOnce(false);
