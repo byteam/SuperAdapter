@@ -3,6 +3,7 @@ package org.byteam.superadapter;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.CallSuper;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 import android.util.Log;
