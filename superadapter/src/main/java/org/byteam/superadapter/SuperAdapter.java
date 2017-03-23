@@ -3,7 +3,6 @@ package org.byteam.superadapter;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.CallSuper;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 import android.util.Log;
@@ -40,14 +39,13 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
     @CallSuper
     @Override
     public SuperViewHolder onCreate(@Nullable View convertView, ViewGroup parent, int viewType) {
-        @LayoutRes int resource;
-        if (mMulItemViewType != null) {
-            resource = mMulItemViewType.getLayoutId(viewType);
-        } else {
-            resource = mLayoutResId;
+        if (convertView == null) {
+            View itemView = mLayoutInflater.inflate(mMulItemViewType == null ?
+                    mLayoutResId : mMulItemViewType.getLayoutId(viewType), parent, false);
+            return SuperViewHolder.get(null, itemView);
+        } else { // When convertView != null, parent must be an AbsListView.
+            return SuperViewHolder.get(convertView, null);
         }
-        return SuperViewHolder.get(convertView, convertView == null ?
-                mLayoutInflater.inflate(resource, parent, false) : null);
     }
 
     /**
@@ -247,14 +245,7 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
             Log.w(TAG, "Invalid size of the new list.");
             return false;
         }
-
-        try {
-            Class.forName("android.support.v7.util.DiffUtil");
-            return true;
-        } catch (ClassNotFoundException e) {
-            Log.e(TAG, "This method only works on revision 24.2.0 or above.", e);
-            return false;
-        }
+        return true;
     }
 
 }
