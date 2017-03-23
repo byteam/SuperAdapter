@@ -24,7 +24,7 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
     /**
      * Constructor for single itemView type.
      */
-    public SuperAdapter(Context context, List<T> items, int layoutResId) {
+    public SuperAdapter(Context context, List<T> items, @LayoutRes int layoutResId) {
         super(context, items, layoutResId);
         this.mLayoutInflater = LayoutInflater.from(context);
     }

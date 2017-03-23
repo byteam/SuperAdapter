@@ -3,6 +3,7 @@ package org.byteam.superadapter;
 import android.content.Context;
 import android.database.DataSetObservable;
 import android.database.DataSetObserver;
+import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -24,7 +25,7 @@ abstract class ListSupportAdapter<T> extends RecyclerSupportAdapter<T>
 
     private DataSetObservable mDataSetObservable = new DataSetObservable();
 
-    public ListSupportAdapter(Context context, List<T> list, int layoutResId) {
+    public ListSupportAdapter(Context context, List<T> list, @LayoutRes int layoutResId) {
         super(context, list, layoutResId);
     }
 

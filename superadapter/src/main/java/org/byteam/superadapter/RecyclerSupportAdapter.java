@@ -3,6 +3,7 @@ package org.byteam.superadapter;
 import android.animation.Animator;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.LayoutRes;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -59,7 +60,7 @@ abstract class RecyclerSupportAdapter<T> extends RecyclerView.Adapter<SuperViewH
      * @param list        Data list.
      * @param layoutResId {@link android.support.annotation.LayoutRes}
      */
-    public RecyclerSupportAdapter(Context context, List<T> list, int layoutResId) {
+    public RecyclerSupportAdapter(Context context, List<T> list, @LayoutRes int layoutResId) {
         this.mContext = context;
         this.mData = list == null ? new ArrayList<T>() : list;
         this.mLayoutResId = layoutResId;
