@@ -44,6 +44,10 @@ public class SuperViewHolder extends RecyclerView.ViewHolder implements ChainSet
         return holder;
     }
 
+    public CExtendViewHolder view(int viewId) {
+        return CExtendViewHolder.getInstance(findViewById(viewId));
+    }
+
     /**
      * Deprecated. Use {@link #findViewById(int)} instead for a better understanding.
      */
