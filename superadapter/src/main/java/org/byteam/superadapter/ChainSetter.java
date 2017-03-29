@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.FloatRange;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.MovementMethod;
@@ -27,7 +29,7 @@ interface ChainSetter<VH> {
 
     VH setMovementMethod(int viewId, MovementMethod method);
 
-    VH setImageResource(int viewId, int imgResId);
+    VH setImageResource(int viewId, @DrawableRes int resId);
 
     VH setImageDrawable(int viewId, Drawable drawable);
 
@@ -37,9 +39,9 @@ interface ChainSetter<VH> {
 
     VH setScaleType(int viewId, ImageView.ScaleType type);
 
-    VH setBackgroundColor(int viewId, int bgColor);
+    VH setBackgroundColor(int viewId, @ColorInt int bgColor);
 
-    VH setBackgroundResource(int viewId, int bgRes);
+    VH setBackgroundResource(int viewId, @DrawableRes int bgRes);
 
     VH setColorFilter(int viewId, ColorFilter colorFilter);
 
@@ -56,8 +58,6 @@ interface ChainSetter<VH> {
     VH setRating(int viewId, float rating);
 
     VH setTag(int viewId, Object tag);
-
-    VH setTag(int viewId, int key, Object tag);
 
     VH setEnabled(int viewId, boolean enabled);
 

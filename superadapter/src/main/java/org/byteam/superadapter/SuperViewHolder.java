@@ -5,10 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.FloatRange;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.MovementMethod;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Adapter;
@@ -46,12 +49,19 @@ public class SuperViewHolder extends RecyclerView.ViewHolder implements ChainSet
 
     /**
      * Deprecated. Use {@link #findViewById(int)} instead for a better understanding.
+     * It will be removed in a future release!
      */
     @Deprecated
     public <T extends View> T getView(int id) {
+        Log.e("SuperViewHolder", "Deprecated method 'getView(int)', please use 'findViewById(int)' instead.");
         return findViewById(id);
     }
 
+    /**
+     * @param id  View id
+     * @param <T> Subclass of View
+     * @return Child view
+     */
     @SuppressWarnings("unchecked")
     public <T extends View> T findViewById(int id) {
         View childView = childViews.get(id);
@@ -59,9 +69,22 @@ public class SuperViewHolder extends RecyclerView.ViewHolder implements ChainSet
             childView = itemView.findViewById(id);
             if (childView != null)
                 childViews.put(id, childView);
+            else
+                return null;
         }
         return (T) childView;
     }
+
+    /**
+     * Start of a chain call.
+     *
+     * @param id View id
+     * @return ExtendViewHolder
+     */
+    public ExtendViewHolder view(int id) {
+        return ExtendViewHolder.get(findViewById(id));
+    }
+
 
     @Override
     public SuperViewHolder setText(int viewId, CharSequence text) {
@@ -92,9 +115,9 @@ public class SuperViewHolder extends RecyclerView.ViewHolder implements ChainSet
     }
 
     @Override
-    public SuperViewHolder setImageResource(int viewId, int imgResId) {
+    public SuperViewHolder setImageResource(int viewId, @DrawableRes int resId) {
         ImageView view = findViewById(viewId);
-        view.setImageResource(imgResId);
+        view.setImageResource(resId);
         return this;
     }
 
@@ -127,14 +150,14 @@ public class SuperViewHolder extends RecyclerView.ViewHolder implements ChainSet
     }
 
     @Override
-    public SuperViewHolder setBackgroundColor(int viewId, int bgColor) {
+    public SuperViewHolder setBackgroundColor(int viewId, @ColorInt int bgColor) {
         View view = findViewById(viewId);
         view.setBackgroundColor(bgColor);
         return this;
     }
 
     @Override
-    public SuperViewHolder setBackgroundResource(int viewId, int bgRes) {
+    public SuperViewHolder setBackgroundResource(int viewId, @DrawableRes int bgRes) {
         View view = findViewById(viewId);
         view.setBackgroundResource(bgRes);
         return this;
@@ -193,13 +216,6 @@ public class SuperViewHolder extends RecyclerView.ViewHolder implements ChainSet
     public SuperViewHolder setTag(int viewId, Object tag) {
         View view = findViewById(viewId);
         view.setTag(tag);
-        return this;
-    }
-
-    @Override
-    public SuperViewHolder setTag(int viewId, int key, Object tag) {
-        View view = findViewById(viewId);
-        view.setTag(key, tag);
         return this;
     }
 
