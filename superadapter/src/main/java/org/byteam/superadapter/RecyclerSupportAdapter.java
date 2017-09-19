@@ -262,18 +262,14 @@ abstract class RecyclerSupportAdapter<T> extends RecyclerView.Adapter<SuperViewH
     private void setLayoutParams(View view) {
         if (hasHeaderView() || hasFooterView()) {
             RecyclerView.LayoutManager layoutManager = getLayoutManager();
-            if (layoutManager instanceof StaggeredGridLayoutManager) {
-                view.setLayoutParams(new StaggeredGridLayoutManager.LayoutParams(
-                        StaggeredGridLayoutManager.LayoutParams.MATCH_PARENT,
-                        StaggeredGridLayoutManager.LayoutParams.WRAP_CONTENT));
-            } else if (layoutManager instanceof GridLayoutManager) {
-                view.setLayoutParams(new GridLayoutManager.LayoutParams(
-                        GridLayoutManager.LayoutParams.MATCH_PARENT,
-                        GridLayoutManager.LayoutParams.WRAP_CONTENT));
-            } else {
+            if (layoutManager.canScrollVertically()) {
                 view.setLayoutParams(new RecyclerView.LayoutParams(
                         RecyclerView.LayoutParams.MATCH_PARENT,
                         RecyclerView.LayoutParams.WRAP_CONTENT));
+            } else {
+                view.setLayoutParams(new RecyclerView.LayoutParams(
+                        RecyclerView.LayoutParams.WRAP_CONTENT,
+                        RecyclerView.LayoutParams.MATCH_PARENT));
             }
         }
     }
