@@ -4,13 +4,13 @@ group = "org.byteam.superadapter"
 version = "3.6.7"
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 25
-        versionCode 29
+        minSdkVersion 14
+        targetSdkVersion 26
+        versionCode 1
         versionName version
     }
 
@@ -24,7 +24,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    provided 'com.android.support:recyclerview-v7:25.3.1'
+    provided 'com.android.support:recyclerview-v7:26.1.0'
 }
 
 apply from: 'bintray.gradle'

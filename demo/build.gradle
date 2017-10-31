@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "org.byteam.superadapter.demo"
-        minSdkVersion 11
-        targetSdkVersion 25
+        minSdkVersion 14
+        targetSdkVersion 26
         versionCode 1
-        versionName "2016/12/20"
+        versionName "1.0.0"
     }
     buildTypes {
         release {
@@ -22,7 +22,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':superadapter')
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:design:26.1.0'
+    compile 'com.android.support:recyclerview-v7:26.1.0'
 }
