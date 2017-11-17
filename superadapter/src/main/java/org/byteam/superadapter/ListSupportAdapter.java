@@ -65,6 +65,9 @@ abstract class ListSupportAdapter<T> extends RecyclerSupportAdapter<T>
         mDataSetObservable.unregisterObserver(observer);
     }
 
+    /**
+     * Used for ListView.
+     */
     public void notifyDataSetHasChanged() {
         if (mRecyclerView == null) {
             mDataSetObservable.notifyChanged();
@@ -73,6 +76,9 @@ abstract class ListSupportAdapter<T> extends RecyclerSupportAdapter<T>
         }
     }
 
+    /**
+     * Used for ListView.
+     */
     public void notifyDataSetInvalidated() {
         if (mRecyclerView == null)
             mDataSetObservable.notifyInvalidated();
