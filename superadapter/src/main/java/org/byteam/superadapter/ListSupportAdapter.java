@@ -7,6 +7,7 @@ import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SpinnerAdapter;
@@ -148,6 +149,33 @@ abstract class ListSupportAdapter<T> extends RecyclerSupportAdapter<T>
         return getCount() == 0;
     }
 
+    @Override
+    public void setOnItemClickListener(final OnItemClickListener onItemClickListener) {
+        if (mAbsListView != null && mAbsListView instanceof ListView) {
+            mAbsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    onItemClickListener.onItemClick(view, getItemViewType(position), position);
+                }
+            });
+        } else {
+            super.setOnItemClickListener(onItemClickListener);
+        }
+    }
+
+    @Override
+    public void setOnItemLongClickListener(final OnItemLongClickListener onItemLongClickListener) {
+        if (mAbsListView != null && mAbsListView instanceof ListView) {
+            mAbsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    onItemLongClickListener.onItemLongClick(view, getItemViewType(position), position);
+                }
+            });
+        } else {
+            super.setOnItemLongClickListener(onItemLongClickListener);
+        }
+    }
 
     @Override
     public void addHeaderView(View header) {
