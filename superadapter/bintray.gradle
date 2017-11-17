@@ -21,8 +21,8 @@ install {
         developers {
             developer {
                 id 'chenenyu'
-                name 'Enyu Chen'
-                email 'echocey@gmail.com'
+                name 'chenenyu'
+                email 'ceychina@gmail.com'
             }
         }
     }
