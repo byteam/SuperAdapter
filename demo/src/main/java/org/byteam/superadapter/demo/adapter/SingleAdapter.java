@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import org.byteam.superadapter.SuperAdapter;
 import org.byteam.superadapter.SuperViewHolder;
-import org.byteam.superadapter.animation.AlphaInAnimation;
 import org.byteam.superadapter.demo.R;
 
 import java.util.List;
@@ -18,8 +17,8 @@ import java.util.List;
 public class SingleAdapter extends SuperAdapter<String> {
     public SingleAdapter(Context context, List<String> list, @LayoutRes int layoutResId) {
         super(context, list, layoutResId);
-        enableLoadAnimation(500, new AlphaInAnimation());
-        setOnlyOnce(false);
+//        enableLoadAnimation(500, new AlphaInAnimation());
+//        setOnlyOnce(false);
     }
 
     @Override

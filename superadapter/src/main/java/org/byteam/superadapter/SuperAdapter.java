@@ -1,5 +1,6 @@
 package org.byteam.superadapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.CallSuper;
@@ -60,7 +61,9 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
         if (hasHeaderView())
             location++;
         notifyItemInserted(location);
-        notifyDataSetHasChanged();
+        if (mRecyclerView == null) {
+            notifyDataSetHasChanged();
+        }
     }
 
     @Override
@@ -69,7 +72,9 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
         if (hasHeaderView())
             location++;
         notifyItemInserted(location);
-        notifyDataSetHasChanged();
+        if (mRecyclerView == null) {
+            notifyDataSetHasChanged();
+        }
     }
 
     @Override
@@ -89,7 +94,9 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
         if (hasHeaderView())
             location++;
         notifyItemRangeInserted(location, items.size());
-        notifyDataSetHasChanged();
+        if (mRecyclerView == null) {
+            notifyDataSetHasChanged();
+        }
     }
 
     @Override
@@ -106,7 +113,9 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
         if (hasHeaderView())
             location++;
         notifyItemRangeInserted(location, items.size());
-        notifyDataSetHasChanged();
+        if (mRecyclerView == null) {
+            notifyDataSetHasChanged();
+        }
     }
 
     @Override
@@ -122,21 +131,27 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
         if (hasHeaderView())
             location++;
         notifyItemRemoved(location);
-        notifyDataSetHasChanged();
+        if (mRecyclerView == null) {
+            notifyDataSetHasChanged();
+        }
     }
 
     @Override
     public void removeAll(List<T> items) {
         mData.removeAll(items);
-        notifyDataSetChanged(); // RecyclerView
-        notifyDataSetHasChanged(); // AdapterView
+        notifyDataSetChanged();
+        if (mRecyclerView == null) {
+            notifyDataSetHasChanged();
+        }
     }
 
     @Override
     public void retainAll(List<T> items) {
         mData.retainAll(items);
-        notifyDataSetChanged(); // RecyclerView
-        notifyDataSetHasChanged(); // AdapterView
+        notifyDataSetChanged();
+        if (mRecyclerView == null) {
+            notifyDataSetHasChanged();
+        }
     }
 
     @Override
@@ -150,14 +165,18 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
         if (hasHeaderView())
             location++;
         notifyItemChanged(location);
-        notifyDataSetHasChanged();
+        if (mRecyclerView == null) {
+            notifyDataSetHasChanged();
+        }
     }
 
     @Override
     public final void replaceAll(List<T> items) {
         if (mData == items) {
             notifyDataSetChanged();
-            notifyDataSetHasChanged();
+            if (mRecyclerView == null) {
+                notifyDataSetHasChanged();
+            }
             return;
         }
         if (items == null || items.isEmpty()) {
@@ -181,7 +200,9 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
                 notifyItemRangeChanged(start, originalSize);
                 notifyItemRangeInserted(start + originalSize, newSize - originalSize);
             }
-            notifyDataSetHasChanged();
+            if (mRecyclerView == null) {
+                notifyDataSetHasChanged();
+            }
         }
     }
 
@@ -201,7 +222,9 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
         if (count > 0) {
             mData.clear();
             notifyItemRangeRemoved(hasHeaderView() ? 1 : 0, count);
-            notifyDataSetHasChanged();
+            if (mRecyclerView == null) {
+                notifyDataSetHasChanged();
+            }
         }
     }
 
@@ -217,6 +240,7 @@ public abstract class SuperAdapter<T> extends ListSupportAdapter<T> implements C
      *
      * @param callback {@link DefaultDiffCallback}
      */
+    @SuppressLint("StaticFieldLeak")
     @Override
     public void diff(final DefaultDiffCallback<T> callback) {
         if (checkDiff(callback)) {
